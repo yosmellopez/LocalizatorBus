@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+    <head>
+        <meta charset="utf-8">
+        <title>Localizator</title>
+        <base th:href="@{/}">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <script>
+            localStorage.setItem("serverUrl", "http://localhost:8080/Bus/");
+            localStorage.setItem("socketDir", "ws://localhost:8080/Bus/");
+        </script>
+        <link rel="stylesheet" href="styles.0eb4404c58e5fd153406.css">
+    </head>
+    <body>
+        <app-root></app-root>
+        <script type="text/javascript" th:src="@{/static/runtime.1184e155d4312abfd600.js}"></script>
+        <script type="text/javascript" th:src="@{/static/polyfills.c53b1132b0de9f2601bd.js}"></script>
+        <script type="text/javascript" th:src="@{/static/scripts.cc34c050a9d473ed5181.js}"></script>
+        <script type="text/javascript" th:src="@{/static/main.9c74b3249fef37f4223d.js}"></script>
+    </body>
+</html>
