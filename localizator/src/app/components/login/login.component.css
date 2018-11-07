@@ -1,0 +1,29 @@
+html,
+body {
+    height: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.login-btn {
+    height: 50px;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+.login-btn mat-icon {
+    position: relative;
+    top: -2px;
+}
+
+body {
+    background-color: darkcyan;
+}

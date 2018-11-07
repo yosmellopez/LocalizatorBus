@@ -1,0 +1,164 @@
+<h1 mat-dialog-title style="margin: 0 0">{{insertar?'Nuevo Viaje':'Modificar Viaje'}}
+    <button type="button" mat-icon-button class="close-button" (click)="onNoClick()">
+        <mat-icon style="font-size: 25px">close</mat-icon>
+    </button>
+    <hr style="opacity: 100%">
+</h1>
+<div mat-dialog-content style="min-height: 100%;padding: 0;overflow: hidden;">
+    <mat-horizontal-stepper linear labelPosition="bottom">
+        <mat-step [stepControl]="formViaje" label="Datos del Viaje">
+            <form class="form" [formGroup]="formViaje" (submit)="insertarTravel()">
+                <mat-expansion-panel [expanded]="true" (opened)="setStep(0)" hideToggle>
+                    <mat-expansion-panel-header class="headers-align">
+                        <mat-panel-title>
+                            Destino
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Escribir datos del viaje
+                            <mat-icon>map</mat-icon>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-form-field class="middle-width">
+                        <mat-select matInput placeholder="Seleccione la ruta del viaje" formControlName="route" [compareWith]="compararRoutes">
+                            <mat-option *ngFor="let route of routes" [value]="route">{{route|route}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="formViaje.controls['route'].errors?.required">Debe seleccionar la ruta del viaje</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="middle-width">
+                        <mat-select matInput placeholder="Seleccione el bus del viaje" formControlName="bus" [compareWith]="compararBuses">
+                            <mat-option *ngFor="let bus of buses" [value]="bus">{{bus.code}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="formViaje.controls['bus'].errors?.required">Debe seleccionar el bus que realizará el viaje</mat-error>
+                    </mat-form-field>
+                    <mat-slide-toggle formControlName="active">Activo</mat-slide-toggle>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel [expanded]="true" (opened)="setStep(1)" hideToggle>
+                    <mat-expansion-panel-header class="headers-align">
+                        <mat-panel-title>
+                            Fecha de Viaje
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Inserte fecha de viaje y fecha de arrivo
+                            <mat-icon>date_range</mat-icon>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <mat-form-field class="middle-width">
+                        <input matInput [matDatepicker]="travelDatePicker" formControlName="travelDate" placeholder="Fecha de Viaje" [min]="minDate" [errorStateMatcher]="matcher">
+                        <mat-datepicker-toggle matSuffix [for]="travelDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #travelDatePicker></mat-datepicker>
+                        <mat-error *ngIf="formViaje.controls['travelDate'].hasError('required')">Debe seleccionar una fecha de viaje.</mat-error>
+                        <mat-error *ngIf="formViaje.controls['travelDate'].hasError('min')">Debe seleccionar una fecha de viaje.</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="middle-width">
+                        <input matInput [matDatepicker]="arriveDatePicker" formControlName="arriveDate" placeholder="Fecha de Arrivo" [min]="minDate" [errorStateMatcher]="matcher">
+                        <mat-datepicker-toggle matSuffix [for]="arriveDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #arriveDatePicker></mat-datepicker>
+                        <mat-error *ngIf="formViaje.controls['arriveDate'].hasError('required')">Debe seleccionar una fecha de arrivo.</mat-error>
+                        <mat-error *ngIf="formViaje.controls['arriveDate'].errors?.min">Debe seleccionar una fecha mayor.</mat-error>
+                    </mat-form-field>
+
+                    <mat-action-row class="boton-theme">
+                        <button mat-raised-button color="primary" style="margin-right: 10px;">Siguiente
+                            <mat-icon>navigate_next</mat-icon>
+                        </button>
+                        <button type="button" mat-raised-button (click)="onNoClick()" color="warn">
+                            <mat-icon>cancel</mat-icon>
+                            Cancelar
+                        </button>
+                    </mat-action-row>
+                </mat-expansion-panel>
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="formPasajero" label="Datos del Pasajero">
+            <form class="form" [formGroup]="formPasajero" (submit)="addPassenger()">
+                <div formGroupName="passenger">
+                    <mat-form-field class="middle-width">
+                        <input matInput placeholder="Nombre" formControlName="name">
+                        <mat-error *ngIf="formPasajero.get('passenger.name').hasError('required')">Debe insertar el nombre de la persona</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="middle-width">
+                        <input matInput placeholder="Apellidos" formControlName="lastname">
+                        <mat-error *ngIf="formPasajero.get('passenger.lastname').hasError('required')">Debe insertar los apellidos de la persona</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="middle-width">
+                        <input matInput placeholder="Documento Nacional de Identidad (DNI)" formControlName="dni" type="number">
+                        <mat-error *ngIf="formPasajero.get('passenger.dni').hasError('required')">Debe insertar el dni de la persona</mat-error>
+                    </mat-form-field>
+                </div>
+                <mat-form-field class="middle-width" style="float: right;top: -61px;margin-right: 5px;">
+                    <mat-select matInput placeholder="Seleccione el lugar del viaje" formControlName="place" [compareWith]="compararLugares">
+                        <mat-option *ngFor="let place of places" [value]="place">{{place.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formPasajero.controls['place'].errors?.required">Debe seleccionar lugar del viaje</mat-error>
+                </mat-form-field>
+                <mat-action-row class="boton-theme" style="clear: both;top: -30px;position: relative">
+                    <button mat-raised-button color="warn" (click)="prevStep()" type="button" style="margin-right: 10px;" matStepperPrevious>
+                        <mat-icon>navigate_before</mat-icon>
+                        Anterior
+                    </button>
+                    <button mat-raised-button color="primary" style="margin-right: 10px;">{{insertarPassenger?'Añadir Viajero':'Editar Pasajero'}}</button>
+                    <button type="button" mat-raised-button color="primary" (click)="finalizar()">
+                        Finalizar
+                    </button>
+                </mat-action-row>
+                <div>
+                    <button mat-button>Eliminar</button>
+                </div>
+                <div class="example-container mat-elevation-z8" style="top: -30px;position:relative;">
+                    <table mat-table [dataSource]="dataSource">
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef> Nombre</th>
+                            <td mat-cell *matCellDef="let element"> {{element.passenger.name}}</td>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="lastname">
+                            <th mat-header-cell *matHeaderCellDef> Apellidos</th>
+                            <td mat-cell *matCellDef="let element"> {{element.passenger.lastname}}</td>
+                        </ng-container>
+
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="dni">
+                            <th mat-header-cell *matHeaderCellDef> DNI</th>
+                            <td mat-cell *matCellDef="let element"> {{element.passenger.dni}}</td>
+                        </ng-container>
+
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="place">
+                            <th mat-header-cell *matHeaderCellDef> Lugar</th>
+                            <td mat-cell *matCellDef="let element"> {{element.place|place}}</td>
+                        </ng-container>
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="acciones" stickyEnd>
+                            <th mat-header-cell *matHeaderCellDef> Acciones</th>
+                            <td mat-cell *matCellDef="let element">
+                                <button mat-mini-fab type="button" color="accent" (click)="editarPassenger($event,element)" matTooltip="Editar Pasajero">
+                                    <mat-icon>mode_edit</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+            </form>
+        </mat-step>
+    </mat-horizontal-stepper>
+</div>
+<!--<div mat-dialog-actions class="boton-theme">-->
+<!--<span class="spacer"></span>-->
+<!--<button type="submit" mat-raised-button cdkFocusInitial color="primary">-->
+<!--<mat-icon>check_circle</mat-icon>-->
+<!--{{insertar?'Guardar Viaje':'Modificar Viaje'}}-->
+<!--</button>-->
+<!--<button type="button" mat-raised-button (click)="onNoClick()" color="warn">-->
+<!--<mat-icon>cancel</mat-icon>-->
+<!--Cancelar-->
+<!--</button>-->
+<!--</div>-->

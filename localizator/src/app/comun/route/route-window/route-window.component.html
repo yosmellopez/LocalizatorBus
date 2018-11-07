@@ -1,0 +1,37 @@
+<form class="form" [formGroup]="form" (submit)="insertarRoute()">
+    <h1 mat-dialog-title style="margin: 0 0">{{insertar?'Nueva Ruta':'Modificar Ruta'}}
+        <button type="button" mat-icon-button class="close-button" (click)="onNoClick()">
+            <mat-icon style="font-size: 25px">close</mat-icon>
+        </button>
+        <hr>
+    </h1>
+    <div mat-dialog-content style="min-height: 100%;">
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Codigo" formControlName="code">
+            <mat-error *ngIf="form.controls['code'].errors?.required">Debe insertar el codigo de la ruta</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-select matInput placeholder="Seleccione el Lugar de Origen" formControlName="origin" [compareWith]="compararLugares">
+                <mat-option *ngFor="let rol of lugares" [value]="rol">{{rol.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.controls['origin'].errors?.required">Debe seleccionar el lugar del origen de la ruta</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-select matInput placeholder="Seleccione el Lugar de Destino" formControlName="destiny" [compareWith]="compararLugares">
+                <mat-option *ngFor="let rol of lugares" [value]="rol">{{rol.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.controls['destiny'].errors?.required">Debe seleccionar el lugar de destino de la ruta</mat-error>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="boton-theme">
+        <span class="spacer"></span>
+        <button type="submit" mat-raised-button cdkFocusInitial color="primary">
+            <mat-icon>check_circle</mat-icon>
+            {{insertar?'Guardar':'Modificar'}}
+        </button>
+        <button type="button" mat-raised-button (click)="onNoClick()" color="warn">
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+    </div>
+</form>

@@ -1,0 +1,22 @@
+.headers-align mat-expansion-panel-header,
+.headers-align mat-panel-description {
+    flex-basis: 0;
+}
+
+.headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.example-container {
+    height: 300px;
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-column-acciones {
+    width: 40px;
+}

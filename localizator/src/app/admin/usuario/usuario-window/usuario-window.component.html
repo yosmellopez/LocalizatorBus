@@ -1,0 +1,55 @@
+<form class="form" [formGroup]="form" (submit)="insertarUsuario()">
+    <h1 mat-dialog-title style="margin: 0 0">{{insertar?'Nuevo Usuario':'Modificar Usuario'}}
+        <button type="button" mat-icon-button class="close-button" (click)="onNoClick()">
+            <mat-icon style="font-size: 25px">close</mat-icon>
+        </button>
+        <hr>
+    </h1>
+    <div mat-dialog-content style="min-height: 100%;">
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Nombre" formControlName="name">
+            <mat-error *ngIf="form.controls['name'].errors?.required">Debe insertar el nombre de la persona</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Apellidos" formControlName="lastname">
+            <mat-error *ngIf="form.controls['lastname'].errors?.required">Debe insertar los apellidos de la persona</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Correo del Usuario" formControlName="email">
+            <mat-error *ngIf="form.controls['email'].errors?.required">Debe insertar el correo del usuario</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Nombre de Usuario" formControlName="username">
+            <mat-error *ngIf="form.controls['username'].errors?.required">Debe insertar el nombre de usuario</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-select matInput placeholder="Seleccione el rol" formControlName="rol" [compareWith]="compararRoles">
+                <mat-option *ngFor="let rol of roles" [value]="rol">{{rol.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.controls['rol'].errors?.required">Debe seleccionar el rol del usuario</mat-error>
+        </mat-form-field>
+        <mat-slide-toggle formControlName="activated">{{form.controls['activated'].value?'Activo':'Desactivado'}}</mat-slide-toggle>
+        <mat-form-field class="full-width">
+            <input matInput type="password" placeholder="Contraseña del Usuario" formControlName="password">
+            <mat-error *ngIf="form.controls['password'].errors?.required">Debe introducir la contraseña del usuario</mat-error>
+            <mat-error *ngIf="form.controls['password'].errors?.noigual">Las contrasenas no coinciden</mat-error>
+        </mat-form-field>
+        <password-lenght [passwordToCheck]="form.controls['password'].value"></password-lenght>
+        <mat-form-field class="full-width" style="position: relative;top: -20px;">
+            <input matInput type="password" placeholder="Repetir Contraseña" formControlName="passwordRepeat">
+            <mat-error *ngIf="form.controls['passwordRepeat'].errors?.required">Debe repetir la contraseña del usuario</mat-error>
+            <mat-error *ngIf="form.controls['passwordRepeat'].errors?.noigual">Las contrasenas no coinciden</mat-error>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="boton-theme">
+        <span class="spacer"></span>
+        <button type="submit" mat-raised-button cdkFocusInitial color="primary">
+            <mat-icon>check_circle</mat-icon>
+            {{insertar?'Guardar':'Modificar'}}
+        </button>
+        <button type="button" mat-raised-button (click)="onNoClick()" color="warn">
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+    </div>
+</form>

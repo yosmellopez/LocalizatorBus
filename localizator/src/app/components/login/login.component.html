@@ -1,0 +1,55 @@
+<!-- Start Page Loading -->
+<div id="loader-wrapper">
+    <div id="loader"></div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>
+<!-- End Page Loading -->
+<div id="login-page" class="row" style="width: 400px;margin:auto;padding-top: 10%">
+    <div class="col s12 z-depth-4 card-panel">
+        <form class="login-form" [formGroup]="form" (submit)="iniciarSesion()" style="padding-top: 10%">
+            <div class="row">
+                <div class="input-field col s12 center" style="text-align: center">
+                    <img src="/assets/images/logo/login-logo.png" alt="" class="circle responsive-img valign profile-image-login">
+                    <p class="center login-form-text" style="text-align: center">Sistema para el control de buses</p>
+                </div>
+            </div>
+            <div class="row margin">
+                <div class="col s1" style="margin-right: 10px">
+                    <i class="material-icons prefix pt-5">person_outline</i>
+                </div>
+                <div class="col s10" style="position: relative;top: -15px;">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Nombre de Usuario" formControlName="username">
+                        <mat-error *ngIf="form.controls['username'].errors?.required">Debe insertar el nombre de usuario</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row margin">
+                <div class="col s1" style="margin-right: 10px">
+                    <i class="material-icons prefix pt-5">lock_outline</i>
+                </div>
+                <div class="col s10" style="position: relative;top: -15px;">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Contraseña" formControlName="password" type="password">
+                        <mat-error *ngIf="form.controls['password'].errors?.required">Debe proporcionar una contraseña</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <span>{{mensaje}}</span>
+                </div>
+                <div class="input-field col s12">
+                    <button class="col s12 login-btn" mat-flat-button color="primary">Iniciar Sesion <mat-icon>keyboard_arrow_right</mat-icon></button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6 m6 l6">
+                    <p class="margin right-align medium-small"><a href="page-forgot-password.html">Forgot password ?</a></p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="hiddendiv common"></div>
