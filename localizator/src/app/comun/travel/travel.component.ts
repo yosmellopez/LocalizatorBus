@@ -20,7 +20,7 @@ declare function my_init_plugins();
             state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
             state('expanded', style({height: '*'})),
             transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-        ]),
+        ])
     ]
 })
 export class TravelComponent implements OnInit {

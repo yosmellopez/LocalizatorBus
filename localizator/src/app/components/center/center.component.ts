@@ -1,8 +1,9 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Location} from "@angular/common";
-import {Router} from "@angular/router";
+import {Router, RouterOutlet} from "@angular/router";
 import {RouteInfo, Usuario} from "../../app.model";
 import {Principal} from "../../services/principal.service";
+import {routerTransition} from "../../animations";
 
 const RUTAS: RouteInfo[] = [
     {
@@ -66,7 +67,10 @@ const RUTAS: RouteInfo[] = [
 @Component({
     selector: 'app-center',
     templateUrl: './center.component.html',
-    styleUrls: ['./center.component.css']
+    styleUrls: ['./center.component.css'],
+    animations: [
+        routerTransition
+    ]
 })
 export class CenterComponent implements OnInit {
     titulo: string;
@@ -110,5 +114,9 @@ export class CenterComponent implements OnInit {
 
     hasAuthority(menuItem: RouteInfo) {
         return menuItem.authority.includes(this.usuario.rol.name);
+    }
+
+    prepareRoute(outlet: RouterOutlet) {
+        return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
     }
 }

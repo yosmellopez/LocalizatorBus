@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
 
     form: FormGroup;
     mensaje: string;
+    isLoading: boolean = false;
 
     constructor(private accoutService: AccountService, private principal: Principal, private router: Router) {
         this.form = new FormGroup({
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit {
 
     iniciarSesion() {
         if (this.form.valid) {
+            this.isLoading = true;
             this.accoutService.iniciarSesion(this.form.value).subscribe(response => {
                 if (response.body.success) {
                     const usuario = response.body.elemento;
@@ -46,6 +48,7 @@ export class LoginComponent implements OnInit {
                         }
                     });
                 } else {
+                    this.isLoading = false;
                     this.mensaje = response.body.msg;
                     this.form.controls['password'].setValue("");
                 }

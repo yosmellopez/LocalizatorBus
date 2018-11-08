@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
 import {RouterModule} from "@angular/router";
 import {adminRoutes} from "./admin-routing.module";
 import {UsuarioComponent} from './usuario/usuario.component';
@@ -9,14 +8,15 @@ import {UsuarioWindow} from './usuario/usuario-window/usuario-window.component';
 import {MensajeModule} from "../mensaje/mensaje.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {PasswordLenghtModule} from "../password-lenght/password-lenght.module";
-import { DashboardComponent } from './dashboard/dashboard.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {CommonModule} from "@angular/common";
 
 
 @NgModule({
     imports: [
-        CommonModule,
         AngularMaterialModule,
         PipesModule,
+        CommonModule,
         RouterModule.forChild(adminRoutes),
         MensajeModule,
         ReactiveFormsModule,

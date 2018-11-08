@@ -7,13 +7,16 @@ import {UsuarioService} from "../../services/usuario.service";
 import {SelectionModel} from "@angular/cdk/collections";
 import {UsuarioWindow} from "./usuario-window/usuario-window.component";
 import {Confirm, Information} from "../../mensaje/window.mensaje";
+import {routerTransition} from "../../animations";
 
 declare function my_init_plugins();
 
 @Component({
     selector: 'app-usuario',
     templateUrl: './usuario.component.html',
-    styleUrls: ['./usuario.component.css']
+    styleUrls: ['./usuario.component.css'],
+    animations: [routerTransition],
+    host: { '[@routerTransition]': '' }
 })
 export class UsuarioComponent implements OnInit {
 

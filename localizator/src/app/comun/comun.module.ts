@@ -17,8 +17,8 @@ import {RouteWindow} from './route/route-window/route-window.component';
 import {TravelWindow} from './travel/travel-window/travel-window.component';
 import {DateAdapter} from "@angular/material";
 import {DateFormat} from "../app.model";
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { NotificationComponent } from '../components/notification/notification.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {NotificationComponent} from '../components/notification/notification.component';
 
 @NgModule({
     imports: [
@@ -31,7 +31,7 @@ import { NotificationComponent } from '../components/notification/notification.c
     declarations: [BusComponent, PlaceComponent, UserProfileComponent, RouteComponent, TravelComponent, BusWindow, PlaceWindow, RouteWindow, TravelWindow, DashboardComponent, NotificationComponent],
     entryComponents: [BusWindow, PlaceWindow, RouteWindow, TravelWindow],
     providers: [
-        { provide: DateAdapter, useClass: DateFormat },
+        {provide: DateAdapter, useClass: DateFormat},
     ],
 })
 export class ComunModule {

@@ -34,12 +34,17 @@ export class NotificacionResolve implements Resolve<Notificacion> {
 
 export const routesComun: Routes = [
     {path: 'user-profile', component: UserProfileComponent},
-    {path: 'bus-list', component: BusComponent},
-    {path: 'place-list', component: PlaceComponent},
-    {path: 'route-list', component: RouteComponent},
-    {path: 'travel-list', component: TravelComponent},
-    {path: 'dashboard', component: DashboardComponent},
-    {path: 'notification', component: NotificationComponent},
-    {path: 'notification/:id', component: NotificationComponent, resolve: {object: NotificacionResolve}},
+    {path: 'bus-list', component: BusComponent, data: {animation: 'BusAnimation'}},
+    {path: 'place-list', component: PlaceComponent, data: {animation: 'PlaceAnimation'}},
+    {path: 'route-list', component: RouteComponent, data: {animation: 'RouteAnimation'}},
+    {path: 'travel-list', component: TravelComponent, data: {animation: 'TravelAnimation'}},
+    {path: 'dashboard', component: DashboardComponent, data: {animation: 'DashboardAnimation'}},
+    {path: 'notification', component: NotificationComponent, data: {animation: 'NotificationAnimation'}},
+    {
+        path: 'notification/:id',
+        component: NotificationComponent,
+        resolve: {object: NotificacionResolve},
+        data: {animation: 'AnimatePage'}
+    },
 ];
 
