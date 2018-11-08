@@ -198,8 +198,9 @@ export class TravelWindow implements OnInit {
                 });
                 this.newPassenger = null;
                 this.insertarPassenger = true;
-                this.formPasajero.reset({place: null, passenger: {name: '', lastname: '', dni: ''}});
-                this.formPasajero.setErrors(null);
+                this.formPasajero.reset();
+                this.formPasajero.clearValidators();
+                this.formPasajero.clearAsyncValidators();
             } else {
                 this.dialog.open(MensajeError, {width: "400px", data: {mensaje: response.body.msg}});
             }

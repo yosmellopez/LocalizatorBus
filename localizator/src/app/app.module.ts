@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {HeaderComponent, NotificacionMensajeComponent} from './components/header/header.component';
@@ -19,7 +19,7 @@ import {DateFormat} from "./app.model";
 import {StompConfig, StompService} from "@stomp/ng2-stompjs";
 import {stompConfig} from "./app.constant";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {BrowserModule} from '@angular/platform-browser';
+import {TranslateService} from "./services/translate.service";
 
 @NgModule({
     declarations: [
@@ -40,21 +40,23 @@ import {BrowserModule} from '@angular/platform-browser';
         MensajeModule,
         AppRoutingModule,
         RouterModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
     ],
     providers: [
         {provide: DateAdapter, useClass: DateFormat},
-        StompService,
-        {
+        StompService, {
             provide: StompConfig,
             useValue: stompConfig,
-        },
+        }
     ],
     bootstrap: [AppComponent],
     entryComponents: [NotificacionMensajeComponent]
 })
 export class AppModule {
-    constructor(private dateAdapter: DateAdapter<Date>) {
+    constructor(private dateAdapter: DateAdapter<Date>, private translate: TranslateService) {
         dateAdapter.setLocale('en-in'); // DD/MM/YYYY
+        translate.use('en').then(() => {
+            console.log(translate.data);
+        });
     }
 }

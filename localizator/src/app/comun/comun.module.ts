@@ -20,13 +20,14 @@ import {DateFormat} from "../app.model";
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {NotificationComponent} from '../components/notification/notification.component';
 
+
 @NgModule({
     imports: [
         CommonModule,
         AngularMaterialModule,
         PipesModule,
         ReactiveFormsModule,
-        RouterModule.forChild(routesComun)
+        RouterModule.forChild(routesComun),
     ],
     declarations: [BusComponent, PlaceComponent, UserProfileComponent, RouteComponent, TravelComponent, BusWindow, PlaceWindow, RouteWindow, TravelWindow, DashboardComponent, NotificationComponent],
     entryComponents: [BusWindow, PlaceWindow, RouteWindow, TravelWindow],

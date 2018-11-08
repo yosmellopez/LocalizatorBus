@@ -71,7 +71,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col s10 m6 l6">
-                            <h5 class="breadcrumbs-title">{{getTitle()}}</h5>
+                            <h5 class="breadcrumbs-title" [ngClass]="routeAnimationsElements">{{getTitle()}}</h5>
                             <ol class="breadcrumbs">
                                 <li><a href="index.html">Dashboard</a></li>
                                 <li><a href="#">Tables</a></li>
@@ -82,8 +82,8 @@
                 </div>
             </div>
             <div class="container">
-                <div class="section" [@routerTransition]="prepareRoute(outlet)">
-                    <router-outlet #outlet="outlet"></router-outlet>
+                <div class="section" [@routeAnimations]="o.isActivated && o.activatedRoute.routeConfig.path">
+                    <router-outlet #o="outlet"></router-outlet>
                 </div>
             </div>
         </section>

@@ -1,9 +1,12 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Location} from "@angular/common";
-import {Router, RouterOutlet} from "@angular/router";
+import {ActivatedRouteSnapshot, ActivationEnd, Router, RouterOutlet} from "@angular/router";
 import {RouteInfo, Usuario} from "../../app.model";
 import {Principal} from "../../services/principal.service";
-import {routerTransition} from "../../animations";
+import {ROUTE_ANIMATIONS_ELEMENTS, routeAnimations} from "../../animations/route.animations";
+import {Observable} from "rxjs/index";
+import {filter, map} from "rxjs/internal/operators";
+import {AnimationsService} from "../../animations/animations.service";
 
 const RUTAS: RouteInfo[] = [
     {
@@ -68,20 +71,26 @@ const RUTAS: RouteInfo[] = [
     selector: 'app-center',
     templateUrl: './center.component.html',
     styleUrls: ['./center.component.css'],
-    animations: [
-        routerTransition
-    ]
+    animations: [routeAnimations],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CenterComponent implements OnInit {
     titulo: string;
     rutas: RouteInfo[] = RUTAS;
     usuario: Usuario = new Usuario();
     rutasUsuario: RouteInfo[] = [];
+    activatedRouteSnapshot$: Observable<ActivatedRouteSnapshot>;
+    routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
 
-    constructor(private router: Router, private location: Location, private principal: Principal) {
+    constructor(private router: Router, private location: Location, private principal: Principal, private animation: AnimationsService) {
     }
 
     ngOnInit(): void {
+        this.animation.updateRouteAnimationType(true, true);
+        this.activatedRouteSnapshot$ = this.router.events.pipe(
+            filter(event => event instanceof ActivationEnd),
+            map((event: ActivationEnd) => event.snapshot)
+        );
         this.principal.identity().then(valor => {
             if (valor) {
                 this.usuario = valor;
