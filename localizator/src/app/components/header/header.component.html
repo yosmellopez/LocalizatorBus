@@ -27,7 +27,7 @@
                     <li>
                         <a href="javascript:void(0);" class="waves-effect waves-block waves-light notification-button" data-activates="notifications-dropdown">
                             <i class="material-icons">notifications_none
-                                <small class="notification-badge pink accent-2">{{notificaciones.length}}</small>
+                                <small class="notification-badge pink accent-2" *ngIf="notificaciones.length!==0">{{notificaciones.length}}</small>
                             </i>
                         </a>
                     </li>
@@ -51,7 +51,7 @@
                 <ul id="notifications-dropdown" class="dropdown-content">
                     <li>
                         <h6>NOTIFICATIONS
-                            <span class="new badge">{{notificaciones.length}}</span>
+                            <span class="badge new">{{notificaciones.length==0?'Sin Notificaciones':notificaciones.length+' new'}}</span>
                         </h6>
                     </li>
                     <li class="divider"></li>

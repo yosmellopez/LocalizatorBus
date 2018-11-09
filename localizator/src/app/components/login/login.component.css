@@ -27,3 +27,28 @@ body {
 body {
     background-color: darkcyan;
 }
+
+.progreso {
+    position: relative;
+    width: 106%;
+    left: -11px;
+    height: 5px;
+    float: left;
+    clear: right;
+}
+
+.disable-class {
+    pointer-events: none;
+}
+
+.frente {
+    height: 518px;
+    width: 400px;
+    min-height: 300px;
+    min-width: 300px;
+    z-index: 1000000;
+    opacity: 0.5;
+    position: absolute;
+    background-color: #0e0e0e;
+    margin-top: 12px;
+}

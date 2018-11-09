@@ -6,8 +6,10 @@
 </div>
 <!-- End Page Loading -->
 <div id="login-page" class="row" style="width: 400px;margin:auto;padding-top: 10%">
-    <div class="col s12 z-depth-4 card-panel">
-        <form class="login-form" [formGroup]="form" (submit)="iniciarSesion()" style="padding-top: 10%">
+    <div class="frente" [style.display]="isLoading ? 'block' : 'none'"></div>
+    <div class="col s12 z-depth-4 card-panel disabled">
+        <mat-progress-bar mode="indeterminate" class="progreso" [style.display]="isLoading ? 'block' : 'none'"></mat-progress-bar>
+        <form class="login-form" [formGroup]="form" (submit)="iniciarSesion()" style="padding-top: 10%" [attr.disabled]="isLoading">
             <div class="row">
                 <div class="input-field col s12 center" style="text-align: center">
                     <img src="/assets/images/logo/login-logo.png" alt="" class="circle responsive-img valign profile-image-login">
@@ -37,11 +39,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s12">
+                <div class="input-field col s12" style="min-height: 20px;text-align: center;position: relative;top: -7px;color:red">
                     <span>{{mensaje}}</span>
                 </div>
-                <div class="input-field col s12">
-                    <button class="col s12 login-btn" mat-flat-button color="primary">Iniciar Sesion <mat-icon>keyboard_arrow_right</mat-icon></button>
+                <div class="input-field col s12" style="padding: 0 30px;">
+                    <button class="col s12 login-btn" mat-flat-button color="primary">Iniciar Sesión
+                        <mat-icon>keyboard_arrow_right</mat-icon>
+                    </button>
                 </div>
             </div>
             <div class="row">
