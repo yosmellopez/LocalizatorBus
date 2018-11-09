@@ -58,7 +58,14 @@
                         <mat-error *ngIf="formViaje.controls['arriveDate'].hasError('required')">Debe seleccionar una fecha de arrivo.</mat-error>
                         <mat-error *ngIf="formViaje.controls['arriveDate'].errors?.min">Debe seleccionar una fecha mayor.</mat-error>
                     </mat-form-field>
-
+                    <mat-form-field class="middle-width">
+                        <input type="time" atp-time-picker matInput placeholder="Hora de Viaje" formControlName="travelTime">
+                        <mat-error *ngIf="formViaje.controls['travelTime'].errors?.required">Debe seleccionar la hora de viaje</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="middle-width">
+                        <input type="time" atp-time-picker matInput placeholder="Hora de Llegada" formControlName="arriveTime" labels="{'ok': 'Selecionar', 'cancel': 'Cancelar'}">
+                        <mat-error *ngIf="formViaje.controls['arriveTime'].errors?.required">Debe seleccionar la hora de viaje</mat-error>
+                    </mat-form-field>
                     <mat-action-row class="boton-theme">
                         <button mat-raised-button color="primary" style="margin-right: 10px;">Siguiente
                             <mat-icon>navigate_next</mat-icon>

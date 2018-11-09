@@ -58,7 +58,9 @@ export class Travel {
     active: boolean = false;
     route: Route;
     travelDate: Date;
+    travelTime: Date;
     arriveDate: Date;
+    arriveTime: Date;
     bus: Bus;
     expandido: boolean = false;
     passengerTravels: PassengerTravel[];

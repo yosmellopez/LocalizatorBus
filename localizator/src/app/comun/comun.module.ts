@@ -19,6 +19,8 @@ import {DateAdapter} from "@angular/material";
 import {DateFormat} from "../app.model";
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {NotificationComponent} from '../components/notification/notification.component';
+import {AmazingTimePickerModule} from "amazing-time-picker";
+import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import {NotificationComponent} from '../components/notification/notification.com
         AngularMaterialModule,
         PipesModule,
         ReactiveFormsModule,
+        AmazingTimePickerModule,
         RouterModule.forChild(routesComun),
+        NgxMaterialTimepickerModule
     ],
     declarations: [BusComponent, PlaceComponent, UserProfileComponent, RouteComponent, TravelComponent, BusWindow, PlaceWindow, RouteWindow, TravelWindow, DashboardComponent, NotificationComponent],
     entryComponents: [BusWindow, PlaceWindow, RouteWindow, TravelWindow],

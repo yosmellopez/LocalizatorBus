@@ -30,13 +30,23 @@ public class Travel implements Serializable, ClonableEntity<Travel> {
 
     @Column(name = "travel_date")
     @NotNull(message = "travel_date_not_null")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date travelDate;
 
     @Column(name = "arrive_date")
     @NotNull(message = "travel_arrive_not_null")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date arriveDate;
+
+    @Column(name = "travel_time")
+    @NotNull(message = "travel_time_not_null")
+    @Temporal(TemporalType.TIME)
+    private Date travelTime;
+
+    @Column(name = "arrive_time")
+    @NotNull(message = "travel_time_not_null")
+    @Temporal(TemporalType.TIME)
+    private Date arriveTime;
 
     @ManyToOne(optional = false)
     @NotNull(message = "travel_bus_not_null")
@@ -105,12 +115,30 @@ public class Travel implements Serializable, ClonableEntity<Travel> {
         this.passengerTravels = passengerTravels;
     }
 
+    public Date getTravelTime() {
+        return travelTime;
+    }
+
+    public void setTravelTime(Date travelTime) {
+        this.travelTime = travelTime;
+    }
+
+    public Date getArriveTime() {
+        return arriveTime;
+    }
+
+    public void setArriveTime(Date arriveTime) {
+        this.arriveTime = arriveTime;
+    }
+
     @Override
     public void clone(Travel travel) {
         active = travel.active;
         route = travel.route;
         arriveDate = travel.arriveDate;
         travelDate = travel.travelDate;
+        travelTime = travel.travelTime;
+        arriveTime = travel.arriveTime;
         bus = travel.bus;
     }
 

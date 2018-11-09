@@ -1,12 +1,16 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
+import {TranslateService} from "../services/translate.service";
 
 @Pipe({
-  name: 'translate'
+    name: 'translate',
+    pure: false
 })
 export class TranslatePipe implements PipeTransform {
+    constructor(private translate: TranslateService) {
+        translate.use(localStorage.getItem("lang") || "es");
+    }
 
-  transform(value: any, args?: any): any {
-    return null;
-  }
-
+    transform(key: any): any {
+        return this.translate.data[key] || key;
+    }
 }

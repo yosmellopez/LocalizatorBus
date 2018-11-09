@@ -1,4 +1,4 @@
-import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {HeaderComponent, NotificacionMensajeComponent} from './components/header/header.component';
@@ -20,6 +20,7 @@ import {StompConfig, StompService} from "@stomp/ng2-stompjs";
 import {stompConfig} from "./app.constant";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateService} from "./services/translate.service";
+import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
 
 @NgModule({
     declarations: [

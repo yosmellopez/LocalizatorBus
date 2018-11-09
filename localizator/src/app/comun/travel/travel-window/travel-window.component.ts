@@ -62,7 +62,7 @@ export class TravelWindow implements OnInit {
     @ViewChild(MatStepper) steeper: MatStepper;
     matcher = new MyErrorStateMatcher();
 
-    constructor(public dialogRef: MatDialogRef<TravelWindow>, @Inject(MAT_DIALOG_DATA) {id, active, travelDate, arriveDate, bus, route, passengerTravels, expandido}: Travel,
+    constructor(public dialogRef: MatDialogRef<TravelWindow>, @Inject(MAT_DIALOG_DATA) {id, active, travelDate, arriveDate, bus, route, passengerTravels, expandido, arriveTime, travelTime}: Travel,
                 private service: TravelService, private routeService: RouteService, private busService: BusService, private passengerService: PassengerService,
                 private placeService: PlaceService, private passengerTravelService: PassengerTravelService, private dialog: MatDialog) {
         if (id) {
@@ -77,7 +77,9 @@ export class TravelWindow implements OnInit {
                 arriveDate: arriveDate,
                 bus: bus,
                 passengerTravels: passengerTravels,
-                expandido: expandido
+                expandido: expandido,
+                travelTime: travelTime,
+                arriveTime: arriveTime
             };
             passengerTravels.forEach(passengerTravel => {
                 this.datos.push(passengerTravel);
@@ -87,7 +89,9 @@ export class TravelWindow implements OnInit {
         this.formViaje = new FormGroup({
             active: new FormControl(active),
             travelDate: new FormControl(travelDate ? new Date(travelDate) : '', [Validators.required]),
+            travelTime: new FormControl(travelTime ? new Date(travelTime) : '', [Validators.required]),
             arriveDate: new FormControl(arriveDate ? new Date(arriveDate) : '', [Validators.required]),
+            arriveTime: new FormControl(arriveTime ? new Date(arriveTime) : '', [Validators.required]),
             bus: new FormControl(bus, [Validators.required]),
             route: new FormControl(route, [Validators.required]),
         });
