@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 
 import static com.localizator.bus.control.AppResponse.failure;
 import static com.localizator.bus.control.AppResponse.success;
+import static org.springframework.http.ResponseEntity.ok;
 
 
 @RestController
@@ -40,19 +41,19 @@ public class PlaceControl {
     @GetMapping(value = "/place")
     public ResponseEntity<AppResponse<Place>> listarPlaces(Pageable pageable) {
         Page<Place> places = placeRepository.findAll(pageable);
-        return ResponseEntity.ok(success(places.getContent()).total(places.getTotalElements()).build());
+        return ok(success(places.getContent()).total(places.getTotalElements()).build());
     }
 
     @GetMapping(value = "/place/all")
     public ResponseEntity<AppResponse<Place>> listarAllPlaces() {
         List<Place> places = placeRepository.findAll();
-        return ResponseEntity.ok(success(places).total(places.size()).build());
+        return ok(success(places).total(places.size()).build());
     }
 
     @PostMapping(value = "/place")
     public ResponseEntity<AppResponse<Place>> insertarPlace(@Valid @RequestBody Place place) {
         placeRepository.saveAndFlush(place);
-        return ResponseEntity.ok(success(place).build());
+        return ok(success(place).build());
     }
 
     @PutMapping(value = "/place/{idPlace}")
@@ -60,38 +61,38 @@ public class PlaceControl {
         Place placeBd = optional.orElseThrow(() -> new EntityNotFoundException("place_not_found"));
         placeBd.clone(place);
         placeRepository.saveAndFlush(placeBd);
-        return ResponseEntity.ok(success(placeBd).build());
+        return ok(success(placeBd).build());
     }
 
     @DeleteMapping(value = "/place/{idPlace}")
     public ResponseEntity<AppResponse> eliminarPlace(@PathVariable("idPlace") Optional<Place> optional, Locale locale) {
         Place place = optional.orElseThrow(() -> new EntityNotFoundException("place_not_found"));
         placeRepository.delete(place);
-        return ResponseEntity.ok(success(messageSource.getMessage("delete_place", null, locale)).total(placeRepository.count()).build());
+        return ok(success(messageSource.getMessage("delete_place", null, locale)).total(placeRepository.count()).build());
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<AppResponse> tratarExcepciones(EntityNotFoundException e, Locale locale) {
-        return ResponseEntity.ok(failure(messageSource.getMessage(e.getMessage(), null, locale)).build());
+        return ok(failure(messageSource.getMessage(e.getMessage(), null, locale)).build());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<AppResponse> tratarValidacion(MethodArgumentNotValidException ex, Locale locale) {
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
         String mensaje = fieldErrors.parallelStream().map(error -> messageSource.getMessage(error.getDefaultMessage(), null, locale)).collect(Collectors.joining(", "));
-        return ResponseEntity.ok(failure(mensaje).build());
+        return ok(failure(mensaje).build());
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<AppResponse> tratarValidacion(ConstraintViolationException ex, Locale locale) {
         Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
         String mensaje = violations.parallelStream().map(error -> messageSource.getMessage(error.getMessage(), null, locale)).collect(Collectors.joining(", "));
-        return ResponseEntity.ok(failure(mensaje).build());
+        return ok(failure(mensaje).build());
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<AppResponse> tratarExcepcion(Exception e, Locale locale) {
         GeneralException exception = new PlaceException(e.getCause(), messageSource, locale);
-        return ResponseEntity.ok(failure(exception.tratarExcepcion()).build());
+        return ok(failure(exception.tratarExcepcion()).build());
     }
 }

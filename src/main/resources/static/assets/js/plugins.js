@@ -68,11 +68,10 @@ function my_init_plugins() {
             inDuration: 300,
             outDuration: 225,
             constrainWidth: false,
-            hover: true,
+            hover: false,
             gutter: 0,
             belowOrigin: true,
-            alignment: 'right',
-            stopPropagation: true
+            alignment: 'right'
         });
 
         // Materialize scrollSpy
@@ -96,16 +95,8 @@ function my_init_plugins() {
             menuOut: false // Set if default menu open is true
         });
 
-        // Pikadate datepicker
-        $('.datepicker').pickadate({
-            selectMonths: true, // Creates a dropdown to control month
-            selectYears: 15 // Creates a dropdown of 15 years to control year
-        });
-
         // Perfect Scrollbar
         $('select').not('.disabled').material_select();
-        var leftnav = $(".page-topbar").height();
-        var leftnavHeight = window.innerHeight - leftnav;
         if (!$('#slide-out.leftside-navigation').hasClass('native-scroll')) {
             $('.leftside-navigation').perfectScrollbar({
                 suppressScrollX: true

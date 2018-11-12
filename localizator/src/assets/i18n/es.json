@@ -1,3 +1,67 @@
 {
-    "TITLE": "Hola desde mi archivo de lenguajes!"
+    "hello": "Hola!",
+    "usuario": {
+        "name": "Nombre",
+        "lastname": "Apellidos",
+        "username": "Nombre de Usuario",
+        "email": "Correo",
+        "role": "Rol",
+        "activated": "Activo",
+        "list": "Lista de Usuarios",
+        "listmsg": "Muestra el Listado de Usuarios del Sistema",
+        "logout": "Cerrar Sesión"
+    },
+    "bus": {
+        "name": "Nombre",
+        "lastname": "Apellidos",
+        "username": "Nombre de Usuario",
+        "email": "Correo",
+        "role": "Rol",
+        "activated": "Activo",
+        "list": "Lista de Buses",
+        "listmsg": "Muestra el Listado de Buses del Sistema"
+    },
+    "place": {
+        "name": "Nombre",
+        "lastname": "Apellidos",
+        "username": "Nombre de Usuario",
+        "email": "Correo",
+        "role": "Rol",
+        "activated": "Activo",
+        "list": "Lista de Lugares",
+        "listmsg": "Muestra el Listado de Lugares del Sistema"
+    },
+    "route": {
+        "name": "Nombre",
+        "lastname": "Apellidos",
+        "username": "Nombre de Usuario",
+        "email": "Correo",
+        "role": "Rol",
+        "activated": "Activo",
+        "list": "Lista de Rutas",
+        "listmsg": "Muestra el Listado de Rutas del Sistema"
+    },
+    "travel": {
+        "name": "Nombre",
+        "lastname": "Apellidos",
+        "username": "Nombre de Usuario",
+        "email": "Correo",
+        "role": "Rol",
+        "activated": "Activo",
+        "list": "Lista de Viajes",
+        "listmsg": "Muestra el Listado de Viajes Realizados"
+    },
+    "notification": {
+        "title": "Título",
+        "description": "Descripción",
+        "fecha": "Fecha",
+        "message": "Mensaje",
+        "list": "Lista de Notificaciones",
+        "listmsg": "Listado de notificaciones del usuario "
+    },
+    "actions": "Acciones",
+    "notifications": "Notificaciones",
+    "dashboard": "Dashboard",
+    "userprofile": "Perfil de Usuario",
+    "accountlock": "Bloquear Pantalla"
 }

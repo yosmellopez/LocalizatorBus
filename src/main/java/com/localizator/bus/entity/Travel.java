@@ -1,5 +1,10 @@
 package com.localizator.bus.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.localizator.bus.json.TimeDeserializer;
+import com.localizator.bus.json.TimeSerializer;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -38,14 +43,18 @@ public class Travel implements Serializable, ClonableEntity<Travel> {
     @Temporal(TemporalType.DATE)
     private Date arriveDate;
 
-    @Column(name = "travel_time")
-    @NotNull(message = "travel_time_not_null")
     @Temporal(TemporalType.TIME)
+    @Column(name = "travel_time")
+    @JsonSerialize(using = TimeSerializer.class)
+    @JsonDeserialize(using = TimeDeserializer.class)
+    @NotNull(message = "travel_time_not_null")
     private Date travelTime;
 
-    @Column(name = "arrive_time")
-    @NotNull(message = "travel_time_not_null")
     @Temporal(TemporalType.TIME)
+    @Column(name = "arrive_time")
+    @JsonSerialize(using = TimeSerializer.class)
+    @JsonDeserialize(using = TimeDeserializer.class)
+    @NotNull(message = "travel_time_not_null")
     private Date arriveTime;
 
     @ManyToOne(optional = false)
@@ -150,6 +159,8 @@ public class Travel implements Serializable, ClonableEntity<Travel> {
                 ", route=" + route +
                 ", travelDate=" + travelDate +
                 ", arriveDate=" + arriveDate +
+                ", travelTime=" + travelTime +
+                ", arriveTime=" + arriveTime +
                 ", bus=" + bus +
                 '}';
     }

@@ -20,7 +20,8 @@ import {StompConfig, StompService} from "@stomp/ng2-stompjs";
 import {stompConfig} from "./app.constant";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateService} from "./services/translate.service";
-import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
+import {UserMenuComponent} from './components/user-menu/user-menu.component';
+import {ComunModule} from "./comun/comun.module";
 
 @NgModule({
     declarations: [
@@ -31,7 +32,8 @@ import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
         LoginComponent,
         AdminComponent,
         CenterComponent,
-        NotificacionMensajeComponent
+        NotificacionMensajeComponent,
+        UserMenuComponent
     ],
     imports: [
         BrowserAnimationsModule,
@@ -56,8 +58,5 @@ import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
 export class AppModule {
     constructor(private dateAdapter: DateAdapter<Date>, private translate: TranslateService) {
         dateAdapter.setLocale('en-in'); // DD/MM/YYYY
-        translate.use('en').then(() => {
-            console.log(translate.data);
-        });
     }
 }

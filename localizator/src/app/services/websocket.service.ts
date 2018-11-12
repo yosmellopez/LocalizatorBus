@@ -17,8 +17,6 @@ export class WebsocketService {
     }
 
     public connectWebSocket(username: string, isAdmin: boolean) {
-        console.log(`${NOTIFICATION_TOPIC}/${username}`)
-        console.log(`${NOTIFICATION_TOPIC}/admin`)
         this.wsstate = this.stompService.state.pipe(map((state: number) => StompState[state]));
         this.messageNotificacion = this.stompService.subscribe(`${NOTIFICATION_TOPIC}/${username}`);
         if (isAdmin)

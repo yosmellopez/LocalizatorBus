@@ -1,5 +1,7 @@
 @charset "UTF-8";
-.not-animatedMia { opacity: 0; }
+.not-animatedMia {
+    opacity: 0;
+}
 
 .animatedMia {
     opacity: 1;
@@ -9,22 +11,27 @@
     animation-fill-mode: both;
 }
 
-.one{
+.one {
     animation-delay: 0.4s;
 }
-.two{
+
+.two {
     animation-delay: 0.7s;
 }
-.three{
+
+.three {
     animation-delay: 1s;
 }
-.four{
+
+.four {
     animation-delay: 1.3s;
 }
-.five{
+
+.five {
     animation-delay: 1.6s;
 }
-.six{
+
+.six {
     animation-delay: 1.9s;
 }
 
@@ -54,8 +61,8 @@
     0%, 20%, 53%, 80%, 100% {
         -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
         animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-        -webkit-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
     }
 
     40%, 43% {
@@ -73,8 +80,8 @@
     }
 
     90% {
-        -webkit-transform: translate3d(0,-4px,0);
-        transform: translate3d(0,-4px,0);
+        -webkit-transform: translate3d(0, -4px, 0);
+        transform: translate3d(0, -4px, 0);
     }
 }
 
@@ -82,8 +89,8 @@
     0%, 20%, 53%, 80%, 100% {
         -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
         animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-        -webkit-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
     }
 
     40%, 43% {
@@ -101,8 +108,8 @@
     }
 
     90% {
-        -webkit-transform: translate3d(0,-4px,0);
-        transform: translate3d(0,-4px,0);
+        -webkit-transform: translate3d(0, -4px, 0);
+        transform: translate3d(0, -4px, 0);
     }
 }
 
@@ -579,11 +586,9 @@
     }
 }
 
-
-
-.jello{
-    -webkit-animation-name:jello;
-    animation-name:jello;
+.jello {
+    -webkit-animation-name: jello;
+    animation-name: jello;
     -webkit-transform-origin: center;
 
     transform-origin: center
@@ -1165,7 +1170,7 @@
     0% {
         opacity: 0;
     }
-    
+
     50% {
         opacity: .5;
     }

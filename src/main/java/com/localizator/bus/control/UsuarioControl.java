@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 import static com.localizator.bus.control.AppResponse.failure;
 import static com.localizator.bus.control.AppResponse.success;
+import static org.springframework.http.ResponseEntity.ok;
 
 
 @RestController
@@ -47,19 +48,22 @@ public class UsuarioControl {
     @GetMapping(value = "/usuario")
     public ResponseEntity<AppResponse<Usuario>> listarUsuarios(Pageable pageable) {
         Page<Usuario> usuarios = usuarioRepository.findAll(pageable);
-        return ResponseEntity.ok(success(usuarios.getContent()).total(usuarios.getTotalElements()).build());
+        return ok(success(usuarios.getContent()).total(usuarios.getTotalElements()).build());
     }
 
     @PostMapping(value = "/usuario")
     public ResponseEntity<AppResponse<Usuario>> insertarUsuario(@Valid @RequestBody Usuario usuario) {
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         usuarioRepository.saveAndFlush(usuario);
-        return ResponseEntity.ok(success(usuario).build());
+        return ok(success(usuario).build());
     }
 
     @PutMapping(value = "/usuario/{idUsuario}")
-    public ResponseEntity<AppResponse<Usuario>> actualizarUsuario(@PathVariable("idUsuario") Optional<Usuario> optional, @RequestBody Usuario usuario) {
+    public ResponseEntity<AppResponse<Usuario>> actualizarUsuario(@PathVariable("idUsuario") Optional<Usuario> optional, @RequestBody Usuario usuario, @AuthenticationPrincipal Usuario logeado) {
         final Usuario usuarioBd = optional.orElseThrow(() -> new EntityNotFoundException("user_not_found"));
+        if (!usuario.getActivated() && logeado.equals(usuarioBd)) {
+            return ok(failure("No se puede desactivar usted mismo.").build());
+        }
         usuarioBd.clone(usuario);
         Optional.ofNullable(usuario.getPassword()).ifPresent(password -> {
             if (!password.isEmpty()) {
@@ -67,25 +71,25 @@ public class UsuarioControl {
             }
         });
         usuarioRepository.saveAndFlush(usuarioBd);
-        return ResponseEntity.ok(success(usuarioBd).build());
+        return ok(success(usuarioBd).build());
     }
 
     @DeleteMapping(value = "/usuario/{idUsuario}")
     public ResponseEntity<AppResponse> eliminarUsuario(@PathVariable("idUsuario") Optional<Usuario> optional) {
         Usuario usuario = optional.orElseThrow(() -> new EntityNotFoundException("user_not_found"));
         usuarioRepository.delete(usuario);
-        return ResponseEntity.ok(success("Usuario eliminado correctamente").total(usuarioRepository.count()).build());
+        return ok(success("Usuario eliminado correctamente").total(usuarioRepository.count()).build());
     }
 
     @GetMapping(value = "/roles")
     public ResponseEntity<AppResponse<Rol>> listRoles() {
         List<Rol> rolList = rolRepository.findAll();
-        return ResponseEntity.ok(success(rolList).total(rolList.size()).build());
+        return ok(success(rolList).total(rolList.size()).build());
     }
 
     @GetMapping(value = "/account")
     public ResponseEntity<AppResponse<Usuario>> getAuthenticatedUser(@AuthenticationPrincipal Usuario usuario) {
-        return ResponseEntity.ok(success(usuario).build());
+        return ok(success(usuario).build());
     }
 
 
@@ -107,32 +111,32 @@ public class UsuarioControl {
         Map<String, Map> fcm = new HashMap();
         fcm.put("notification", fcmNotification);
         publishRequest.put("fcm", fcm);
-        return ResponseEntity.ok(success("Mensaje enviado OK").build());
+        return ok(success("Mensaje enviado OK").build());
     }
 
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<AppResponse> tratarExcepciones(EntityNotFoundException e, Locale locale) {
-        return ResponseEntity.ok(failure(messageSource.getMessage(e.getMessage(), null, locale)).build());
+        return ok(failure(messageSource.getMessage(e.getMessage(), null, locale)).build());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<AppResponse> tratarValidacion(MethodArgumentNotValidException ex, Locale locale) {
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
         String mensaje = fieldErrors.parallelStream().map(error -> messageSource.getMessage(error.getDefaultMessage(), null, locale)).collect(Collectors.joining(", "));
-        return ResponseEntity.ok(failure(mensaje).build());
+        return ok(failure(mensaje).build());
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<AppResponse> tratarValidacion(ConstraintViolationException ex, Locale locale) {
         Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
         String mensaje = violations.parallelStream().map(error -> messageSource.getMessage(error.getMessage(), null, locale)).collect(Collectors.joining(", "));
-        return ResponseEntity.ok(failure(mensaje).build());
+        return ok(failure(mensaje).build());
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<AppResponse> tratarExcepcion(Exception e, Locale locale) {
         GeneralException exception = new UsuarioException(e.getCause(), messageSource, locale);
-        return ResponseEntity.ok(failure(exception.tratarExcepcion()).build());
+        return ok(failure(exception.tratarExcepcion()).build());
     }
 }

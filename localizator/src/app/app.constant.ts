@@ -1,7 +1,7 @@
 import {StompConfig} from "@stomp/ng2-stompjs";
 
 export const SERVER_API_URL = localStorage.getItem("serverUrl");
-export const uri: string = localStorage.getItem("socketDir") + 'websocket/configuracion';
+export const uri: string = localStorage.getItem("socketDir") + 'configuracion/websocket';
 export const NOTIFICATION_TOPIC: string = '/buslocator/notificacion';
 
 export const stompConfig: StompConfig = {

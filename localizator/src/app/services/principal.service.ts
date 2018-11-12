@@ -68,6 +68,7 @@ export class Principal {
         // check and see if we have retrieved the userIdentity data from the server.
         // if we have, reuse it by immediately resolving
         if (this.userIdentity) {
+            this.authenticationState.next(this.userIdentity);
             return Promise.resolve(this.userIdentity);
         }
 

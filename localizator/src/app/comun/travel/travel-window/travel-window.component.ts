@@ -18,6 +18,7 @@ import {PassengerService} from "../../../services/passenger.service";
 import {PlaceService} from "../../../services/place.service";
 import {PassengerTravelService} from "../../../services/passenger-travel.service";
 import {Subject} from "rxjs/index";
+import {WTimeDialogComponent} from "../../../components/time-control/w-time-dialog.component";
 
 export const MY_FORMATS = {
     parse: {
@@ -61,6 +62,9 @@ export class TravelWindow implements OnInit {
     passengerSubcription: Subject<Passenger> = new Subject<Passenger>();
     @ViewChild(MatStepper) steeper: MatStepper;
     matcher = new MyErrorStateMatcher();
+    private hour = 10;
+    private minute = 25;
+    private meridien = 'PM';
 
     constructor(public dialogRef: MatDialogRef<TravelWindow>, @Inject(MAT_DIALOG_DATA) {id, active, travelDate, arriveDate, bus, route, passengerTravels, expandido, arriveTime, travelTime}: Travel,
                 private service: TravelService, private routeService: RouteService, private busService: BusService, private passengerService: PassengerService,
@@ -89,9 +93,9 @@ export class TravelWindow implements OnInit {
         this.formViaje = new FormGroup({
             active: new FormControl(active),
             travelDate: new FormControl(travelDate ? new Date(travelDate) : '', [Validators.required]),
-            travelTime: new FormControl(travelTime ? new Date(travelTime) : '', [Validators.required]),
+            travelTime: new FormControl(travelTime ? this.convertDate(new Date(travelTime)) : '', [Validators.required]),
             arriveDate: new FormControl(arriveDate ? new Date(arriveDate) : '', [Validators.required]),
-            arriveTime: new FormControl(arriveTime ? new Date(arriveTime) : '', [Validators.required]),
+            arriveTime: new FormControl(arriveTime ? this.convertDate(new Date(arriveTime)) : '', [Validators.required]),
             bus: new FormControl(bus, [Validators.required]),
             route: new FormControl(route, [Validators.required]),
         });
@@ -222,6 +226,8 @@ export class TravelWindow implements OnInit {
                     this.formPasajero.setErrors(null);
                 }
                 this.dialog.open(Information, {width: "300px", data: {mensaje: "Pasajero modificado exitosamente"}});
+                this.newPassenger = null;
+                this.insertarPassenger = true;
             } else {
                 this.dialog.open(MensajeError, {width: "300px", data: {mensaje: resp.body.msg}});
             }
@@ -280,6 +286,52 @@ export class TravelWindow implements OnInit {
 
     finalizar() {
         this.dialogRef.close(this.newTravel);
+    }
+
+    private getTime(): string {
+        return `${this.hour < 10 ? '0' + this.hour : this.hour}:${this.minute < 10 ? '0' + this.minute : this.minute} ${this.meridien}`;
+    }
+
+    showPicker($event, control: FormControl) {
+        this.getTimeElement(control);
+        let dialogRef = this.dialog.open(WTimeDialogComponent, {
+            maxHeight: "300px",
+            data: {
+                hour: this.hour,
+                minute: this.minute,
+                meriden: this.meridien
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result === undefined) {
+                return;
+            } else if (result !== -1) {
+                this.hour = result.hour;
+                this.minute = result.minute;
+                this.meridien = result.meriden;
+                control.setValue(this.getTime());
+            }
+        });
+        return false;
+    }
+
+    private getTimeElement(control: FormControl) {
+        let time: string = control.value;
+        if (time) {
+            this.hour = Number.parseInt(time.substr(0, 2));
+            this.minute = Number.parseInt(time.substr(3, 5));
+            this.meridien = time.substr(6, 8);
+        } else {
+            let fecha: Date = new Date();
+            this.hour = fecha.getHours();
+            this.minute = fecha.getMinutes();
+            // this.meridien = fecha.getTimezoneOffset();
+        }
+    }
+
+    private convertDate(fecha: Date) {
+        return `${fecha.getHours() < 10 ? '0' + fecha.getHours() : fecha.getHours()}:${fecha.getMinutes() < 10 ? '0' + fecha.getMinutes() : fecha.getMinutes()}`;
     }
 }
 

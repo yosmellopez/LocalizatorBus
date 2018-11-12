@@ -1,9 +1,15 @@
 package com.localizator.bus.config;
 
-import com.localizator.bus.security.*;
-import com.localizator.bus.security.jwt.*;
+import com.localizator.bus.security.AjaxLoginProcessingFilter;
+import com.localizator.bus.security.AutenticacionAjaxExitosa;
+import com.localizator.bus.security.AutenticacionAjaxFallida;
+import com.localizator.bus.security.CustomCorsFilter;
+import com.localizator.bus.security.jwt.JwtAuthenticationProvider;
+import com.localizator.bus.security.jwt.JwtTokenAuthenticationProcessingFilter;
+import com.localizator.bus.security.jwt.SkipPathRequestMatcher;
 import com.localizator.bus.security.jwt.token.TokenExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -31,26 +37,31 @@ import static com.localizator.bus.AppConstants.*;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
+
+    private final TokenExtractor tokenExtractor;
+
+    private final AutenticacionAjaxFallida autenticacionAjaxFallida;
+
+    private final AutenticacionAjaxExitosa autenticacionAjaxExitosa;
+
+    private final JwtAuthenticationProvider jwtAuthenticationProvider;
+
+    private final MessageSource messageSource;
 
     @Autowired
-    private TokenProvider tokenProvider;
-
-    @Autowired
-    private TokenExtractor tokenExtractor;
-
-    @Autowired
-    private AutenticacionAjaxFallida autenticacionAjaxFallida;
-
-    @Autowired
-    private AutenticacionAjaxExitosa autenticacionAjaxExitosa;
-
-    @Autowired
-    private JwtAuthenticationProvider jwtAuthenticationProvider;
+    public SecurityConfig(UserDetailsService userDetailsService, TokenExtractor tokenExtractor, AutenticacionAjaxFallida autenticacionAjaxFallida, AutenticacionAjaxExitosa autenticacionAjaxExitosa, JwtAuthenticationProvider jwtAuthenticationProvider, MessageSource messageSource) {
+        this.userDetailsService = userDetailsService;
+        this.tokenExtractor = tokenExtractor;
+        this.autenticacionAjaxFallida = autenticacionAjaxFallida;
+        this.autenticacionAjaxExitosa = autenticacionAjaxExitosa;
+        this.jwtAuthenticationProvider = jwtAuthenticationProvider;
+        this.messageSource = messageSource;
+    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/recursos/static/**");
     }
 
     @Override
@@ -66,7 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(AUTHENTICATION_URL).permitAll()
                 .antMatchers(LOGOUT_URL).permitAll()
-                .antMatchers("/api/auth/autenticated").permitAll()
+                .anyRequest().permitAll()
+                .antMatchers("/login", "/api/auth/autenticated").permitAll()
                 .antMatchers("/index.html").fullyAuthenticated()
                 .and()
                 .addFilterBefore(new CustomCorsFilter(), UsernamePasswordAuthenticationFilter.class)
@@ -82,6 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder());
+        provider.setMessageSource(messageSource);
         return provider;
     }
 

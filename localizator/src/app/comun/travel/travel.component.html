@@ -1,7 +1,7 @@
 <mat-card color="primary">
     <mat-card-header color="primary">
-        <mat-card-title>Lista de Viajes</mat-card-title>
-        <mat-card-subtitle>Listado de Viajes Realizados en el Sistema</mat-card-subtitle>
+        <mat-card-title>{{'travel.list'|translate}}</mat-card-title>
+        <mat-card-subtitle>{{'travel.listmsg'|translate}}</mat-card-subtitle>
         <span class="spacer"></span>
         <div class="card-actions">
             <button mat-fab color="primary" (click)="abrirVentana()">
@@ -46,12 +46,12 @@
 
             <ng-container matColumnDef="travelDate">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Viaje</th>
-                <td mat-cell *matCellDef="let element">{{element.travelDate|date:'short'}}</td>
+                <td mat-cell *matCellDef="let element">{{element.travelDate|date:'shortDate'}} {{element.travelTime|date:'shortTime'}}</td>
             </ng-container>
 
             <ng-container matColumnDef="arriveDate">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Arrivo</th>
-                <td mat-cell *matCellDef="let element">{{element.arriveDate|date:'short'}}</td>
+                <td mat-cell *matCellDef="let element">{{element.arriveDate|date:'shortDate'}} {{element.arriveTime|date:'shortTime'}}</td>
             </ng-container>
 
             <ng-container matColumnDef="bus">
@@ -80,11 +80,13 @@
                 <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
                     <div class="element-detail"
                          [@detailExpand]="element.expandido ? 'expanded' : 'collapsed'">
-                        <div class="element-description" style="width: 50%">
+                        <div class="element-description" style="width: 80%">
                             <mat-list *ngIf="element.passengerTravels.length!==0">
-                                <mat-list-item *ngFor="let passengerTravel of element.passengerTravels">
-                                    {{passengerTravel.passenger|passenger}}
-                                    <mat-divider></mat-divider>
+                                <mat-list-item *ngFor="let passengerTravel of element.passengerTravels;let i = index" class="row" style="height: 40px">
+                                    <span class="col s5">{{passengerTravel.passenger|passenger}}</span>
+                                    <span class="col s3">{{passengerTravel.passenger|dni}}</span>
+                                    <span class="col s4">{{passengerTravel.place|place}}</span>
+                                    <mat-divider *ngIf="i+1!==element.passengerTravels.length"></mat-divider>
                                 </mat-list-item>
                             </mat-list>
                             <span *ngIf="element.passengerTravels.length===0">Sin pasajeros</span>

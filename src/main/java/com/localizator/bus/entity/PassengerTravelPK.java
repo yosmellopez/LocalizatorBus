@@ -39,8 +39,16 @@ public class PassengerTravelPK implements Serializable {
     }
 
     @Override
-    public int hashCode() {
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PassengerTravelPK that = (PassengerTravelPK) o;
+        return Objects.equals(passengerId, that.passengerId) &&
+                Objects.equals(travelId, that.travelId);
+    }
 
+    @Override
+    public int hashCode() {
         return Objects.hash(passengerId, travelId);
     }
 }

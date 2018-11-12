@@ -7,10 +7,10 @@ import {TranslateService} from "../services/translate.service";
 })
 export class TranslatePipe implements PipeTransform {
     constructor(private translate: TranslateService) {
-        translate.use(localStorage.getItem("lang") || "es");
+
     }
 
-    transform(key: any): any {
-        return this.translate.data[key] || key;
+    transform(key: string): any {
+        return this.translate.translate(key);
     }
 }

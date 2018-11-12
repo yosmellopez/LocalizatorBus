@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 import static com.localizator.bus.control.AppResponse.failure;
 import static com.localizator.bus.control.AppResponse.success;
+import static org.springframework.http.ResponseEntity.ok;
 
 
 @RestController
@@ -47,7 +48,7 @@ public class PassengerTravelControl {
     @GetMapping(value = "/passengerTravel")
     public ResponseEntity<AppResponse<PassengerTravel>> listarPassengerTravelPlaces() {
         List<PassengerTravel> passengerTravels = passengerTravelRepository.findAll();
-        return ResponseEntity.ok(success(passengerTravels).total(passengerTravels.size()).build());
+        return ok(success(passengerTravels).total(passengerTravels.size()).build());
     }
 
     @PostMapping(value = "/passengerTravel")
@@ -56,12 +57,12 @@ public class PassengerTravelControl {
         Route route = routeRepository.findById(travel.getRoute().getId()).orElseThrow(() -> new EntityNotFoundException("route_not_found"));
         Place place = passengerTravel.getPlace();
         if (!place.equals(route.getDestiny()) && !route.getPlaces().contains(place)) {
-            return ResponseEntity.ok(failure(messageSource.getMessage("passenger_place_not_match", null, locale)).build());
+            return ok(failure(messageSource.getMessage("passenger_place_not_match", null, locale)).build());
         }
         PassengerTravelPK passengerTravelPK = new PassengerTravelPK(passengerTravel.getPassenger().getId(), passengerTravel.getTravel().getId());
         passengerTravel.setPassengerTravelPK(passengerTravelPK);
         passengerTravelRepository.saveAndFlush(passengerTravel);
-        return ResponseEntity.ok(success(passengerTravel).build());
+        return ok(success(passengerTravel).build());
     }
 
     @PutMapping(value = "/passengerTravel/{optPassenger}/{optTravel}")
@@ -73,7 +74,7 @@ public class PassengerTravelControl {
         PassengerTravel passengerTravelBd = optional.orElseThrow(() -> new EntityNotFoundException("passenger_travel_not_found"));
         passengerTravelBd.clone(passengerTravel);
         passengerTravelRepository.saveAndFlush(passengerTravelBd);
-        return ResponseEntity.ok(success(passengerTravelBd).build());
+        return ok(success(passengerTravelBd).build());
     }
 
     @DeleteMapping(value = "/passengerTravel/{optPassenger}/{optTravel}")
@@ -84,31 +85,31 @@ public class PassengerTravelControl {
         Optional<PassengerTravel> optional = passengerTravelRepository.findById(passengerTravelPlacePK);
         PassengerTravel passengerTravel = optional.orElseThrow(() -> new EntityNotFoundException("passenger_travel_not_found"));
         passengerTravelRepository.delete(passengerTravel);
-        return ResponseEntity.ok(success("Pasajero eliminado del viaje correctamente").total(passengerTravelRepository.count()).build());
+        return ok(success("Pasajero eliminado del viaje correctamente").total(passengerTravelRepository.count()).build());
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<AppResponse> tratarExcepciones(EntityNotFoundException e, Locale locale) {
-        return ResponseEntity.ok(failure(messageSource.getMessage(e.getMessage(), null, locale)).build());
+        return ok(failure(messageSource.getMessage(e.getMessage(), null, locale)).build());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<AppResponse> tratarValidacion(MethodArgumentNotValidException ex, Locale locale) {
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
         String mensaje = fieldErrors.parallelStream().map(error -> messageSource.getMessage(error.getDefaultMessage(), null, locale)).collect(Collectors.joining(", "));
-        return ResponseEntity.ok(failure(mensaje).build());
+        return ok(failure(mensaje).build());
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<AppResponse> tratarValidacion(ConstraintViolationException ex, Locale locale) {
         Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
         String mensaje = violations.parallelStream().map(error -> messageSource.getMessage(error.getMessage(), null, locale)).collect(Collectors.joining(", "));
-        return ResponseEntity.ok(failure(mensaje).build());
+        return ok(failure(mensaje).build());
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<AppResponse> tratarExcepcion(Exception e, Locale locale) {
         GeneralException exception = new PassengerTravelException(e.getCause(), messageSource, locale);
-        return ResponseEntity.ok(failure(exception.tratarExcepcion()).build());
+        return ok(failure(exception.tratarExcepcion()).build());
     }
 }

@@ -8,6 +8,7 @@ export class TranslateService {
     data: any = {};
 
     constructor(private http: HttpClient) {
+        this.use(localStorage.getItem("lang") || "es");
     }
 
     use(lang: string): Promise<{}> {
@@ -24,5 +25,17 @@ export class TranslateService {
                 }
             );
         });
+    }
+
+    translate(key: string) {
+        let split: any[] = key.split(".");
+        let currentObject: any = null;
+        split.forEach(string => {
+            if (!currentObject)
+                currentObject = this.data[string];
+            else
+                currentObject = currentObject[string];
+        });
+        return currentObject || key;
     }
 }

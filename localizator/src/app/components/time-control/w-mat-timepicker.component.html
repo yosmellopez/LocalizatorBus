@@ -1,0 +1,8 @@
+<div fxFlex fxLayout="row" class="w-mat-timepicker">
+    <mat-form-field fxFlex class="timeContainer">
+        <input matInput class="timeInput" placeholder="Seleccionar fecha de viaje" id="time_Control" name="time_Control" [value]="getTime()" (click)="showPicker($event)" >
+    </mat-form-field>
+    <button mat-button (click)="showPicker($event)" class="time-picker-button">
+        <mat-icon>access_time</mat-icon>
+    </button>
+</div>

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AccountService} from "../../services/account.service";
 import {Principal} from "../../services/principal.service";
@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
     form: FormGroup;
     mensaje: string;
     isLoading: boolean = false;
+    @ViewChild("password") passwordField: ElementRef;
 
     constructor(private accoutService: AccountService, private principal: Principal, private router: Router) {
         this.form = new FormGroup({
@@ -50,7 +51,8 @@ export class LoginComponent implements OnInit {
                 } else {
                     this.isLoading = false;
                     this.mensaje = response.body.msg;
-                    this.form.controls['password'].setValue("");
+                    this.passwordField.nativeElement.focus();
+                    // this.form.controls['password'].setValue("");
                 }
             });
         }

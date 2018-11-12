@@ -8,7 +8,6 @@ import {MatDialog, MatPaginator, MatSort, MatTable, MatTableDataSource} from "@a
 import {TravelService} from "../../services/travel.service";
 import {forkJoin, merge, Subject} from "rxjs/index";
 import {animate, state, style, transition, trigger} from "@angular/animations";
-import {ROUTE_ANIMATIONS_ELEMENTS} from "../../animations/route.animations";
 
 declare function my_init_plugins();
 

@@ -2,7 +2,7 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {SERVER_API_URL} from "../app.constant";
 import {Observable} from "rxjs/index";
 import {HttpClient} from "@angular/common/http";
-import {AppResponse, ResponseApp, Respuesta, Notificacion} from "../app.model";
+import {AppResponse, Notificacion, ResponseApp, Respuesta} from "../app.model";
 
 @Injectable({
     providedIn: 'root'
@@ -14,6 +14,14 @@ export class NotificacionService {
 
     constructor(private http: HttpClient) {
         this.token = localStorage.getItem("user_token");
+    }
+
+    listarNotifications(sort: string, order: string, page: number, limit: number): Observable<Respuesta<Notificacion>> {
+        let constUrl = `${this.notificationUrl}?sort=${sort},${order}&page=${page + 1}&limit=${limit}`;
+        return this.http.get<AppResponse<Notificacion>>(constUrl, {
+            observe: "response",
+            headers: {"Authorization": this.token}
+        });
     }
 
     listarAllNotificaciones(): Observable<Respuesta<Notificacion>> {

@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 import static com.localizator.bus.control.AppResponse.failure;
 import static com.localizator.bus.control.AppResponse.success;
+import static org.springframework.http.ResponseEntity.ok;
 
 
 @RestController
@@ -38,17 +39,17 @@ public class PassengerControl {
     @GetMapping(value = "/passenger")
     public ResponseEntity<AppResponse<Passenger>> listarPassengers() {
         List<Passenger> passengers = passengerRepository.findAll();
-        return ResponseEntity.ok(success(passengers).total(passengers.size()).build());
+        return ok(success(passengers).total(passengers.size()).build());
     }
 
     @PostMapping(value = "/passenger")
     public ResponseEntity<AppResponse<Passenger>> insertarPassenger(@Valid @RequestBody Passenger passenger) {
         Optional<Passenger> optional = passengerRepository.findByDni(passenger.getDni());
         if (optional.isPresent()) {
-            return ResponseEntity.ok(success(optional.get()).build());
+            return ok(success(optional.get()).build());
         }
         passengerRepository.saveAndFlush(passenger);
-        return ResponseEntity.ok(success(passenger).build());
+        return ok(success(passenger).build());
     }
 
     @PutMapping(value = "/passenger/{idPassenger}")
@@ -56,39 +57,39 @@ public class PassengerControl {
         Passenger passengerBd = optional.orElseThrow(() -> new EntityNotFoundException("passenger_not_found"));
         passengerBd.clone(passenger);
         passengerRepository.saveAndFlush(passengerBd);
-        return ResponseEntity.ok(success(passengerBd).build());
+        return ok(success(passengerBd).build());
     }
 
     @DeleteMapping(value = "/passenger/{idPassenger}")
     public ResponseEntity<AppResponse> eliminarPassenger(@PathVariable("idPassenger") Optional<Passenger> optional, Locale locale) {
         Passenger passenger = optional.orElseThrow(() -> new EntityNotFoundException("passenger_not_found"));
         passengerRepository.delete(passenger);
-        return ResponseEntity.ok(success(messageSource.getMessage("delete_passenger", null, locale))
+        return ok(success(messageSource.getMessage("delete_passenger", null, locale))
                 .total(passengerRepository.count()).build());
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<AppResponse> tratarExcepciones(EntityNotFoundException e, Locale locale) {
-        return ResponseEntity.ok(failure(messageSource.getMessage(e.getMessage(), null, locale)).build());
+        return ok(failure(messageSource.getMessage(e.getMessage(), null, locale)).build());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<AppResponse> tratarValidacion(MethodArgumentNotValidException ex, Locale locale) {
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
         String mensaje = fieldErrors.parallelStream().map(error -> messageSource.getMessage(error.getDefaultMessage(), null, locale)).collect(Collectors.joining(", "));
-        return ResponseEntity.ok(failure(mensaje).build());
+        return ok(failure(mensaje).build());
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<AppResponse> tratarValidacion(ConstraintViolationException ex, Locale locale) {
         Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
         String mensaje = violations.parallelStream().map(error -> messageSource.getMessage(error.getMessage(), null, locale)).collect(Collectors.joining(", "));
-        return ResponseEntity.ok(failure(mensaje).build());
+        return ok(failure(mensaje).build());
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<AppResponse> tratarExcepcion(Exception e, Locale locale) {
         GeneralException exception = new PassengerException(e.getCause(), messageSource, locale);
-        return ResponseEntity.ok(failure(exception.tratarExcepcion()).build());
+        return ok(failure(exception.tratarExcepcion()).build());
     }
 }

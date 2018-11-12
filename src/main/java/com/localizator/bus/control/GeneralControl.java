@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class GeneralControl {
 
-    @RequestMapping(value = {"/index"})
+    @RequestMapping(value = {"/", "/{pagina}/{ruta}", "/login"})
     public ModelAndView inicio() {
         return new ModelAndView("index");
     }

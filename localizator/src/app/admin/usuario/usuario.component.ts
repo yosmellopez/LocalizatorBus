@@ -1,12 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {forkJoin, merge, Subject} from "rxjs/index";
-import {AppResponse, Respuesta, Usuario} from "../../app.model";
+import {Usuario} from "../../app.model";
 import {MatDialog, MatPaginator, MatSort, MatTable, MatTableDataSource} from "@angular/material";
 import {catchError, map, startWith, switchMap} from "rxjs/internal/operators";
 import {UsuarioService} from "../../services/usuario.service";
 import {SelectionModel} from "@angular/cdk/collections";
 import {UsuarioWindow} from "./usuario-window/usuario-window.component";
-import {Confirm, Information} from "../../mensaje/window.mensaje";
+import {Confirm, Information, MensajeError} from "../../mensaje/window.mensaje";
 import {routeAnimations} from "../../animations/route.animations";
 
 declare function my_init_plugins();
@@ -16,7 +16,7 @@ declare function my_init_plugins();
     templateUrl: './usuario.component.html',
     styleUrls: ['./usuario.component.css'],
     animations: [routeAnimations],
-    host: { '[@routeAnimations]': '' }
+    host: {'[@routeAnimations]': ''}
 })
 export class UsuarioComponent implements OnInit {
 
@@ -36,7 +36,7 @@ export class UsuarioComponent implements OnInit {
     }
 
     ngOnInit() {
-        my_init_plugins();
+        // my_init_plugins();
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.sort.active = 'id,desc';
@@ -165,6 +165,9 @@ export class UsuarioComponent implements OnInit {
         this.service.modificarUsuario(usuario.id, usuario).subscribe(response => {
             if (response.body.success) {
                 this.dialog.open(Information, {data: {mensaje: `Usuario ${accion} exitosamente`}, width: "350px"});
+            } else {
+                usuario.activated = !usuario.activated;
+                this.dialog.open(MensajeError, {data: {mensaje: response.body.msg}, width: "350px"});
             }
         });
     }

@@ -58,14 +58,24 @@
                         <mat-error *ngIf="formViaje.controls['arriveDate'].hasError('required')">Debe seleccionar una fecha de arrivo.</mat-error>
                         <mat-error *ngIf="formViaje.controls['arriveDate'].errors?.min">Debe seleccionar una fecha mayor.</mat-error>
                     </mat-form-field>
-                    <mat-form-field class="middle-width">
-                        <input type="time" atp-time-picker matInput placeholder="Hora de Viaje" formControlName="travelTime">
-                        <mat-error *ngIf="formViaje.controls['travelTime'].errors?.required">Debe seleccionar la hora de viaje</mat-error>
-                    </mat-form-field>
-                    <mat-form-field class="middle-width">
-                        <input type="time" atp-time-picker matInput placeholder="Hora de Llegada" formControlName="arriveTime" labels="{'ok': 'Selecionar', 'cancel': 'Cancelar'}">
-                        <mat-error *ngIf="formViaje.controls['arriveTime'].errors?.required">Debe seleccionar la hora de viaje</mat-error>
-                    </mat-form-field>
+                    <div class="time-middle-width time-picker-component" style="display: inline-block">
+                        <mat-form-field>
+                            <input matInput placeholder="Hora de Viaje" formControlName="travelTime" (click)="showPicker($event,formViaje.controls['travelTime'])">
+                            <mat-error *ngIf="formViaje.controls['travelTime'].errors?.required">Debe seleccionar la hora de viaje</mat-error>
+                        </mat-form-field>
+                        <button type="button" mat-icon-button (click)="showPicker($event,formViaje.controls['travelTime'])">
+                            <mat-icon>access_time</mat-icon>
+                        </button>
+                    </div>
+                    <div class="time-middle-width time-picker-component" style="display: inline-block">
+                        <mat-form-field>
+                            <input matInput placeholder="Hora de Llegada" formControlName="arriveTime" (click)="showPicker($event,formViaje.controls['arriveTime'])">
+                            <mat-error *ngIf="formViaje.controls['arriveTime'].errors?.required">Debe seleccionar la hora de viaje</mat-error>
+                        </mat-form-field>
+                        <button type="button" mat-icon-button (click)="showPicker($event,formViaje.controls['arriveTime'])">
+                            <mat-icon>access_time</mat-icon>
+                        </button>
+                    </div>
                     <mat-action-row class="boton-theme">
                         <button mat-raised-button color="primary" style="margin-right: 10px;">Siguiente
                             <mat-icon>navigate_next</mat-icon>
@@ -80,29 +90,29 @@
         </mat-step>
         <mat-step [stepControl]="formPasajero" label="Datos del Pasajero">
             <form class="form" [formGroup]="formPasajero" (submit)="addPassenger()">
-                <div formGroupName="passenger">
-                    <mat-form-field class="middle-width">
-                        <input matInput placeholder="Nombre" formControlName="name">
-                        <mat-error *ngIf="formPasajero.get('passenger.name').hasError('required')">Debe insertar el nombre de la persona</mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field class="middle-width">
-                        <input matInput placeholder="Apellidos" formControlName="lastname">
-                        <mat-error *ngIf="formPasajero.get('passenger.lastname').hasError('required')">Debe insertar los apellidos de la persona</mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field class="middle-width">
-                        <input matInput placeholder="Documento Nacional de Identidad (DNI)" formControlName="dni" type="number">
-                        <mat-error *ngIf="formPasajero.get('passenger.dni').hasError('required')">Debe insertar el dni de la persona</mat-error>
-                    </mat-form-field>
-                </div>
-                <mat-form-field class="middle-width" style="float: right;top: -61px;margin-right: 5px;">
+                <mat-form-field class="middle-width" style="float: right;margin-right: 5px;">
                     <mat-select matInput placeholder="Seleccione el lugar del viaje" formControlName="place" [compareWith]="compararLugares">
                         <mat-option *ngFor="let place of places" [value]="place">{{place.name}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="formPasajero.controls['place'].errors?.required">Debe seleccionar lugar del viaje</mat-error>
                 </mat-form-field>
-                <mat-action-row class="boton-theme" style="clear: both;top: -30px;position: relative">
+                <div formGroupName="passenger">
+                    <mat-form-field class="middle-width">
+                        <input matInput placeholder="Documento Nacional de Identidad (DNI)" formControlName="dni" type="number">
+                        <mat-error *ngIf="formPasajero.get('passenger.dni').hasError('required')">Debe insertar el dni de la persona</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="middle-width">
+                        <input matInput placeholder="Nombre" formControlName="name">
+                        <mat-error *ngIf="formPasajero.get('passenger.name').hasError('required')">Debe insertar el nombre de la persona</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="middle-width" style="margin: 0 0 0 20px">
+                        <input matInput placeholder="Apellidos" formControlName="lastname">
+                        <mat-error *ngIf="formPasajero.get('passenger.lastname').hasError('required')">Debe insertar los apellidos de la persona</mat-error>
+                    </mat-form-field>
+
+                </div>
+                <mat-action-row class="boton-theme" style="clear: both;top: 10px;position: relative">
                     <button mat-raised-button color="warn" (click)="prevStep()" type="button" style="margin-right: 10px;" matStepperPrevious>
                         <mat-icon>navigate_before</mat-icon>
                         Anterior

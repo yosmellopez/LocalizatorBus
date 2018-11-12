@@ -1,3 +1,37 @@
-<p>{{notificacion.title}}</p>
-<p>{{notificacion.mensaje}}</p>
-<p>{{notificacion.description}}</p>
+<mat-card color="primary" class="animated fadeInUp">
+    <mat-card-header color="primary">
+        <mat-card-title>{{'notification.list'|translate}}</mat-card-title>
+        <mat-card-subtitle>{{'notification.listmsg'|translate}}</mat-card-subtitle>
+        <span class="spacer"></span>
+    </mat-card-header>
+    <mat-card-content>
+        <table mat-table [dataSource]="dataSource" matSort matSortActive="notification.title" matSortDisableClear matSortDirection="desc">
+            <ng-container matColumnDef="index">
+                <th mat-header-cell *matHeaderCellDef class="ajustado"> No.</th>
+                <td mat-cell *matCellDef="let element;let i = index"> {{i+1}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="notification.title" class="ajustado"> {{'notification.title'|translate}}</th>
+                <td mat-cell *matCellDef="let element"> {{element.title}}</td>
+            </ng-container>
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="ajustado"> {{'notification.description'|translate}}</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.description}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="mensaje">
+                <th mat-header-cell *matHeaderCellDef class="ajustado"> {{'notification.message'|translate}}</th>
+                <td mat-cell *matCellDef="let element"> {{element.mensaje}}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </mat-card-content>
+    <mat-card-footer>
+        <mat-paginator [length]="resultsLength" [pageSize]="pageSize" [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
+    </mat-card-footer>
+</mat-card>

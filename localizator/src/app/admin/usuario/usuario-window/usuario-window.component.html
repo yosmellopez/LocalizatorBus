@@ -34,7 +34,9 @@
             <mat-error *ngIf="form.controls['password'].errors?.required">Debe introducir la contraseña del usuario</mat-error>
             <mat-error *ngIf="form.controls['password'].errors?.noigual">Las contrasenas no coinciden</mat-error>
         </mat-form-field>
-        <password-lenght [passwordToCheck]="form.controls['password'].value"></password-lenght>
+        <div>
+            <password-lenght [passwordToCheck]="form.controls['password'].value"></password-lenght>
+        </div>
         <mat-form-field class="full-width" style="position: relative;top: -20px;">
             <input matInput type="password" placeholder="Repetir Contraseña" formControlName="passwordRepeat">
             <mat-error *ngIf="form.controls['passwordRepeat'].errors?.required">Debe repetir la contraseña del usuario</mat-error>

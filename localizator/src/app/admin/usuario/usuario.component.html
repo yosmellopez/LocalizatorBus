@@ -1,9 +1,7 @@
 <mat-card color="primary">
     <mat-card-header color="primary">
-        <mat-card-title-group>
-            <mat-card-title>Lista de Usuarios</mat-card-title>
-            <mat-card-subtitle>Listado de Usuarios del Sistema</mat-card-subtitle>
-        </mat-card-title-group>
+        <mat-card-title>{{'usuario.list'|translate}}</mat-card-title>
+        <mat-card-subtitle>{{'usuario.listmsg'|translate}}</mat-card-subtitle>
         <span class="spacer"></span>
         <div class="card-actions">
             <button mat-fab color="primary" (click)="abrirVentana()">
@@ -33,43 +31,43 @@
             </ng-container>
 
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="ajustado"> Nombre</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="ajustado"> {{'usuario.name'|translate}}</th>
                 <td mat-cell *matCellDef="let element"> {{element.name}}</td>
             </ng-container>
 
             <ng-container matColumnDef="lastname">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="ajustado"> Apellidos</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="ajustado"> {{'usuario.lastname'|translate}}</th>
                 <td mat-cell *matCellDef="let element">
                     {{element.lastname}}
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="username">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="ajustado"> Nombre de Usuario</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="ajustado"> {{'usuario.username'|translate}}</th>
                 <td mat-cell *matCellDef="let element"> {{element.username}}</td>
             </ng-container>
 
             <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="ajustado"> Correo</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="ajustado"> {{'usuario.email'|translate}}</th>
                 <td mat-cell *matCellDef="let element"> {{element.email}}</td>
             </ng-container>
 
             <ng-container matColumnDef="rol">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header="rol.name" class="ajustado"> Rol</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="rol.name" class="ajustado"> {{'usuario.role'|translate}}</th>
                 <td mat-cell *matCellDef="let element"> {{element.rol|rol}}</td>
             </ng-container>
 
             <ng-container matColumnDef="activated">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="ajustado" style=""> Activo</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="ajustado" style=""> {{'usuario.activated'|translate}}</th>
                 <td mat-cell *matCellDef="let element" class="table-actions-theme">
-                    <button mat-mini-fab color="primary" (click)="activarUsuario($event,element)" matTooltip="Activar/Desactivar Usuario" [color]="element.activated?'primary':'warn'">
+                    <button mat-mini-fab color="primary" (click)="activarUsuario($event,element)" [matTooltip]="element.activated?'Desactivar Usuario':'Activar Usuario'" [color]="element.activated?'primary':'warn'">
                         <mat-icon>person</mat-icon>
                     </button>
                 </td>
             </ng-container>
             <!-- Symbol Column -->
             <ng-container matColumnDef="acciones" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef style="text-align: center;">Acciones</th>
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;">{{'actions'|translate}}</th>
                 <td mat-cell *matCellDef="let element" align="center" class="acciones table-actions-theme">
                     <button mat-mini-fab color="accent" (click)="editarUsuario($event,element)" matTooltip="Editar Usuario {{element.username}}">
                         <mat-icon>mode_edit</mat-icon>

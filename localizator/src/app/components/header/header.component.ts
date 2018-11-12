@@ -1,26 +1,34 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {NotificacionService} from "../../services/notification.service";
-import {Notificacion, RouteInfo} from "../../app.model";
+import {Notificacion, RouteInfo, Title, Usuario} from "../../app.model";
 import {WebsocketService} from "../../services/websocket.service";
-import {Subscription} from "rxjs/index";
+import {of, Subscription} from "rxjs/index";
 import {Message} from '@stomp/stompjs';
-import {MAT_DIALOG_DATA, MAT_SNACK_BAR_DATA, MatDialogRef, MatSnackBar, MatSnackBarRef} from "@angular/material";
-import {UsuarioWindow} from "../../admin/usuario/usuario-window/usuario-window.component";
-import {Router} from "@angular/router";
+import {MAT_SNACK_BAR_DATA, MatSnackBar, MatSnackBarRef} from "@angular/material";
 import {LanguageService} from "../../services/language.service";
+import {TranslateService} from "../../services/translate.service";
+import {Principal} from "../../services/principal.service";
+import {TitleService} from "../../services/title.service";
+import {Observable} from "rxjs/Rx";
 
 const LANGUAGES: RouteInfo[] = [{
-    path: "en_EN",
+    id: "",
     title: "English",
     class: "grey-text text-darken-1",
     icon: "flag-icon flag-icon-gb",
-    authority: []
+    hasChildren: false,
+    authority: [],
+    path: "",
+    routes: []
 }, {
-    path: "es_ES",
+    id: "",
     title: "Español",
     class: "grey-text text-darken-1",
+    hasChildren: false,
+    path: "",
     icon: "flag-icon flag-icon-es",
-    authority: []
+    authority: [],
+    routes: []
 }];
 
 @Component({
@@ -31,19 +39,30 @@ const LANGUAGES: RouteInfo[] = [{
 })
 export class HeaderComponent implements OnInit {
     languages = LANGUAGES;
+    titulos: Observable<Title[]> = new Observable<Title[]>();
     notificaciones: Notificacion[] = [];
     username: string;
     isAdmin: boolean = false;
+    usuario: Usuario = null;
+    expandido: boolean = true;
+    @ViewChild("body") body: ElementRef;
     private websocketNotification: Subscription;
     private websocketAdminNotification: Subscription;
     private websocketStatus: Subscription;
 
-    constructor(private notificationService: NotificacionService, private websocket: WebsocketService, public snackBar: MatSnackBar, private language: LanguageService) {
+    constructor(private notificationService: NotificacionService, private websocket: WebsocketService, public snackBar: MatSnackBar, private language: LanguageService,
+                private translate: TranslateService, private principal: Principal, private titleService: TitleService) {
         this.username = localStorage.getItem("username");
         this.isAdmin = JSON.parse(localStorage.getItem("isAdmin") == null ? "false" : localStorage.getItem("isAdmin"));
     }
 
     ngOnInit() {
+        this.principal.getAuthenticationState().subscribe((user: Usuario) => {
+            this.usuario = user;
+        });
+        this.titleService.titleEmitter.subscribe(value => {
+            this.titulos = of(value);
+        })
         this.websocket.connectWebSocket(this.username, this.isAdmin);
         this.websocketNotification = this.websocket.getMessageNotificacion().subscribe(this.onReceiveNotification);
         if (this.isAdmin)
@@ -65,13 +84,13 @@ export class HeaderComponent implements OnInit {
     changeLanguage(locale: string) {
         this.language.changeLanguage(locale).subscribe(resp => {
             if (resp.body.success) {
-                console.log(resp.body)
+                localStorage.setItem("lang", locale);
+                this.translate.use(locale);
             }
         });
     }
 
     private onReceiveNotification = (message: Message) => {
-        console.log(message.body)
         const notificacion: Notificacion = JSON.parse(message.body);
         this.notificaciones.push(notificacion);
         this.snackBar.openFromComponent(NotificacionMensajeComponent, {
@@ -85,6 +104,11 @@ export class HeaderComponent implements OnInit {
 
     private onStateChange = (state: String) => {
         console.log('WS estado de la conexion ha cambiado ' + state);
+    }
+
+    cambiarBarra() {
+        this.expandido = !this.expandido;
+        document.body.setAttribute("data-layout", this.expandido ? "default-sidebar-1" : "default-sidebar-2");
     }
 }
 

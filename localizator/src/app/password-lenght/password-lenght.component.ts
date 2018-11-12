@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {FormControl} from "@angular/forms";
 
 @Component({
     selector: 'password-lenght',
@@ -38,7 +39,6 @@ export class PasswordLenghtComponent implements OnInit {
         force = p.length <= 6 ? Math.min(force, 10) : force;
 
         // penality (poor variety of characters)
-        console.log(force)
         force = passedMatches === 1 ? Math.min(force, 25) : force;
         force = passedMatches === 2 ? Math.min(force, 50) : force;
         force = passedMatches === 3 ? Math.min(force, 75) : force;

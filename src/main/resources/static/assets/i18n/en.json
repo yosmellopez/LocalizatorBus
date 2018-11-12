@@ -1,0 +1,59 @@
+{
+    "hello": "Hello!",
+    "usuario": {
+        "name": "Name",
+        "lastname": "Lastname",
+        "username": "Username",
+        "email": "Email",
+        "role": "Role",
+        "activated": "Activated",
+        "list": "User List",
+        "listmsg": "Show the system user list",
+        "logout": "Logout"
+    },
+    "bus": {
+        "name": "Name",
+        "lastname": "Lastname",
+        "username": "Username",
+        "email": "Email",
+        "role": "Role",
+        "activated": "Activated",
+        "list": "Bus List",
+        "listmsg": "Show the system bus list"
+    },
+    "place": {
+        "name": "Name",
+        "lastname": "Lastname",
+        "username": "Username",
+        "email": "Email",
+        "role": "Role",
+        "activated": "Activated",
+        "list": "Places List",
+        "listmsg": "Show the system places list"
+    },
+    "route": {
+        "name": "Name",
+        "lastname": "Lastname",
+        "username": "Username",
+        "email": "Email",
+        "role": "Role",
+        "activated": "Activated",
+        "list": "Routes List",
+        "listmsg": "Show the system routes list"
+    },
+    "travel": {
+        "name": "Name",
+        "lastname": "Lastname",
+        "username": "Username",
+        "email": "Email",
+        "role": "Role",
+        "activated": "Activated",
+        "list": "Travel List",
+        "listmsg": "Show the system travels at the moment"
+    },
+    "actions": "Actions",
+    "notifications": "Notificaciones",
+    "dashboard": "Dashboard",
+    "userprofile": "User Profile",
+    "accountlock": "Lock Screen"
+}

@@ -3,90 +3,99 @@
     <div class="loader-section section-left"></div>
     <div class="loader-section section-right"></div>
 </div>
-<div id="main">
-    <!-- START WRAPPER -->
-    <div class="wrapper">
-        <!-- START LEFT SIDEBAR NAV-->
-        <aside id="left-sidebar-nav" style="width: 300px">
-            <ul id="slide-out" class="side-nav fixed leftside-navigation">
-                <li class="user-details cyan darken-2">
-                    <div class="row">
-                        <div class="col col s8 m8 l8">
-                            <ul id="profile-dropdown-nav" class="dropdown-content" style="width: 200px;z-index: 10000000000">
-                                <li>
-                                    <a routerLink="/user-profile" class="grey-text text-darken-1">
-                                        <i class="material-icons">face</i> Perfil de Usuario</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="grey-text text-darken-1">
-                                        <i class="material-icons">settings</i> Configuracion</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="grey-text text-darken-1">
-                                        <i class="material-icons">live_help</i> Ayuda</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="#" class="grey-text text-darken-1">
-                                        <i class="material-icons">lock_outline</i> Bloquear</a>
-                                </li>
-                                <li>
-                                    <a class="grey-text text-darken-1" (click)="cerrarSession()">
-                                        <i class="material-icons">keyboard_tab</i> Cerrar Sesion</a>
-                                </li>
-                            </ul>
-                            <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown-nav">{{usuario|usuario}}<i class="mdi-navigation-arrow-drop-down right"></i></a>
-                            <p class="user-roal">{{usuario.rol|rol}}</p>
-                        </div>
-                        <div class="col col s4 m4 l4">
-                            <img src="/assets/images/avatar/avatar-7.png" alt="" class="circle responsive-img valign profile-image cyan">
+<div class="container-fluid">
+    <div class="row">
+        <div class="left-sidebar-1">
+            <div class="wrapper">
+                <div class="content">
+                    <div class="logo">
+                        <a href="#" class="text">
+                            <i class="fa fa-adjust"></i>
+                            <span>GPS Tracking</span>
+                        </a>
+                    </div>
+                    <div class="left-sidebar-search">
+                        <div class="form-inline form-custom">
+                            <i class="material-icons">search</i>
+                            <div class="form-group">
+                                <label for="search" class="bmd-label-floating">Search</label>
+                                <input type="text" class="form-control" id="search">
+                            </div>
                         </div>
                     </div>
-                </li>
-                <li class="no-padding">
-                    <ul class="collapsible" data-collapsible="accordion">
-                        <li class="bold" *ngFor="let menuItem of rutasUsuario">
-                            <a [routerLink]="menuItem.path" [class]="menuItem.class">
-                                <i class="material-icons">{{menuItem.icon}}</i>
-                                <span class="nav-text">{{menuItem.title}}</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only">
-                <i class="material-icons">menu</i>
-            </a>
-        </aside>
-        <!-- END LEFT SIDEBAR NAV-->
-        <!-- //////////////////////////////////////////////////////////////////////////// -->
-        <!-- START CONTENT -->
-        <section id="content" style="z-index: 10000" class="animated fadeIn">
-            <!--breadcrumbs start-->
-            <div id="breadcrumbs-wrapper">
-                <!-- Search for small screen -->
-                <div class="header-search-wrapper grey lighten-2 hide-on-large-only">
-                    <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize">
-                </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col s10 m6 l6">
-                            <h5 class="breadcrumbs-title" [ngClass]="routeAnimationsElements">{{getTitle()}}</h5>
-                            <ol class="breadcrumbs">
-                                <li><a href="index.html">Dashboard</a></li>
-                                <li><a href="#">Tables</a></li>
-                                <li class="active">{{titulo}}</li>
-                            </ol>
+                    <div class="sidebar-heading">
+                        <div class="sidebar-image">
+                            <img src="assets/faces/m7.png" class="img-circle img-fluid" alt="sidebar-image"/>
                         </div>
+                        <div class="sidebar-options">
+                            <div class="dropdown">
+                                <a href="#" class="btn btn-secondary btn-raised dropdown-toggle" data-toggle="dropdown">
+                                    {{usuario|usuario}} </a>
+                                <div class="dropdown-menu dropdown-menu-center from-top">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="material-icons icon">email</i>
+                                        <span class="title">Inbox</span>
+                                        <span class="pull-xs-right tag tag-pill tag-raised tag-danger tag-xs">New</span>
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="material-icons icon">grade</i>
+                                        <span class="title">{{'notifications'|translate}}</span>
+                                        <span class="pull-xs-right tag tag-outline-primary tag-rounded tag-xs">5</span>
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="material-icons icon">settings</i>
+                                        <span class="title">{{'userprofile'|translate}}</span>
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="material-icons icon">alarm</i>
+                                        <span class="title">{{'accountlock'|translate}}</span>
+                                    </a>
+                                    <a class="dropdown-item" routerLink="/login">
+                                        <i class="material-icons icon">power_settings_new</i>
+                                        <span class="title">{{'usuario.logout'|translate}}</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="description">
+                                {{rol|async}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="left-sidebar-section">
+                        <mat-divider></mat-divider>
+                        <ul class="list-unstyled" id="navigation">
+                            <li *ngFor="let menu of rutasUsuario">
+                                <button class="btn btn-flat collapsed" data-toggle="collapse" data-parent="#navigation" [attr.data-target]="'#'+menu.id" *ngIf="menu.hasChildren">
+                                    <span class="tag tag-rounded tag-danger tag-sm">{{menu.routes.length}}</span>
+                                    <span class="btn-title">{{menu.title|translate}}</span>
+                                    <i class="material-icons pull-left icon">dashboard</i>
+                                    <i class="pull-right fa fa-caret-down" *ngIf="menu.hasChildren"></i>
+                                </button>
+                                <div class="collapse" id="{{menu.id}}" *ngIf="menu.hasChildren">
+                                    <ul class="list-unstyled left-padding">
+                                        <li *ngFor="let menuItem of menu.routes">
+                                            <a [routerLink]="menuItem.path" class="btn btn-flat">
+                                                <i class="material-icons pull-left icon">{{menuItem.icon}}</i>
+                                                <span class="title">{{menuItem.title|translate}}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <a [routerLink]="menu.path" class="btn btn-flat" *ngIf="!menu.hasChildren">
+                                    <i class="material-icons pull-left icon">{{menu.icon}}</i>
+                                    <span class="title">{{menu.title|translate}}</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <mat-divider></mat-divider>
                     </div>
                 </div>
             </div>
-            <div class="container">
-                <div class="section" [@routeAnimations]="o.isActivated && o.activatedRoute.routeConfig.path">
-                    <router-outlet #o="outlet"></router-outlet>
-                </div>
+        </div>
+        <div class="col-xs-12 main">
+            <div class="page-on-top" [@routeAnimations]="o.isActivated && o.activatedRoute.routeConfig.path">
+                <router-outlet #o="outlet"></router-outlet>
             </div>
-        </section>
+        </div>
     </div>
-    <!-- END WRAPPER -->
 </div>

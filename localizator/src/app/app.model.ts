@@ -108,12 +108,28 @@ export declare class Respuesta<T> extends HttpResponseBase {
 }
 
 export declare interface RouteInfo {
+    id: string;
     path: string;
     title: string;
     icon: string;
     class: string;
     authority: string[];
+    routes: AppRoute[];
+    hasChildren: boolean;
 }
+
+export declare interface AppRoute {
+    path: string;
+    title: string;
+    icon: string;
+    class: string;
+}
+
+export declare class Title {
+    title: string;
+    active: boolean;
+}
+
 
 export class DateFormat extends NativeDateAdapter {
     useUtcForDisplay = true;

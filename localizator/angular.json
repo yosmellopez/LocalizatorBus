@@ -24,15 +24,21 @@
                         ],
                         "styles": [
                             "src/styles.css",
-                            "../localizator/node_modules/material-design-icons/iconfont/material-icons.css",
+                            "node_modules/material-design-icons/iconfont/material-icons.css",
+                            "node_modules/font-awesome/css/font-awesome.css",
                             "src/assets/tema.scss"
                         ],
                         "scripts": [
-                            "src/assets/vendors/jquery-3.2.1.min.js",
+                            "src/assets/vendors/jquery.min.js",
+                            "src/assets/vendors/tether.js",
+                            "src/assets/vendors/bootstrap-material-design.iife.js",
                             "src/assets/js/materialize.js",
                             "src/assets/vendors/prism/prism.js",
                             "src/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js",
                             "src/assets/js/plugins.js",
+                            "src/assets/js/modernizr.js",
+                            "src/assets/js/highlight.min.js",
+                            "src/assets/js/enhance.js",
                             "src/assets/js/custom-script.js"
                         ]
                     },
