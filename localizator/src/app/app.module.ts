@@ -6,7 +6,7 @@ import {FooterComponent} from './components/footer/footer.component';
 import {AngularMaterialModule} from "./material.module";
 import {RouterModule} from "@angular/router";
 import {AppRoutingModule} from "./app.routing";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {PipesModule} from "./pipes/pipes.module";
 import {ComunComponent} from "./comun/comun.component";
 import {MensajeModule} from "./mensaje/mensaje.module";
@@ -21,7 +21,7 @@ import {stompConfig} from "./app.constant";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateService} from "./services/translate.service";
 import {UserMenuComponent} from './components/user-menu/user-menu.component';
-import {ComunModule} from "./comun/comun.module";
+import {TokenInterceptor} from "./services/token-interceptor";
 
 @NgModule({
     declarations: [
@@ -50,6 +50,10 @@ import {ComunModule} from "./comun/comun.module";
         StompService, {
             provide: StompConfig,
             useValue: stompConfig,
+        }, {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TokenInterceptor,
+            multi: true
         }
     ],
     bootstrap: [AppComponent],

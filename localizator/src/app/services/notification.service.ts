@@ -9,56 +9,36 @@ import {AppResponse, Notificacion, ResponseApp, Respuesta} from "../app.model";
 })
 export class NotificacionService {
     private notificationUrl = SERVER_API_URL + "api/notification";
-    private token: string = "";
     public evento: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     constructor(private http: HttpClient) {
-        this.token = localStorage.getItem("user_token");
     }
 
     listarNotifications(sort: string, order: string, page: number, limit: number): Observable<Respuesta<Notificacion>> {
         let constUrl = `${this.notificationUrl}?sort=${sort},${order}&page=${page + 1}&limit=${limit}`;
-        return this.http.get<AppResponse<Notificacion>>(constUrl, {
-            observe: "response",
-            headers: {"Authorization": this.token}
-        });
+        return this.http.get<AppResponse<Notificacion>>(constUrl, {observe: "response"});
     }
 
     listarAllNotificaciones(): Observable<Respuesta<Notificacion>> {
         let constUrl = `${this.notificationUrl}`;
-        return this.http.get<AppResponse<Notificacion>>(constUrl, {
-            observe: "response",
-            headers: {"Authorization": this.token}
-        });
+        return this.http.get<AppResponse<Notificacion>>(constUrl, {observe: "response"});
     }
 
     findNotificacion(id: number): Observable<Respuesta<Notificacion>> {
         let constUrl = `${this.notificationUrl}/${id}`;
-        return this.http.get<AppResponse<Notificacion>>(constUrl, {
-            observe: "response",
-            headers: {"Authorization": this.token}
-        });
+        return this.http.get<AppResponse<Notificacion>>(constUrl, {observe: "response"});
     }
 
     insertarNotificacion(notification: Notificacion): Observable<Respuesta<Notificacion>> {
-        return this.http.post<AppResponse<Notificacion>>(this.notificationUrl, notification, {
-            observe: "response",
-            headers: {"Authorization": this.token}
-        });
+        return this.http.post<AppResponse<Notificacion>>(this.notificationUrl, notification, {observe: "response"});
     }
 
     modificarNotificacion(id: number, notification: Notificacion): Observable<Respuesta<Notificacion>> {
         notification.id = id;
-        return this.http.put<AppResponse<Notificacion>>(this.notificationUrl + "/" + id, notification, {
-            observe: "response",
-            headers: {"Authorization": this.token}
-        });
+        return this.http.put<AppResponse<Notificacion>>(this.notificationUrl + "/" + id, notification, {observe: "response"});
     }
 
     eliminarNotificacion(id: number): Observable<Respuesta<ResponseApp>> {
-        return this.http.delete<ResponseApp>(this.notificationUrl + "/" + id, {
-            observe: "response",
-            headers: {"Authorization": this.token}
-        });
+        return this.http.delete<ResponseApp>(this.notificationUrl + "/" + id, {observe: "response"});
     }
 }

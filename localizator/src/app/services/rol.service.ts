@@ -9,16 +9,11 @@ import {HttpClient} from "@angular/common/http";
 })
 export class RolService {
     private rolUrl = SERVER_API_URL + "api/roles";
-    private token: string = "";
 
     constructor(private  http: HttpClient) {
-        this.token = localStorage.getItem("user_token");
     }
 
     listarRoles(): Observable<Respuesta<Rol>> {
-        return this.http.get<AppResponse<Rol>>(this.rolUrl, {
-            observe: "response",
-            headers: {"Authorization": this.token}
-        });
+        return this.http.get<AppResponse<Rol>>(this.rolUrl, {observe: "response",});
     }
 }
