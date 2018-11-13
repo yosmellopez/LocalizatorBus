@@ -9,7 +9,8 @@
         "activated": "Activated",
         "list": "User List",
         "listmsg": "Show the system user list",
-        "logout": "Logout"
+        "logout": "Logout",
+        "management": "GPS and Travels"
     },
     "bus": {
         "name": "Name",

@@ -134,3 +134,7 @@ snack-bar-container {
 #notifications-dropdown li {
     min-width: 290px;
 }
+
+.cdk-overlay-pane {
+    padding-left: 16px;
+}

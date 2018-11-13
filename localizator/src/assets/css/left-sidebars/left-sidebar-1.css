@@ -18,7 +18,7 @@
 .left-sidebar-1 .wrapper .content .logo {
     display: -ms-flexbox;
     display: flex;
-    height: 80px;
+    height: 110px;
     -ms-flex-pack: distribute;
     justify-content: space-around;
     -ms-flex-align: center;

@@ -18,8 +18,10 @@ export class RouteWindow implements OnInit {
     insertar = true;
     form: FormGroup;
     lugares: Place[];
+    lugaresSeleccionados: Place[] = [];
+    panelOpenState = false;
 
-    constructor(public dialogRef: MatDialogRef<RouteWindow>, @Inject(MAT_DIALOG_DATA) {id, code, origin, destiny}: Route,
+    constructor(public dialogRef: MatDialogRef<RouteWindow>, @Inject(MAT_DIALOG_DATA) {id, code, origin, destiny, places}: Route,
                 private service: RouteService, private placeService: PlaceService, private dialog: MatDialog) {
         if (id)
             this.insertar = false;
@@ -28,6 +30,7 @@ export class RouteWindow implements OnInit {
             code: new FormControl(code, [Validators.required]),
             origin: new FormControl(origin, [Validators.required]),
             destiny: new FormControl(destiny, [Validators.required]),
+            places: new FormControl(places, []),
         });
     }
 
@@ -62,6 +65,15 @@ export class RouteWindow implements OnInit {
         this.placeService.listarAllPlaces().subscribe(response => {
             this.lugares = response.body.elementos;
         });
+    }
+
+    mostrarElementos(cantidad: number, places: Place[]): string {
+        let cadena: string = "";
+        let tam: number = places.length;
+        for (let i: number = 0; i < cantidad && i < tam; i++) {
+            cadena += (i != 0 ? ', ' : '') + places[i].name;
+        }
+        return cadena;
     }
 
     compararLugares(inicio: Place, fin: Place) {

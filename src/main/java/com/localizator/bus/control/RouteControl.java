@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,7 +67,7 @@ public class RouteControl {
     @PutMapping(value = "/route/{idRoute}")
     public ResponseEntity<AppResponse<Route>> actualizarRoute(@PathVariable("idRoute") Optional<Route> optional, @RequestBody Route route) {
         Route routeBd = optional.orElseThrow(() -> new EntityNotFoundException("route_not_found"));
-//        routeBd.clonarDatos(route);
+        routeBd.clone(route);
         routeRepository.saveAndFlush(routeBd);
         return ok(success(routeBd).build());
     }
@@ -85,8 +86,14 @@ public class RouteControl {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<AppResponse> tratarValidacion(MethodArgumentNotValidException ex, Locale locale) {
+        String mensaje;
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
-        String mensaje = fieldErrors.parallelStream().map(error -> messageSource.getMessage(error.getDefaultMessage(), null, locale)).collect(Collectors.joining(", "));
+        if (!fieldErrors.isEmpty())
+            mensaje = fieldErrors.parallelStream().map(error -> messageSource.getMessage(error.getDefaultMessage(), null, locale)).collect(Collectors.joining(", "));
+        else {
+            List<ObjectError> globalErrors = ex.getBindingResult().getGlobalErrors();
+            mensaje = globalErrors.parallelStream().map(error -> messageSource.getMessage(error.getDefaultMessage(), null, locale)).collect(Collectors.joining(", "));
+        }
         return ok(failure(mensaje).build());
     }
 

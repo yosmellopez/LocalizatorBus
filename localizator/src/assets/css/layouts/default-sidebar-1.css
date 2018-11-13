@@ -131,7 +131,7 @@ html [data-layout="default-sidebar-1"][data-navbar="white"] {
     max-height: 100%;
     width: 305px;
     overflow: hidden;
-    z-index: 1032;
+    z-index: 1000;
     transform: translate3d(0, 0, 0);
 }
 

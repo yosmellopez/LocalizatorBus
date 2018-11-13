@@ -59,13 +59,13 @@ export const RUTAS: RouteInfo[] = [
         routes: [{
             path: '/admin/usuario-list',
             title: 'usuario.list',
-            icon: 'group',
+            icon: 'supervisor_account',
             class: 'waves-effect waves-cyan',
         }]
     }, {
         id: "user-actions",
-        title: "Acciones",
-        icon: "group",
+        title: "GPS y Viajes",
+        icon: "gps_fixed",
         class: "",
         hasChildren: true,
         path: "",

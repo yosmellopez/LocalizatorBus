@@ -2,14 +2,15 @@ import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {NotificacionService} from "../../services/notification.service";
 import {Notificacion, RouteInfo, Title, Usuario} from "../../app.model";
 import {WebsocketService} from "../../services/websocket.service";
-import {of, Subscription} from "rxjs/index";
+import {Observable, of, Subscription} from "rxjs/index";
 import {Message} from '@stomp/stompjs';
 import {MAT_SNACK_BAR_DATA, MatSnackBar, MatSnackBarRef} from "@angular/material";
 import {LanguageService} from "../../services/language.service";
 import {TranslateService} from "../../services/translate.service";
 import {Principal} from "../../services/principal.service";
 import {TitleService} from "../../services/title.service";
-import {Observable} from "rxjs/Rx";
+
+declare function my_init_plugins();
 
 const LANGUAGES: RouteInfo[] = [{
     id: "",
@@ -57,6 +58,7 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {
+        my_init_plugins();
         this.principal.getAuthenticationState().subscribe((user: Usuario) => {
             this.usuario = user;
         });
@@ -94,7 +96,7 @@ export class HeaderComponent implements OnInit {
         const notificacion: Notificacion = JSON.parse(message.body);
         this.notificaciones.push(notificacion);
         this.snackBar.openFromComponent(NotificacionMensajeComponent, {
-            duration: 10000,
+            duration: 100000,
             horizontalPosition: "left",
             verticalPosition: "bottom",
             panelClass: ['blue-snackbar', 'mat-elevation-z5'],
@@ -109,6 +111,24 @@ export class HeaderComponent implements OnInit {
     cambiarBarra() {
         this.expandido = !this.expandido;
         document.body.setAttribute("data-layout", this.expandido ? "default-sidebar-1" : "default-sidebar-2");
+    }
+
+    crearNotificacion() {
+        let notificacion: Notificacion = {
+            title: "",
+            mensaje: "",
+            icono: "",
+            fecha: new Date(),
+            description: "",
+            id: 20
+        };
+        this.snackBar.openFromComponent(NotificacionMensajeComponent, {
+            duration: 100000,
+            horizontalPosition: "left",
+            verticalPosition: "bottom",
+            panelClass: ['blue-snackbar', 'mat-elevation-z5'],
+            data: notificacion
+        });
     }
 }
 

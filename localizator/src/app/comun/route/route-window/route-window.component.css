@@ -1,0 +1,8 @@
+.additional-selection {
+    opacity: 0.75;
+    font-size: 0.75em;
+}
+
+.cdk-overlay-pane {
+    padding-left: 20px;
+}

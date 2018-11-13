@@ -1,9 +1,13 @@
 package com.localizator.bus.entity;
 
+import com.localizator.bus.validation.FieldsValueMatch;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -11,7 +15,10 @@ import java.util.Set;
         @UniqueConstraint(name = "unique_route_origin_destiny", columnNames = {"origin_place", "destiny_place"}),
         @UniqueConstraint(name = "unique_route_code", columnNames = {"code"})
 })
-public class Route {
+@FieldsValueMatch.List({
+        @FieldsValueMatch(field = "origin", fieldMatch = "destiny", message = "origin_destiny_no_equals")
+})
+public class Route implements Serializable, ClonableEntity<Route> {
 
     @Id
     @Column(name = "route_id")
@@ -108,5 +115,15 @@ public class Route {
                 ", origin=" + origin +
                 ", destiny=" + destiny +
                 '}';
+    }
+
+    @Override
+    public void clone(Route route) {
+        code = route.code;
+        origin = route.origin;
+        destiny = route.destiny;
+        Optional.ofNullable(route.places).ifPresent(routePlaces -> {
+            places = routePlaces;
+        });
     }
 }

@@ -9,7 +9,8 @@
         "activated": "Activo",
         "list": "Lista de Usuarios",
         "listmsg": "Muestra el Listado de Usuarios del Sistema",
-        "logout": "Cerrar Sesión"
+        "logout": "Cerrar Sesión",
+        "management": "GPS y Viajes"
     },
     "bus": {
         "name": "Nombre",

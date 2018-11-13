@@ -24,6 +24,7 @@ import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
 import {WMatTimePickerComponent} from "../components/time-control/w-mat-timepicker.component";
 import {WTimeDialogComponent} from "../components/time-control/w-time-dialog.component";
 import {WClockComponent} from "../components/time-control/w-clock.component";
+import { PlaceSelectorComponent } from './route/place-selector/place-selector.component';
 
 
 @NgModule({
@@ -37,7 +38,7 @@ import {WClockComponent} from "../components/time-control/w-clock.component";
         NgxMaterialTimepickerModule
     ],
     declarations: [BusComponent, PlaceComponent, UserProfileComponent, RouteComponent, TravelComponent, BusWindow, PlaceWindow, RouteWindow,
-        TravelWindow, DashboardComponent, NotificationComponent, WMatTimePickerComponent, WTimeDialogComponent, WClockComponent],
+        TravelWindow, DashboardComponent, NotificationComponent, WMatTimePickerComponent, WTimeDialogComponent, WClockComponent, PlaceSelectorComponent],
     entryComponents: [BusWindow, PlaceWindow, RouteWindow, TravelWindow, WTimeDialogComponent],
     providers: [
         {provide: DateAdapter, useClass: DateFormat},

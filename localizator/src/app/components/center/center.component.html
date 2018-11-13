@@ -14,15 +14,6 @@
                             <span>GPS Tracking</span>
                         </a>
                     </div>
-                    <div class="left-sidebar-search">
-                        <div class="form-inline form-custom">
-                            <i class="material-icons">search</i>
-                            <div class="form-group">
-                                <label for="search" class="bmd-label-floating">Search</label>
-                                <input type="text" class="form-control" id="search">
-                            </div>
-                        </div>
-                    </div>
                     <div class="sidebar-heading">
                         <div class="sidebar-image">
                             <img src="assets/faces/m7.png" class="img-circle img-fluid" alt="sidebar-image"/>
@@ -68,7 +59,7 @@
                                 <button class="btn btn-flat collapsed" data-toggle="collapse" data-parent="#navigation" [attr.data-target]="'#'+menu.id" *ngIf="menu.hasChildren">
                                     <span class="tag tag-rounded tag-danger tag-sm">{{menu.routes.length}}</span>
                                     <span class="btn-title">{{menu.title|translate}}</span>
-                                    <i class="material-icons pull-left icon">dashboard</i>
+                                    <i class="material-icons pull-left icon">{{menu.icon}}</i>
                                     <i class="pull-right fa fa-caret-down" *ngIf="menu.hasChildren"></i>
                                 </button>
                                 <div class="collapse" id="{{menu.id}}" *ngIf="menu.hasChildren">

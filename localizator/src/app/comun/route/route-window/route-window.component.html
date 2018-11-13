@@ -22,6 +22,16 @@
             </mat-select>
             <mat-error *ngIf="form.controls['destiny'].errors?.required">Debe seleccionar el lugar de destino de la ruta</mat-error>
         </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-select placeholder="Seleccione rutas intermedias" formControlName="places" multiple [compareWith]="compararLugares">
+                <mat-select-trigger>
+                    {{form.controls['places'].value ? mostrarElementos(3, form.controls['places'].value) : ''}}
+                    <span *ngIf="form.controls['places'].value?.length > 3" class="additional-selection">(+{{form.controls['places'].value.length - 3}}
+                        {{form.controls['places'].value?.length === 4 ? 'otro más' : 'más'}})</span>
+                </mat-select-trigger>
+                <mat-option *ngFor="let lugar of lugares" [value]="lugar">{{lugar|place}}</mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
     <div mat-dialog-actions class="boton-theme">
         <span class="spacer"></span>

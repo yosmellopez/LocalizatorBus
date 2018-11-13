@@ -6,7 +6,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link toggle-fullscreen" href="#">
+            <a class="nav-link toggle-fullscreen">
                 <i class="material-icons">fullscreen</i>
             </a>
         </li>
@@ -31,8 +31,8 @@
                     {{title.title}}
                 </li>
             </ol>
-            <button type="button" class="btn btn-secondary bmd-btn-fab" data-toggle="dropdown">
-                <i class="fa fa-ellipsis-v"></i>
+            <button type="button" class="btn btn-secondary bmd-btn-fab" data-toggle="dropdown" (click)="crearNotificacion()">
+                <i class="material-icons md-30">more_vert</i>
             </button>
             <app-user-menu class="dropdown-menu dropdown-menu-right from-right"></app-user-menu>
         </div>

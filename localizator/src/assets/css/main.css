@@ -137,7 +137,6 @@ hr {
 
 button,
 input,
-select,
 textarea {
     font: inherit;
 }
@@ -147,20 +146,17 @@ optgroup {
 }
 
 button,
-input,
-select {
+input {
     overflow: visible;
 }
 
 button,
 input,
-select,
 textarea {
     margin: 0;
 }
 
-button,
-select {
+button {
     text-transform: none;
 }
 
@@ -210,12 +206,6 @@ legend {
 
 textarea {
     overflow: auto;
-}
-
-[type="checkbox"],
-[type="radio"] {
-    box-sizing: border-box;
-    padding: 0;
 }
 
 [type="number"]::-webkit-inner-spin-button,
@@ -315,6 +305,10 @@ html {
 *::before,
 *::after {
     box-sizing: inherit;
+}
+
+.mat-pseudo-checkbox::after {
+    box-sizing: unset;
 }
 
 @-ms-viewport {
@@ -441,7 +435,6 @@ button,
 [role="button"],
 input,
 label,
-select,
 summary,
 textarea {
     -ms-touch-action: manipulation;
@@ -477,16 +470,10 @@ button:focus {
 
 input,
 button,
-select,
 textarea {
     margin: 0;
     line-height: inherit;
     border-radius: 0;
-}
-
-input[type="radio"]:disabled,
-input[type="checkbox"]:disabled {
-    cursor: not-allowed;
 }
 
 input[type="date"],

@@ -76,12 +76,12 @@ export class RouteComponent implements OnInit {
 
     abrirVentana() {
         let dialogRef = this.dialog.open(RouteWindow, {
-            width: '400px', disableClose: true, data: new Route(),
+            width: '420px', disableClose: true, data: new Route(),
         });
 
         dialogRef.afterClosed().subscribe(result => {
             if (result != false) {
-                this.dialog.open(Information, {width: '350px', data: {mensaje: 'Se ha insertardo el route.'}});
+                this.dialog.open(Information, {width: '350px', data: {mensaje: 'Se ha insertardo la ruta.'}});
                 this.paginator.page.emit();
             }
         });
@@ -90,14 +90,14 @@ export class RouteComponent implements OnInit {
     editarRoute(event: Event, route: Route): void {
         event.stopPropagation();
         let editDialogRef = this.dialog.open(RouteWindow, {
-            width: '400px', data: route, disableClose: true
+            width: '420px', data: route, disableClose: true
         });
 
         editDialogRef.afterClosed().subscribe(result => {
             if (result != false && result.success) {
                 this.dialog.open(Information, {
                     width: '350px',
-                    data: {mensaje: 'Se ha modificado el route.'}
+                    data: {mensaje: 'Se ha modificado la ruta.'}
                 });
                 this.paginator.page.emit();
             }
