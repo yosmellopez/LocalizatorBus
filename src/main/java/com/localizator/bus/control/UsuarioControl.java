@@ -92,6 +92,13 @@ public class UsuarioControl {
         return ok(success(usuario).build());
     }
 
+    @PostMapping(value = "/language/change")
+    public ResponseEntity<AppResponse<Boolean>> changeLanguage(@RequestParam String language, @AuthenticationPrincipal Usuario usuario) {
+        System.out.println(language);
+        usuario.setLanguage(language);
+        usuarioRepository.saveAndFlush(usuario);
+        return ok(success().build());
+    }
 
     @GetMapping(value = "/enviar")
     public ResponseEntity<AppResponse> pushNotification() {

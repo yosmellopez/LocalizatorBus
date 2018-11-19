@@ -60,6 +60,12 @@
         "list": "Lista de Notificaciones",
         "listmsg": "Listado de notificaciones del usuario "
     },
+    "company": {
+        "name": "Nombre",
+        "busCount": "Cantidad de Buses",
+        "list": "Lista de Empresas",
+        "listmsg": "Muestra el Listado de Empresas del Sistema"
+    },
     "actions": "Acciones",
     "notifications": "Notificaciones",
     "dashboard": "Dashboard",

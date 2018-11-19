@@ -22,7 +22,7 @@ const routes: Route[] = [
         path: '',
         canActivate: [UsuarioGuard],
         component: ComunComponent,
-        children: [{path: '', loadChildren: './comun/comun.module#ComunModule'}]
+        children: [{path: 'user', loadChildren: './comun/comun.module#ComunModule'}]
     }
 ];
 
@@ -33,7 +33,7 @@ export const RUTAS: RouteInfo[] = [
         path: '/admin/dashboard',
         title: 'dashboard',
         icon: 'dashboard',
-        class: 'waves-effect waves-cyan',
+        class: 'tag tag-rounded tag-danger tag-sm',
         authority: ["Admin"],
         hasChildren: false,
         routes: []
@@ -43,7 +43,7 @@ export const RUTAS: RouteInfo[] = [
         path: '/user/dashboard',
         title: 'dashboard',
         icon: 'dashboard',
-        class: 'waves-effect waves-cyan',
+        class: 'tag tag-rounded tag-danger tag-sm',
         authority: ["User"],
         hasChildren: false,
         routes: []
@@ -52,7 +52,7 @@ export const RUTAS: RouteInfo[] = [
         id: "admin-actions",
         title: "Administracion",
         icon: "group",
-        class: "",
+        class: "tag tag-rounded tag-info tag-sm",
         authority: ["Admin"],
         hasChildren: true,
         path: "",
@@ -61,12 +61,17 @@ export const RUTAS: RouteInfo[] = [
             title: 'usuario.list',
             icon: 'supervisor_account',
             class: 'waves-effect waves-cyan',
+        }, {
+            path: '/admin/company-list',
+            title: 'company.list',
+            icon: 'business',
+            class: 'waves-effect waves-cyan',
         }]
     }, {
         id: "user-actions",
         title: "GPS y Viajes",
         icon: "gps_fixed",
-        class: "",
+        class: "tag tag-rounded tag-success tag-sm",
         hasChildren: true,
         path: "",
         authority: ["User", "Admin"],
@@ -93,19 +98,19 @@ export const RUTAS: RouteInfo[] = [
         }]
     }, {
         id: "user-profile",
-        path: '/user-profile',
+        path: '/user/profile',
         title: 'userprofile',
         icon: 'person',
-        class: 'waves-effect waves-cyan',
+        class: 'tag tag-rounded tag-danger tag-sm',
         authority: ["Admin", "User"],
         hasChildren: false,
         routes: [],
     }, {
         id: "notifications",
-        path: '/notification',
+        path: '/user/notification',
         title: 'notifications',
         icon: 'notifications',
-        class: 'waves-effect waves-cyan',
+        class: 'tag tag-rounded tag-danger tag-sm',
         authority: ["Admin", "User"],
         hasChildren: false,
         routes: [],

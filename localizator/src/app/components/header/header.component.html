@@ -10,7 +10,19 @@
                 <i class="material-icons">fullscreen</i>
             </a>
         </li>
+        <li class="nav-item dropdown user-dropdown">
+            <a class="nav-link dropdown-toggle no-after" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">language</i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-left from-left" style="top: 65%;">
+                <a class="dropdown-item grey-text text-darken-1" *ngFor="let lenguaje of languages" (click)="changeLanguage(lenguaje.path)">
+                    <i class="{{lenguaje.icon}}" style="margin-right: 10px"></i>
+                    <span>{{lenguaje.title}}</span>
+                </a>
+            </div>
+        </li>
     </ul>
+
     <span class="welcome">{{'hello'|translate}}, {{usuario|usuario}}</span>
     <div class="dropdown user-dropdown">
         <a class="dropdown-toggle no-after" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -19,7 +31,7 @@
                 <img src="assets/faces/m7.png" class="max-w-40 img-circle" alt="badge">
             </div>
         </a>
-        <app-user-menu class="dropdown-menu dropdown-menu-right from-right"></app-user-menu>
+        <app-user-menu class="dropdown-menu dropdown-menu-right from-right" style="z-index: 1500"></app-user-menu>
     </div>
 </nav>
 <div class="jumbotron-1">
@@ -31,7 +43,7 @@
                     {{title.title}}
                 </li>
             </ol>
-            <button type="button" class="btn btn-secondary bmd-btn-fab" data-toggle="dropdown" (click)="crearNotificacion()">
+            <button type="button" class="btn btn-secondary bmd-btn-fab" data-toggle="dropdown">
                 <i class="material-icons md-30">more_vert</i>
             </button>
             <app-user-menu class="dropdown-menu dropdown-menu-right from-right"></app-user-menu>

@@ -4,9 +4,7 @@ import {SERVER_API_URL} from "../app.constant";
 import {HttpClient} from "@angular/common/http";
 import {AppResponse, PassengerTravel, ResponseApp, Respuesta} from "../app.model";
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class PassengerTravelService {
 
     private placeUrl = SERVER_API_URL + "api/passengerTravel";

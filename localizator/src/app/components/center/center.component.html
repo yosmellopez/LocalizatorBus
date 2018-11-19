@@ -28,7 +28,7 @@
                                         <span class="title">Inbox</span>
                                         <span class="pull-xs-right tag tag-pill tag-raised tag-danger tag-xs">New</span>
                                     </a>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" routerLink="/notification">
                                         <i class="material-icons icon">grade</i>
                                         <span class="title">{{'notifications'|translate}}</span>
                                         <span class="pull-xs-right tag tag-outline-primary tag-rounded tag-xs">5</span>
@@ -52,20 +52,21 @@
                             </div>
                         </div>
                     </div>
+                    <div style="position:fixed; bottom: 0px;height: 150px;background-color: #1b5e20;width: 305px;"></div>
                     <div class="left-sidebar-section">
                         <mat-divider></mat-divider>
                         <ul class="list-unstyled" id="navigation">
                             <li *ngFor="let menu of rutasUsuario">
                                 <button class="btn btn-flat collapsed" data-toggle="collapse" data-parent="#navigation" [attr.data-target]="'#'+menu.id" *ngIf="menu.hasChildren">
-                                    <span class="tag tag-rounded tag-danger tag-sm">{{menu.routes.length}}</span>
+                                    <span class="{{menu.class}}">{{menu.routes.length}}</span>
                                     <span class="btn-title">{{menu.title|translate}}</span>
                                     <i class="material-icons pull-left icon">{{menu.icon}}</i>
                                     <i class="pull-right fa fa-caret-down" *ngIf="menu.hasChildren"></i>
                                 </button>
                                 <div class="collapse" id="{{menu.id}}" *ngIf="menu.hasChildren">
-                                    <ul class="list-unstyled left-padding">
+                                    <ul class="list-unstyled">
                                         <li *ngFor="let menuItem of menu.routes">
-                                            <a [routerLink]="menuItem.path" class="btn btn-flat">
+                                            <a [routerLink]="menuItem.path" class="btn btn-flat" style="padding-left: 40px">
                                                 <i class="material-icons pull-left icon">{{menuItem.icon}}</i>
                                                 <span class="title">{{menuItem.title|translate}}</span>
                                             </a>

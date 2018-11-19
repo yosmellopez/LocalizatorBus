@@ -30,16 +30,27 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping(value = "/api")
 public class PassengerControl {
 
-    @Autowired
-    private PassengerRepository passengerRepository;
+    private final PassengerRepository passengerRepository;
+
+    private final MessageSource messageSource;
 
     @Autowired
-    private MessageSource messageSource;
+    public PassengerControl(PassengerRepository passengerRepository, MessageSource messageSource) {
+        this.passengerRepository = passengerRepository;
+        this.messageSource = messageSource;
+    }
 
     @GetMapping(value = "/passenger")
     public ResponseEntity<AppResponse<Passenger>> listarPassengers() {
         List<Passenger> passengers = passengerRepository.findAll();
         return ok(success(passengers).total(passengers.size()).build());
+    }
+
+    @GetMapping(value = "/passenger/find")
+    public ResponseEntity<AppResponse<Passenger>> findPassengers(String dni) {
+        Optional<Passenger> optional = passengerRepository.findByDni(dni);
+        Passenger passenger = optional.orElseThrow(() -> new EntityNotFoundException("passenger_not_found"));
+        return ok(success(passenger).build());
     }
 
     @PostMapping(value = "/passenger")

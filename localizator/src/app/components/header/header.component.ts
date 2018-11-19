@@ -19,14 +19,14 @@ const LANGUAGES: RouteInfo[] = [{
     icon: "flag-icon flag-icon-gb",
     hasChildren: false,
     authority: [],
-    path: "",
+    path: "en",
     routes: []
 }, {
     id: "",
     title: "Español",
     class: "grey-text text-darken-1",
     hasChildren: false,
-    path: "",
+    path: "es",
     icon: "flag-icon flag-icon-es",
     authority: [],
     routes: []
@@ -86,8 +86,7 @@ export class HeaderComponent implements OnInit {
     changeLanguage(locale: string) {
         this.language.changeLanguage(locale).subscribe(resp => {
             if (resp.body.success) {
-                localStorage.setItem("lang", locale);
-                this.translate.use(locale);
+                this.translate.setLang(locale);
             }
         });
     }

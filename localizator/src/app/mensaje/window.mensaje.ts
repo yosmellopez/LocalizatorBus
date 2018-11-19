@@ -1,5 +1,6 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {Component, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA, MAT_SNACK_BAR_DATA, MatDialogRef, MatSnackBarRef} from '@angular/material';
+import {Mensaje} from "../app.model";
 
 @Component({
     selector: 'confirm-mensaje',
@@ -40,5 +41,23 @@ export class MensajeError {
 
     cerrarDialog(): void {
         this.dialogRef.close();
+    }
+}
+
+@Component({
+    selector: 'mensaje-toast',
+    templateUrl: './mensaje.toast.html',
+    styleUrls: ['./mensaje.component.css'],
+})
+export class MensajeToast {
+    mensaje: Mensaje;
+    success: boolean = true;
+
+    constructor(public snackbarRef: MatSnackBarRef<MensajeToast>, @Inject(MAT_SNACK_BAR_DATA) mensaje: Mensaje) {
+        this.mensaje = mensaje;
+    }
+
+    cerrarSnackbar() {
+        this.snackbarRef.dismiss();
     }
 }

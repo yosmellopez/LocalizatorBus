@@ -10,6 +10,8 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {PasswordLenghtModule} from "../password-lenght/password-lenght.module";
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {CommonModule} from "@angular/common";
+import {CompanyComponent} from './company/company.component';
+import {CompanyWindow} from './company/company-window/company-window.component';
 
 
 @NgModule({
@@ -22,8 +24,8 @@ import {CommonModule} from "@angular/common";
         ReactiveFormsModule,
         PasswordLenghtModule
     ],
-    declarations: [UsuarioComponent, UsuarioWindow, DashboardComponent],
-    entryComponents: [UsuarioWindow]
+    declarations: [UsuarioComponent, UsuarioWindow, DashboardComponent, CompanyComponent, CompanyWindow],
+    entryComponents: [UsuarioWindow, CompanyWindow]
 })
 export class AdminModule {
 }

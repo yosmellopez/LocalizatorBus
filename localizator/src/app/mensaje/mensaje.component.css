@@ -72,3 +72,11 @@ button mat-icon {
     margin-right: 20px;
     font-size: 35px;
 }
+
+.mat-snack-bar-container {
+    padding: 0;
+}
+
+.md-30 {
+    font-size: 30px;
+}

@@ -81,6 +81,17 @@ export class Notificacion {
     icono: string;
 }
 
+export class Company {
+    id: number;
+    name: string;
+    busCount: number;
+}
+
+export class Mensaje {
+    title: string;
+    description: string;
+}
+
 export class ObjectParam<T> {
     object: T;
 }

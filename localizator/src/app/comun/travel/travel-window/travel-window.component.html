@@ -5,7 +5,7 @@
     <hr style="opacity: 100%">
 </h1>
 <div mat-dialog-content style="min-height: 100%;padding: 0;overflow: hidden;">
-    <mat-horizontal-stepper linear labelPosition="bottom">
+    <mat-horizontal-stepper linear labelPosition="end">
         <mat-step [stepControl]="formViaje" label="Datos del Viaje">
             <form class="form" [formGroup]="formViaje" (submit)="insertarTravel()">
                 <mat-expansion-panel [expanded]="true" (opened)="setStep(0)" hideToggle>
@@ -97,10 +97,15 @@
                     <mat-error *ngIf="formPasajero.controls['place'].errors?.required">Debe seleccionar lugar del viaje</mat-error>
                 </mat-form-field>
                 <div formGroupName="passenger">
-                    <mat-form-field class="middle-width">
-                        <input matInput placeholder="Documento Nacional de Identidad (DNI)" formControlName="dni" type="number">
-                        <mat-error *ngIf="formPasajero.get('passenger.dni').hasError('required')">Debe insertar el dni de la persona</mat-error>
-                    </mat-form-field>
+                    <div class="middle-width">
+                        <mat-form-field style="margin-right: 15px;width: 15.6em;">
+                            <input matInput placeholder="Documento de Identidad (DNI)" formControlName="dni" type="number">
+                            <mat-error *ngIf="formPasajero.get('passenger.dni').hasError('required')">Debe insertar el dni de la persona</mat-error>
+                        </mat-form-field>
+                        <button type="button" mat-mini-fab (click)="findPassenger(formPasajero.get('passenger.dni').value)" color="primary">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </div>
                     <mat-form-field class="middle-width">
                         <input matInput placeholder="Nombre" formControlName="name">
                         <mat-error *ngIf="formPasajero.get('passenger.name').hasError('required')">Debe insertar el nombre de la persona</mat-error>

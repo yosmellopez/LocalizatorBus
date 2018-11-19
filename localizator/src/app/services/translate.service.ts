@@ -1,25 +1,26 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class TranslateService {
     data: any = {};
+    private lang: string = "";
 
     constructor(private http: HttpClient) {
-        this.use(localStorage.getItem("lang") || "es");
+        this.lang = localStorage.getItem("lang") || "es";
+        this.use();
     }
 
-    use(lang: string): Promise<{}> {
+    use(): Promise<{}> {
         return new Promise<{}>((resolve, reject) => {
-            const langPath = `assets/i18n/${lang || 'en'}.json`;
-            this.http.get<{}>(langPath).subscribe(
+            const langPath = `assets/i18n/${this.lang || 'en'}.json`;
+            return this.http.get<{}>(langPath).subscribe(
                 translation => {
                     this.data = Object.assign({}, translation || {});
                     resolve(this.data);
                 },
                 error => {
+                    console.log(error)
                     this.data = {};
                     resolve(this.data);
                 }
@@ -37,5 +38,15 @@ export class TranslateService {
                 currentObject = currentObject[string];
         });
         return currentObject || key;
+    }
+
+    getLang(): string {
+        return this.lang;
+    }
+
+    setLang(lang: string) {
+        this.lang = lang;
+        localStorage.setItem("lang", lang);
+        this.use();
     }
 }

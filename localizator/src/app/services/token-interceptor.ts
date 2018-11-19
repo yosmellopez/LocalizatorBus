@@ -5,15 +5,15 @@ import {Observable} from "rxjs/index";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-    constructor(public auth: AuthService) {
+    constructor(private auth: AuthService) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.log("Funciona el interceptor")
-        request = request.clone({
-            setHeaders: {Authorization: `${this.auth.getToken()}`}
-        });
-        console.log(request)
+        if (this.auth)
+            request = request.clone({
+                setHeaders: {Authorization: `${this.auth.getToken()}`},
+                setParams: {lang: this.auth.getLang()}
+            });
         return next.handle(request);
     }
 }

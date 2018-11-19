@@ -37,28 +37,26 @@ export class NotificationComponent implements OnInit {
         this.paginator.pageSize = this.pageSize;
         this.inicializarElementos();
         this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-        merge(this.sort.sortChange, this.paginator.page)
-            .pipe(
-                startWith({}),
-                switchMap(() => {
-                    this.isLoadingResults = true;
-                    return this.service.listarNotifications(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
-                }),
-                map(data => {
-                    this.total = data.body.total;
-                    this.isLoadingResults = false;
-                    return data.body.elementos;
-                }),
-                catchError(data => {
-                    return [];
-                })
-            )
-            .subscribe(datos => {
-                this.dataSource = new MatTableDataSource(datos);
-                this.paginator.length = this.total;
-                this.table.dataSource = this.dataSource;
-                this.table.renderRows();
-            });
+        merge(this.sort.sortChange, this.paginator.page).pipe(
+            startWith({}),
+            switchMap(() => {
+                this.isLoadingResults = true;
+                return this.service.listarNotifications(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+            }),
+            map(data => {
+                this.total = data.body.total;
+                this.isLoadingResults = false;
+                return data.body.elementos;
+            }),
+            catchError(data => {
+                return [];
+            })
+        ).subscribe(datos => {
+            this.dataSource = new MatTableDataSource(datos);
+            this.paginator.length = this.total;
+            this.table.dataSource = this.dataSource;
+            this.table.renderRows();
+        });
     }
 
 

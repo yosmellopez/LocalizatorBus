@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
                             this.router.navigate(["/admin/usuario-list"]);
                         } else {
                             localStorage.setItem("isAdmin", "false");
-                            this.router.navigate(["/travel-list"]);
+                            this.router.navigate(["/user/travel-list"]);
                         }
                     });
                 } else {

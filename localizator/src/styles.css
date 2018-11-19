@@ -48,6 +48,7 @@
 @import "assets/css/ui/tags.css";
 @import "assets/css/ui/tooltips.css";
 @import "assets/css/ui/typography.css";
+@import "assets/css/flag-icon.css";
 
 table {
     width: 100%;
@@ -123,6 +124,22 @@ mat-paginator {
     left: 30px;
 }
 
+.success-snackbar {
+    background: #1B5E20;
+    color: white;
+    position: relative;
+    top: 30px;
+    left: 30px;
+}
+
+.failure-snackbar {
+    background: #8e120c;
+    color: white;
+    position: relative;
+    top: 30px;
+    left: 30px;
+}
+
 .mat-snack-bar-container {
     padding: 0;
 }
@@ -137,4 +154,9 @@ snack-bar-container {
 
 .cdk-overlay-pane {
     padding-left: 16px;
+}
+
+.mat-icon {
+    position: relative;
+    top: -2px;
 }

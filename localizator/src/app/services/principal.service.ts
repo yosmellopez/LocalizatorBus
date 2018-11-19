@@ -3,13 +3,11 @@ import {AccountService} from "./account.service";
 import {Observable, Subject} from "rxjs/index";
 import {Usuario} from "../app.model";
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class Principal {
     private userIdentity: any;
     private authenticated = false;
-    private authenticationState = new Subject<any>();
+    public authenticationState = new Subject<any>();
 
     constructor(private account: AccountService) {
     }
@@ -33,7 +31,6 @@ export class Principal {
                 for (let i = 0; i < authorities.length; i++) {
                     if (usuario.rol.name == authorities[i]) {
                         return Promise.resolve(true);
-                        ;
                     }
                 }
                 return Promise.resolve(false);
@@ -64,14 +61,12 @@ export class Principal {
         if (force === true) {
             this.userIdentity = undefined;
         }
-
         // check and see if we have retrieved the userIdentity data from the server.
         // if we have, reuse it by immediately resolving
         if (this.userIdentity) {
             this.authenticationState.next(this.userIdentity);
             return Promise.resolve(this.userIdentity);
         }
-
         // retrieve the userIdentity data from the server, update the identity object, and then resolve.
         return this.account
             .get()

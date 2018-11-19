@@ -19,9 +19,9 @@ import {DateFormat} from "./app.model";
 import {StompConfig, StompService} from "@stomp/ng2-stompjs";
 import {stompConfig} from "./app.constant";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {TranslateService} from "./services/translate.service";
 import {UserMenuComponent} from './components/user-menu/user-menu.component';
 import {TokenInterceptor} from "./services/token-interceptor";
+import {AuthService} from "./services/auth.service";
 
 @NgModule({
     declarations: [
@@ -53,14 +53,15 @@ import {TokenInterceptor} from "./services/token-interceptor";
         }, {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,
-            multi: true
+            multi: true,
+            deps: [AuthService]
         }
     ],
     bootstrap: [AppComponent],
     entryComponents: [NotificacionMensajeComponent]
 })
 export class AppModule {
-    constructor(private dateAdapter: DateAdapter<Date>, private translate: TranslateService) {
+    constructor(private dateAdapter: DateAdapter<Date>) {
         dateAdapter.setLocale('en-in'); // DD/MM/YYYY
     }
 }

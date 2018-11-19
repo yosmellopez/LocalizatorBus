@@ -1,16 +1,17 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 import {
-    DateAdapter, ErrorStateMatcher,
+    ErrorStateMatcher,
     MAT_DATE_FORMATS,
     MAT_DIALOG_DATA,
     MatDialog,
     MatDialogRef,
+    MatSnackBar,
     MatStepper,
     MatTableDataSource
 } from "@angular/material";
 import {Bus, Passenger, PassengerTravel, Place, Route, Travel} from "../../../app.model";
-import {Information, MensajeError} from "../../../mensaje/window.mensaje";
+import {Information, MensajeError, MensajeToast} from "../../../mensaje/window.mensaje";
 import {TravelService} from "../../../services/travel.service";
 import {RouteService} from "../../../services/route.service";
 import {BusService} from "../../../services/bus.service";
@@ -61,14 +62,13 @@ export class TravelWindow implements OnInit {
     currentPassengerTravel: PassengerTravel;
     passengerSubcription: Subject<Passenger> = new Subject<Passenger>();
     @ViewChild(MatStepper) steeper: MatStepper;
-    matcher = new MyErrorStateMatcher();
     private hour = 10;
     private minute = 25;
     private meridien = 'PM';
 
     constructor(public dialogRef: MatDialogRef<TravelWindow>, @Inject(MAT_DIALOG_DATA) {id, active, travelDate, arriveDate, bus, route, passengerTravels, expandido, arriveTime, travelTime}: Travel,
                 private service: TravelService, private routeService: RouteService, private busService: BusService, private passengerService: PassengerService,
-                private placeService: PlaceService, private passengerTravelService: PassengerTravelService, private dialog: MatDialog) {
+                private placeService: PlaceService, private passengerTravelService: PassengerTravelService, private dialog: MatDialog, private snackBar: MatSnackBar) {
         if (id) {
             this.insertar = false;
             this.travelInsertado = true;
@@ -113,7 +113,6 @@ export class TravelWindow implements OnInit {
             this.filterPlace(value);
         });
         this.dataSource = new MatTableDataSource<PassengerTravel>(this.datos);
-        // this.matcher = new MyErrorStateMatcher();
     }
 
     setStep(index: number) {
@@ -332,6 +331,22 @@ export class TravelWindow implements OnInit {
 
     private convertDate(fecha: Date) {
         return `${fecha.getHours() < 10 ? '0' + fecha.getHours() : fecha.getHours()}:${fecha.getMinutes() < 10 ? '0' + fecha.getMinutes() : fecha.getMinutes()}`;
+    }
+
+    findPassenger(value: number) {
+        this.passengerService.buscarPassenger(value).subscribe(resp => {
+            if (resp.body.success) {
+                this.formPasajero.get("passenger").patchValue(resp.body.elemento);
+            } else {
+                this.snackBar.openFromComponent(MensajeToast, {
+                    duration: 5000,
+                    horizontalPosition: "center",
+                    verticalPosition: "top",
+                    panelClass: ['failure-snackbar', 'mat-elevation-z5'],
+                    data: {title: "Pasajero no encontrado", description: resp.body.msg}
+                });
+            }
+        });
     }
 }
 

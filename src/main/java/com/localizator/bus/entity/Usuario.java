@@ -44,6 +44,11 @@ public class Usuario implements UserDetails, Serializable, ClonableEntity<Usuari
     @Column(name = "email")
     private String email;
 
+    @NotNull(message = "usuario_email_not_null")
+    @Size(message = "user_language_size", min = 2, max = 5)
+    @Column(name = "language")
+    private String language;
+
     @Column(name = "password_key")
     @Size(message = "usuario_password_size", max = 200)
     @JsonSerialize(using = SerializadorPassword.class)
@@ -98,6 +103,14 @@ public class Usuario implements UserDetails, Serializable, ClonableEntity<Usuari
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     @Override

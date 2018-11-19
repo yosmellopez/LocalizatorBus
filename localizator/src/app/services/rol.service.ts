@@ -14,6 +14,6 @@ export class RolService {
     }
 
     listarRoles(): Observable<Respuesta<Rol>> {
-        return this.http.get<AppResponse<Rol>>(this.rolUrl, {observe: "response",});
+        return this.http.get<AppResponse<Rol>>(this.rolUrl, {observe: "response"});
     }
 }

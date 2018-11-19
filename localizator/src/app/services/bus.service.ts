@@ -4,9 +4,7 @@ import {SERVER_API_URL} from "../app.constant";
 import {AppResponse, Bus, ResponseApp, Respuesta} from "../app.model";
 import {HttpClient} from "@angular/common/http";
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class BusService {
 
     private busUrl = SERVER_API_URL + "api/bus";

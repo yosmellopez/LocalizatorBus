@@ -30,7 +30,6 @@ export class CenterComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // my_init_plugins();
         this.animation.updateRouteAnimationType(true, true);
         this.principal.identity().then(valor => {
             if (valor) {
@@ -51,7 +50,6 @@ export class CenterComponent implements OnInit {
 
     getTitle() {
         let titlee = this.location.prepareExternalUrl(this.location.path());
-        console.log(titlee);
         let titulos: Title[] = [];
         for (let item = 0; item < this.rutas.length; item++) {
             let routes = this.rutas[item].routes;
@@ -82,10 +80,7 @@ export class CenterComponent implements OnInit {
         this.router.navigate(["/login"]);
     }
 
-    hasAuthority(menuItem
-                     :
-                     RouteInfo
-    ) {
+    hasAuthority(menuItem: RouteInfo) {
         return menuItem.authority.includes(this.usuario.rol.name);
     }
 }

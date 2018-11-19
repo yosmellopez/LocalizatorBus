@@ -7288,18 +7288,21 @@ button:focus {
     color: rgba(0, 0, 0, 0.87);
     background-color: inherit;
     border-color: #ccc;
+    z-index: 1400;
 }
 
 .bg-inverse .btn:hover, .bg-inverse .custom-file-control:hover::before {
     color: rgba(0, 0, 0, 0.87);
     background-color: rgba(204, 204, 204, 0.15);
     border-color: rgba(204, 204, 204, 0.15);
+    z-index: 1400;
 }
 
 .bg-inverse .btn:focus, .bg-inverse .custom-file-control:focus::before, .bg-inverse .btn.focus, .bg-inverse .focus.custom-file-control::before {
     color: rgba(0, 0, 0, 0.87);
     background-color: rgba(204, 204, 204, 0.15);
     border-color: rgba(204, 204, 204, 0.15);
+    z-index: 1400;
 }
 
 .bg-inverse .btn:active, .bg-inverse .custom-file-control:active::before, .bg-inverse .btn.active, .bg-inverse .active.custom-file-control::before,

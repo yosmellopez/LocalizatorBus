@@ -8797,7 +8797,7 @@ button:focus {
 .btn-group-raised .custom-file-control:focus::before,
 .btn-group-raised .btn:hover,
 .btn-group-raised .custom-file-control:hover::before {
-    z-index: 1;
+    z-index: 1000;
     box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
 }
 
@@ -8806,7 +8806,7 @@ button:focus {
 .btn-group-raised .active.custom-file-control::before,
 .btn-group-raised .btn:active,
 .btn-group-raised .custom-file-control:active::before {
-    z-index: 1;
+    z-index: 1000;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.18), 0 8px 16px rgba(0, 0, 0, 0.36);
 }
 

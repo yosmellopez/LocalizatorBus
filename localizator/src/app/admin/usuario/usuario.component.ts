@@ -7,7 +7,7 @@ import {UsuarioService} from "../../services/usuario.service";
 import {SelectionModel} from "@angular/cdk/collections";
 import {UsuarioWindow} from "./usuario-window/usuario-window.component";
 import {Confirm, Information, MensajeError} from "../../mensaje/window.mensaje";
-import {routeAnimations} from "../../animations/route.animations";
+import {Principal} from "../../services/principal.service";
 
 declare function my_init_plugins();
 
@@ -15,8 +15,6 @@ declare function my_init_plugins();
     selector: 'app-usuario',
     templateUrl: './usuario.component.html',
     styleUrls: ['./usuario.component.css'],
-    animations: [routeAnimations],
-    host: {'[@routeAnimations]': ''}
 })
 export class UsuarioComponent implements OnInit {
 
@@ -28,11 +26,12 @@ export class UsuarioComponent implements OnInit {
     nombre: string = '';
     resultsLength = 0;
     isLoadingResults = true;
+    usuario: Usuario = new Usuario();
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatTable) table: MatTable<Usuario>;
 
-    constructor(private service: UsuarioService, private dialog: MatDialog) {
+    constructor(private service: UsuarioService, private dialog: MatDialog, private principal: Principal) {
     }
 
     ngOnInit() {
@@ -43,6 +42,9 @@ export class UsuarioComponent implements OnInit {
         this.paginator.pageSize = this.pageSize;
         this.inicializarElementos();
         this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+        this.principal.identity().then(user => {
+            this.usuario = user;
+        });
         merge(this.sort.sortChange, this.paginator.page)
             .pipe(
                 startWith({}),

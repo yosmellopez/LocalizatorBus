@@ -15,6 +15,6 @@ export class LanguageService {
     }
 
     changeLanguage(locale: string): Observable<Respuesta<ResponseApp>> {
-        return this.http.post<ResponseApp>(this.languageUrl, {}, {params: {lang: locale}, observe: "response"});
+        return this.http.post<ResponseApp>(this.languageUrl, {}, {params: {language: locale}, observe: "response"});
     }
 }

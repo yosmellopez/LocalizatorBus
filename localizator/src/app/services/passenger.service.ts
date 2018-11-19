@@ -26,6 +26,13 @@ export class PassengerService {
         return this.http.post<AppResponse<Passenger>>(this.passengerUrl, passenger, {observe: "response"});
     }
 
+    buscarPassenger(dni: number): Observable<Respuesta<Passenger>> {
+        return this.http.get<AppResponse<Passenger>>(`${this.passengerUrl}/find`, {
+            observe: "response",
+            params: {dni: `${dni}`}
+        });
+    }
+
     modificarPassenger(id: number, passenger: Passenger): Observable<Respuesta<Passenger>> {
         passenger.id = id;
         return this.http.put<AppResponse<Passenger>>(this.passengerUrl + "/" + id, passenger, {observe: "response"});
