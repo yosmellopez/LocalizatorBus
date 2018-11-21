@@ -9,8 +9,6 @@ import {UsuarioWindow} from "./usuario-window/usuario-window.component";
 import {Confirm, Information, MensajeError} from "../../mensaje/window.mensaje";
 import {Principal} from "../../services/principal.service";
 
-declare function my_init_plugins();
-
 @Component({
     selector: 'app-usuario',
     templateUrl: './usuario.component.html',
@@ -35,7 +33,6 @@ export class UsuarioComponent implements OnInit {
     }
 
     ngOnInit() {
-        // my_init_plugins();
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.sort.active = 'id,desc';
@@ -71,7 +68,7 @@ export class UsuarioComponent implements OnInit {
 
     abrirVentana() {
         let dialogRef = this.dialog.open(UsuarioWindow, {
-            width: '500px', disableClose: true, data: new Usuario(),
+            width: '580px', disableClose: true, data: new Usuario(),
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -85,7 +82,7 @@ export class UsuarioComponent implements OnInit {
     editarUsuario(event: Event, usuario: Usuario): void {
         event.stopPropagation();
         let editDialogRef = this.dialog.open(UsuarioWindow, {
-            width: '500px', data: usuario, disableClose: true
+            width: '580px', data: usuario, disableClose: true
         });
 
         editDialogRef.afterClosed().subscribe(result => {

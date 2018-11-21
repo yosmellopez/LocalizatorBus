@@ -13,6 +13,11 @@ public class PlaceException extends GeneralException {
     @Override
     public String tratarExcepcion() {
         super.obtenerMensaje();
-        return null;
+        if (mensaje.contains("fk_place_origin_route")) {
+            return messageSource.getMessage("router_place_origin_delete", null, locale);
+        } else if (mensaje.contains("fk_place_destiny_route")) {
+            return messageSource.getMessage("router_place_destiny_delete", null, locale);
+        }
+        return mensaje;
     }
 }

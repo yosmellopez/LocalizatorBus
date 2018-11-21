@@ -34,7 +34,7 @@ export const RUTAS: RouteInfo[] = [
         title: 'dashboard',
         icon: 'dashboard',
         class: 'tag tag-rounded tag-danger tag-sm',
-        authority: ["Admin"],
+        authority: ["Administrador"],
         hasChildren: false,
         routes: []
     },
@@ -44,16 +44,16 @@ export const RUTAS: RouteInfo[] = [
         title: 'dashboard',
         icon: 'dashboard',
         class: 'tag tag-rounded tag-danger tag-sm',
-        authority: ["User"],
+        authority: ["Usuario"],
         hasChildren: false,
         routes: []
     },
     {
         id: "admin-actions",
-        title: "Administracion",
+        title: "adminTitle",
         icon: "group",
         class: "tag tag-rounded tag-info tag-sm",
-        authority: ["Admin"],
+        authority: ["Administrador"],
         hasChildren: true,
         path: "",
         routes: [{
@@ -69,12 +69,12 @@ export const RUTAS: RouteInfo[] = [
         }]
     }, {
         id: "user-actions",
-        title: "GPS y Viajes",
+        title: "gpsTravel",
         icon: "gps_fixed",
         class: "tag tag-rounded tag-success tag-sm",
         hasChildren: true,
         path: "",
-        authority: ["User", "Admin"],
+        authority: ["Usuario", "Administrador"],
         routes: [{
             path: '/user/bus-list',
             title: 'bus.list',
@@ -102,7 +102,7 @@ export const RUTAS: RouteInfo[] = [
         title: 'userprofile',
         icon: 'person',
         class: 'tag tag-rounded tag-danger tag-sm',
-        authority: ["Admin", "User"],
+        authority: ["Administrador", "Usuario"],
         hasChildren: false,
         routes: [],
     }, {
@@ -111,7 +111,7 @@ export const RUTAS: RouteInfo[] = [
         title: 'notifications',
         icon: 'notifications',
         class: 'tag tag-rounded tag-danger tag-sm',
-        authority: ["Admin", "User"],
+        authority: ["Administrador", "Usuario"],
         hasChildren: false,
         routes: [],
     }

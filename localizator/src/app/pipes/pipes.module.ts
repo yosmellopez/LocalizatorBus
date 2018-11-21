@@ -7,10 +7,11 @@ import {PassengerPipe} from './passenger.pipe';
 import {UsuarioPipe} from './usuario.pipe';
 import {TranslatePipe} from './translate.pipe';
 import {DniPipe} from "./dni.pipe";
+import {CompanyPipe} from './company.pipe';
 
 @NgModule({
-    declarations: [RolPipe, BusPipe, PlacePipe, RoutePipe, PassengerPipe, UsuarioPipe, DniPipe, TranslatePipe],
-    exports: [RolPipe, BusPipe, PlacePipe, RoutePipe, PassengerPipe, UsuarioPipe, DniPipe, TranslatePipe]
+    declarations: [RolPipe, BusPipe, PlacePipe, RoutePipe, PassengerPipe, UsuarioPipe, DniPipe, TranslatePipe, CompanyPipe],
+    exports: [RolPipe, BusPipe, PlacePipe, RoutePipe, PassengerPipe, UsuarioPipe, DniPipe, TranslatePipe, CompanyPipe]
 })
 export class PipesModule {
 

@@ -7,16 +7,22 @@
     </h1>
     <div mat-dialog-content style="min-height: 100%;">
         <mat-form-field class="full-width">
-            <input matInput placeholder="Codigo" formControlName="code">
-            <mat-error *ngIf="form.controls['code'].errors?.required">Debe insertar el nombre de la persona</mat-error>
+            <input matInput placeholder="{{'bus.code'|translate}}" formControlName="code">
+            <mat-error *ngIf="form.controls['code'].errors?.required">{{'bus.error.requiredCode'|translate}}</mat-error>
         </mat-form-field>
         <mat-form-field class="full-width">
-            <input matInput placeholder="Numero" formControlName="number" type="number">
-            <mat-error *ngIf="form.controls['number'].errors?.required">Debe insertar los apellidos de la persona</mat-error>
+            <input matInput placeholder="{{'bus.number'|translate}}" formControlName="number" type="number">
+            <mat-error *ngIf="form.controls['number'].errors?.required">{{'bus.error.requiredNumber'|translate}}</mat-error>
         </mat-form-field>
         <mat-form-field class="full-width">
-            <input matInput placeholder="Numero de Asientos" formControlName="siteNumber" type="number">
-            <mat-error *ngIf="form.controls['siteNumber'].errors?.required">Debe insertar el correo del usuario</mat-error>
+            <input matInput placeholder="{{'bus.siteCount'|translate}}" formControlName="siteNumber" type="number">
+            <mat-error *ngIf="form.controls['siteNumber'].errors?.required">{{'bus.error.requiredSiteCount'|translate}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-select matInput placeholder="{{'bus.selectCompany'|translate}}" formControlName="company" [compareWith]="compararCompanies">
+                <mat-option *ngFor="let company of companies" [value]="company">{{company.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.controls['company'].errors?.required">{{'bus.error.requiredCompany'|translate}}</mat-error>
         </mat-form-field>
     </div>
     <div mat-dialog-actions class="boton-theme">

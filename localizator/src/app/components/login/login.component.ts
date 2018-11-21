@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
                     localStorage.setItem("user_token", response.headers.get("Authorization"));
                     localStorage.setItem("username", usuario.username);
                     this.principal.authenticate(usuario);
-                    this.principal.hasAuthority("Admin").then(has => {
+                    this.principal.hasAuthority("Administrador").then(has => {
                         if (has) {
                             localStorage.setItem("isAdmin", "true");
                             this.router.navigate(["/admin/usuario-list"]);

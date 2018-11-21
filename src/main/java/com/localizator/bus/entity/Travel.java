@@ -28,10 +28,6 @@ public class Travel implements Serializable, ClonableEntity<Travel> {
     @NotNull(message = "travel_active_not_null")
     private Boolean active;
 
-    @ManyToOne(optional = false)
-    @NotNull(message = "travel_route_not_null")
-    @JoinColumn(name = "route_id", foreignKey = @ForeignKey(name = "fk_travel_route"))
-    private Route route;
 
     @Column(name = "travel_date")
     @NotNull(message = "travel_date_not_null")
@@ -56,6 +52,11 @@ public class Travel implements Serializable, ClonableEntity<Travel> {
     @JsonDeserialize(using = TimeDeserializer.class)
     @NotNull(message = "travel_time_not_null")
     private Date arriveTime;
+
+    @ManyToOne(optional = false)
+    @NotNull(message = "travel_route_not_null")
+    @JoinColumn(name = "route_id", foreignKey = @ForeignKey(name = "fk_travel_route"))
+    private Route route;
 
     @ManyToOne(optional = false)
     @NotNull(message = "travel_bus_not_null")

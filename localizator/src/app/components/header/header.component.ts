@@ -104,7 +104,7 @@ export class HeaderComponent implements OnInit {
     }
 
     private onStateChange = (state: String) => {
-        console.log('WS estado de la conexion ha cambiado ' + state);
+        console.log('Cambiando estado del WebSocket a: ' + state);
     }
 
     cambiarBarra() {

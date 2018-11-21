@@ -20,6 +20,7 @@ import {PlaceService} from "../../../services/place.service";
 import {PassengerTravelService} from "../../../services/passenger-travel.service";
 import {Subject} from "rxjs/index";
 import {WTimeDialogComponent} from "../../../components/time-control/w-time-dialog.component";
+import {DatePipe} from "@angular/common";
 
 export const MY_FORMATS = {
     parse: {
@@ -67,23 +68,15 @@ export class TravelWindow implements OnInit {
     private meridien = 'PM';
 
     constructor(public dialogRef: MatDialogRef<TravelWindow>, @Inject(MAT_DIALOG_DATA) {id, active, travelDate, arriveDate, bus, route, passengerTravels, expandido, arriveTime, travelTime}: Travel,
-                private service: TravelService, private routeService: RouteService, private busService: BusService, private passengerService: PassengerService,
+                private service: TravelService, private routeService: RouteService, private busService: BusService, private passengerService: PassengerService, private datePipe: DatePipe,
                 private placeService: PlaceService, private passengerTravelService: PassengerTravelService, private dialog: MatDialog, private snackBar: MatSnackBar) {
         if (id) {
             this.insertar = false;
             this.travelInsertado = true;
             this.places = route.places;
             this.newTravel = {
-                id: id,
-                active: active,
-                route: route,
-                travelDate: travelDate,
-                arriveDate: arriveDate,
-                bus: bus,
-                passengerTravels: passengerTravels,
-                expandido: expandido,
-                travelTime: travelTime,
-                arriveTime: arriveTime
+                id: id, active: active, route: route, travelDate: travelDate, arriveDate: arriveDate, bus: bus,
+                passengerTravels: passengerTravels, expandido: expandido, travelTime: travelTime, arriveTime: arriveTime
             };
             passengerTravels.forEach(passengerTravel => {
                 this.datos.push(passengerTravel);
@@ -330,7 +323,8 @@ export class TravelWindow implements OnInit {
     }
 
     private convertDate(fecha: Date) {
-        return `${fecha.getHours() < 10 ? '0' + fecha.getHours() : fecha.getHours()}:${fecha.getMinutes() < 10 ? '0' + fecha.getMinutes() : fecha.getMinutes()}`;
+        let meridiano: string = this.datePipe.transform(fecha, "a");
+        return `${fecha.getHours() < 10 ? '0' + fecha.getHours() : fecha.getHours()}:${fecha.getMinutes() < 10 ? '0' + fecha.getMinutes() : fecha.getMinutes()} ${meridiano}`;
     }
 
     findPassenger(value: number) {

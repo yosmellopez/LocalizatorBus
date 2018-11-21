@@ -22,6 +22,14 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UserMenuComponent} from './components/user-menu/user-menu.component';
 import {TokenInterceptor} from "./services/token-interceptor";
 import {AuthService} from "./services/auth.service";
+import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
+import {PERFECT_SCROLLBAR_CONFIG} from 'ngx-perfect-scrollbar';
+import {PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
+import {DatePipe} from "@angular/common";
+
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+    suppressScrollX: true
+};
 
 @NgModule({
     declarations: [
@@ -33,7 +41,7 @@ import {AuthService} from "./services/auth.service";
         AdminComponent,
         CenterComponent,
         NotificacionMensajeComponent,
-        UserMenuComponent
+        UserMenuComponent,
     ],
     imports: [
         BrowserAnimationsModule,
@@ -44,10 +52,11 @@ import {AuthService} from "./services/auth.service";
         AppRoutingModule,
         RouterModule,
         ReactiveFormsModule,
+        PerfectScrollbarModule
     ],
     providers: [
         {provide: DateAdapter, useClass: DateFormat},
-        StompService, {
+        StompService, DatePipe, {
             provide: StompConfig,
             useValue: stompConfig,
         }, {
@@ -55,6 +64,9 @@ import {AuthService} from "./services/auth.service";
             useClass: TokenInterceptor,
             multi: true,
             deps: [AuthService]
+        }, {
+            provide: PERFECT_SCROLLBAR_CONFIG,
+            useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
         }
     ],
     bootstrap: [AppComponent],

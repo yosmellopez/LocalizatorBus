@@ -12,10 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "usuario", uniqueConstraints = {@UniqueConstraint(name = "unique_username", columnNames = {"username"})})
@@ -66,6 +63,12 @@ public class Usuario implements UserDetails, Serializable, ClonableEntity<Usuari
     @JoinColumn(name = "rol_id", foreignKey = @ForeignKey(name = "fk_usuario_rol"))
     private Rol rol;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "company_usuario", uniqueConstraints = {@UniqueConstraint(name = "usuario_company_unique", columnNames = {"usuario_id"})},
+            foreignKey = @ForeignKey(name = "fk_company_usuario_usuario"), inverseForeignKey = @ForeignKey(name = "fk_company_usuario_company"),
+            joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "company_id"))
+    private Set<Company> companies = new HashSet<>();
+
     public Usuario() {
     }
 
@@ -111,6 +114,14 @@ public class Usuario implements UserDetails, Serializable, ClonableEntity<Usuari
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public Set<Company> getCompanies() {
+        return companies;
+    }
+
+    public void setCompanies(Set<Company> companies) {
+        this.companies = companies;
     }
 
     @Override

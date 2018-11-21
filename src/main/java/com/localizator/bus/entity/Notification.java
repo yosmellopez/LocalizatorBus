@@ -29,7 +29,6 @@ public class Notification implements Serializable, Comparable<Notification> {
 
     @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
-//    @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss a")
     private Date fecha;
 
     @JsonIgnore
@@ -97,7 +96,8 @@ public class Notification implements Serializable, Comparable<Notification> {
     }
 
     public String getMensaje() {
-        return mensaje = fechaActual(fecha, new Date());
+        mensaje = fechaActual(fecha, new Date());
+        return mensaje;
     }
 
     public void setMensaje(String mensaje) {
@@ -123,6 +123,11 @@ public class Notification implements Serializable, Comparable<Notification> {
     }
 
     @Override
+    public int compareTo(Notification o) {
+        return o.fecha.compareTo(fecha);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -138,16 +143,7 @@ public class Notification implements Serializable, Comparable<Notification> {
 
     @Override
     public String toString() {
-        return "Notification{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", fecha=" + fecha +
-                '}';
+        return "Notification{" + "id=" + id + ", title='" + title + '\'' + ", description='" + description + '\'' + ", fecha=" + fecha + '}';
     }
 
-    @Override
-    public int compareTo(Notification o) {
-        return o.fecha.compareTo(fecha);
-    }
 }

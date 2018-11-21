@@ -13,6 +13,9 @@ public class CompanyException extends GeneralException {
     @Override
     public String tratarExcepcion() {
         obtenerMensaje();
+        if (mensaje.contains("fk_bus_company")) {
+            return messageSource.getMessage("company_bus_delete", null, locale);
+        }
         return mensaje;
     }
 }

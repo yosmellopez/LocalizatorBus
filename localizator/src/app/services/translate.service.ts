@@ -1,10 +1,11 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 
 @Injectable({providedIn: 'root'})
 export class TranslateService {
     data: any = {};
     private lang: string = "";
+    languageEmitter: EventEmitter<boolean> = new EventEmitter();
 
     constructor(private http: HttpClient) {
         this.lang = localStorage.getItem("lang") || "es";
@@ -47,6 +48,8 @@ export class TranslateService {
     setLang(lang: string) {
         this.lang = lang;
         localStorage.setItem("lang", lang);
-        this.use();
+        this.use().then(datos => {
+            this.languageEmitter.emit(true);
+        });
     }
 }

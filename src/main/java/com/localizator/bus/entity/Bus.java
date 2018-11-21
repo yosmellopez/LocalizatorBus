@@ -33,6 +33,11 @@ public class Bus implements Serializable, ClonableEntity<Bus> {
     @NotNull(message = "bus_number_not_null")
     private Integer number;
 
+    @ManyToOne(optional = false)
+    @NotNull(message = "bus_company_not_null")
+    @JoinColumn(name = "company_id", foreignKey = @ForeignKey(name = "fk_bus_company"))
+    private Company company;
+
     public Bus() {
     }
 
@@ -66,6 +71,14 @@ public class Bus implements Serializable, ClonableEntity<Bus> {
 
     public void setNumber(Integer number) {
         this.number = number;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     @Override

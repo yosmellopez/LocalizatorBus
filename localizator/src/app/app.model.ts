@@ -23,6 +23,7 @@ export class Bus {
     siteNumber: number;
     number: number;
     code: string;
+    company: Company
 }
 
 export class Place {

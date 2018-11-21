@@ -13,14 +13,19 @@
         "management": "GPS y Viajes"
     },
     "bus": {
-        "name": "Nombre",
-        "lastname": "Apellidos",
-        "username": "Nombre de Usuario",
-        "email": "Correo",
-        "role": "Rol",
-        "activated": "Activo",
+        "code": "Código",
+        "number": "Número",
+        "siteCount": "Cantidad de Asientos",
+        "company": "Nombre Empresa",
+        "selectCompany": "Selecione la Empresa",
         "list": "Lista de Buses",
-        "listmsg": "Muestra el Listado de Buses del Sistema"
+        "listmsg": "Muestra el Listado de Buses del Sistema",
+        "error": {
+            "requiredCode": "Debe insertar el código del bus",
+            "requiredNumber": "Debe insertar el número del bus",
+            "requiredSiteCount": "Debe insertar la cantidad de asientos del bus",
+            "requiredCompany": "Debe seleccionar la empresa del bus"
+        }
     },
     "place": {
         "name": "Nombre",
@@ -69,6 +74,8 @@
     "actions": "Acciones",
     "notifications": "Notificaciones",
     "dashboard": "Dashboard",
+    "adminTitle": "Administración",
+    "gpsTravel": "GPS y Viajes",
     "userprofile": "Perfil de Usuario",
     "accountlock": "Bloquear Pantalla"
 }

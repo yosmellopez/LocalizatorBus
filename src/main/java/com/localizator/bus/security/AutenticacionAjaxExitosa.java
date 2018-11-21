@@ -25,14 +25,18 @@ import java.util.Date;
 @Component
 public class AutenticacionAjaxExitosa implements AuthenticationSuccessHandler {
 
-    @Autowired
-    private JwtTokenFactory tokenFactory;
+    private final JwtTokenFactory tokenFactory;
+
+    private final UsuarioRepository usuarioRepository;
+
+    private final ObjectMapper objectMapper;
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    @Autowired
-    private ObjectMapper objectMapper;
+    public AutenticacionAjaxExitosa(JwtTokenFactory tokenFactory, UsuarioRepository usuarioRepository, ObjectMapper objectMapper) {
+        this.tokenFactory = tokenFactory;
+        this.usuarioRepository = usuarioRepository;
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -61,13 +65,5 @@ public class AutenticacionAjaxExitosa implements AuthenticationSuccessHandler {
             }
             response.getWriter().flush();
         }
-    }
-
-    public UsuarioRepository getUsuarioRepository() {
-        return usuarioRepository;
-    }
-
-    public void setUsuarioRepository(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
     }
 }

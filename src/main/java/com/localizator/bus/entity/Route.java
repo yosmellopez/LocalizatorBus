@@ -94,6 +94,16 @@ public class Route implements Serializable, ClonableEntity<Route> {
     }
 
     @Override
+    public void clone(Route route) {
+        code = route.code;
+        origin = route.origin;
+        destiny = route.destiny;
+        Optional.ofNullable(route.places).ifPresent(routePlaces -> {
+            places = routePlaces;
+        });
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -109,21 +119,6 @@ public class Route implements Serializable, ClonableEntity<Route> {
 
     @Override
     public String toString() {
-        return "Route{" +
-                "id=" + id +
-                ", code='" + code + '\'' +
-                ", origin=" + origin +
-                ", destiny=" + destiny +
-                '}';
-    }
-
-    @Override
-    public void clone(Route route) {
-        code = route.code;
-        origin = route.origin;
-        destiny = route.destiny;
-        Optional.ofNullable(route.places).ifPresent(routePlaces -> {
-            places = routePlaces;
-        });
+        return "Route{" + "id=" + id + ", code='" + code + '\'' + ", origin=" + origin + ", destiny=" + destiny + '}';
     }
 }

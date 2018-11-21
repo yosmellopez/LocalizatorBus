@@ -12,6 +12,6 @@ public class JwtHeaderTokenExtractor implements TokenExtractor {
         if (StringUtils.isEmpty(header)) {
             throw new AuthenticationServiceException("No está autorizado a acceder a este recurso!");
         }
-        return header;
+        return header.substring(7);
     }
 }

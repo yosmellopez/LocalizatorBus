@@ -9,8 +9,6 @@ import {TranslateService} from "../../services/translate.service";
 import {TitleService} from "../../services/title.service";
 import {RUTAS} from "../../app.routing";
 
-declare function my_init_plugins();
-
 @Component({
     selector: 'app-center',
     templateUrl: './center.component.html',
@@ -45,6 +43,9 @@ export class CenterComponent implements OnInit {
             if (event instanceof NavigationEnd)
                 this.getTitle();
         });
+        this.service.languageEmitter.subscribe(value => {
+            this.getTitle();
+        });
         this.getTitle();
     }
 
@@ -57,7 +58,7 @@ export class CenterComponent implements OnInit {
                 for (let i = 0; i < routes.length; i++) {
                     if (titlee.includes(routes[i].path)) {
                         this.titulo = this.service.translate(routes[i].title);
-                        titulos.push({title: this.rutas[item].title, active: false});
+                        titulos.push({title: this.service.translate(this.rutas[item].title), active: false});
                         titulos.push({title: this.titulo, active: true});
                     }
                 }

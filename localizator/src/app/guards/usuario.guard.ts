@@ -14,7 +14,7 @@ export class UsuarioGuard implements CanActivate {
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
         my_init_plugins();
-        return this.principal.hasAnyAuthority(["Admin", "User"]).then(authenticated => {
+        return this.principal.hasAnyAuthority(["Administrador", "Usuario"]).then(authenticated => {
             if (authenticated) {
                 return Promise.resolve(authenticated);
             } else {

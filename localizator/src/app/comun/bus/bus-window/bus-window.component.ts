@@ -1,9 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
-import {Bus} from "../../../app.model";
+import {Bus, Company} from "../../../app.model";
 import {MensajeError} from "../../../mensaje/window.mensaje";
 import {BusService} from "../../../services/bus.service";
+import {CompanyService} from "../../../services/company.service";
 
 @Component({
     selector: 'app-bus-window',
@@ -16,9 +17,10 @@ export class BusWindow implements OnInit {
     idUser: number;
     insertar = true;
     form: FormGroup;
+    companies: Company[] = [];
 
-    constructor(public dialogRef: MatDialogRef<BusWindow>, @Inject(MAT_DIALOG_DATA) {id, code, siteNumber, number}: Bus,
-                private service: BusService, private dialog: MatDialog) {
+    constructor(public dialogRef: MatDialogRef<BusWindow>, @Inject(MAT_DIALOG_DATA) {id, code, siteNumber, number, company}: Bus,
+                private service: BusService, private dialog: MatDialog, private companyService: CompanyService) {
         if (id)
             this.insertar = false;
         this.idUser = id;
@@ -26,6 +28,7 @@ export class BusWindow implements OnInit {
             code: new FormControl(code, [Validators.required]),
             number: new FormControl(number, [Validators.required]),
             siteNumber: new FormControl(siteNumber, [Validators.required]),
+            company: new FormControl(company, [Validators.required]),
         });
     }
 
@@ -57,6 +60,15 @@ export class BusWindow implements OnInit {
     }
 
     ngOnInit() {
+        this.companyService.listarAllCompanys().subscribe(resp => {
+            if (resp.body.success) {
+                this.companies = resp.body.elementos;
+            }
+        });
+    }
+
+    compararCompanies(inicio: Company, fin: Company) {
+        return inicio && fin && inicio.id === fin.id;
     }
 
     onNoClick(): void {

@@ -16,7 +16,7 @@ export class AdminGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
         my_init_plugins();
-        return this.principal.hasAuthority("Admin").then(authenticated => {
+        return this.principal.hasAuthority("Administrador").then(authenticated => {
             if (authenticated) {
                 return Promise.resolve(authenticated);
             } else {
