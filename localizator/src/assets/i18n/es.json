@@ -10,7 +10,8 @@
         "list": "Lista de Usuarios",
         "listmsg": "Muestra el Listado de Usuarios del Sistema",
         "logout": "Cerrar Sesión",
-        "management": "GPS y Viajes"
+        "management": "GPS y Viajes",
+        "company": "Empresa"
     },
     "bus": {
         "code": "Código",
@@ -76,6 +77,7 @@
     "dashboard": "Dashboard",
     "adminTitle": "Administración",
     "gpsTravel": "GPS y Viajes",
+    "noCompanies": "Sin Empresa",
     "userprofile": "Perfil de Usuario",
     "accountlock": "Bloquear Pantalla"
 }

@@ -17,9 +17,9 @@ import {RUTAS} from "../../app.routing";
 })
 export class CenterComponent implements OnInit {
     titulo: string;
-    rutas: RouteInfo[] = RUTAS;
     usuario: Usuario = null;
     rol: Promise<String> = Promise.resolve("");
+    rutas: RouteInfo[] = RUTAS;
     rutasUsuario: RouteInfo[] = [];
     routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
 

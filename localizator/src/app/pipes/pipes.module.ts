@@ -8,10 +8,11 @@ import {UsuarioPipe} from './usuario.pipe';
 import {TranslatePipe} from './translate.pipe';
 import {DniPipe} from "./dni.pipe";
 import {CompanyPipe} from './company.pipe';
+import {CompaniesPipe} from './companies.pipe';
 
 @NgModule({
-    declarations: [RolPipe, BusPipe, PlacePipe, RoutePipe, PassengerPipe, UsuarioPipe, DniPipe, TranslatePipe, CompanyPipe],
-    exports: [RolPipe, BusPipe, PlacePipe, RoutePipe, PassengerPipe, UsuarioPipe, DniPipe, TranslatePipe, CompanyPipe]
+    declarations: [RolPipe, BusPipe, PlacePipe, RoutePipe, PassengerPipe, UsuarioPipe, DniPipe, TranslatePipe, CompanyPipe, CompaniesPipe],
+    exports: [RolPipe, BusPipe, PlacePipe, RoutePipe, PassengerPipe, UsuarioPipe, DniPipe, TranslatePipe, CompanyPipe, CompaniesPipe]
 })
 export class PipesModule {
 

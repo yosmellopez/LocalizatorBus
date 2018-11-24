@@ -46,8 +46,9 @@ export class UsuarioWindow implements OnInit {
     }
 
     ngOnInit() {
-        this.rolService.listarRoles().subscribe(response => {
-            this.roles = response.body.elementos;
+        this.rolService.listarRoles().subscribe(resp => {
+            if (resp.body.success)
+                this.roles = resp.body.elementos;
         });
     }
 

@@ -10,7 +10,8 @@
         "list": "User List",
         "listmsg": "Show the system user list",
         "logout": "Logout",
-        "management": "GPS and Travels"
+        "management": "GPS and Travels",
+        "company": "Company"
     },
     "bus": {
         "code": "Code",
@@ -77,5 +78,6 @@
     "userprofile": "User Profile",
     "adminTitle": "Administration",
     "gpsTravel": "GPS and Travels",
+    "noCompanies": "No Companies",
     "accountlock": "Lock Screen"
 }

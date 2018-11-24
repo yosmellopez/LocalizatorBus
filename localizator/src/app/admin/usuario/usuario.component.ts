@@ -19,7 +19,7 @@ export class UsuarioComponent implements OnInit {
     dataSource: MatTableDataSource<Usuario> = new MatTableDataSource<Usuario>();
     total: number = 0;
     pageSize: number = 10;
-    displayedColumns = ['seleccionado', 'name', 'lastname', 'username', 'email', 'rol', 'activated', 'acciones'];
+    displayedColumns = ['seleccionado', 'name', 'lastname', 'username', 'email', 'company', 'rol', 'activated', 'acciones'];
     selection = new SelectionModel<Usuario>(true, []);
     nombre: string = '';
     resultsLength = 0;

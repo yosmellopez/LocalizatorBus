@@ -10,6 +10,7 @@ export class Usuario {
     password: string;
     activated: boolean;
     email: string;
+    companies: Company[];
     rol: Rol
 }
 
