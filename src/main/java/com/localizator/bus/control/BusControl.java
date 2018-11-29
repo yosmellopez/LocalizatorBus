@@ -1,14 +1,18 @@
 package com.localizator.bus.control;
 
 import com.localizator.bus.entity.Bus;
+import com.localizator.bus.entity.Company;
+import com.localizator.bus.entity.Usuario;
 import com.localizator.bus.exception.GeneralException;
 import com.localizator.bus.exception.BusException;
 import com.localizator.bus.repository.BusRepository;
+import com.localizator.bus.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -39,21 +43,38 @@ public class BusControl {
     private MessageSource messageSource;
 
     @GetMapping(value = "/bus")
-    public ResponseEntity<AppResponse<Bus>> listarBuss(Pageable pageable) {
-        Page<Bus> buss = busRepository.findAll(pageable);
-        return ok(success(buss.getContent()).total(buss.getTotalElements()).build());
+    public ResponseEntity<AppResponse<Bus>> listarBuss(Pageable pageable, @AuthenticationPrincipal Usuario usuario) {
+        if (SecurityUtils.isAdmin()) {
+            Page<Bus> buss = busRepository.findAll(pageable);
+            return ok(success(buss.getContent()).total(buss.getTotalElements()).build());
+        } else {
+            Company company = usuario.getCompanies().parallelStream().findFirst().get();
+            Page<Bus> buss = busRepository.findByCompany(company, pageable);
+            return ok(success(buss.getContent()).total(buss.getTotalElements()).build());
+        }
     }
 
     @GetMapping(value = "/bus/all")
-    public ResponseEntity<AppResponse<Bus>> listarAllBuss() {
-        List<Bus> buss = busRepository.findAll();
-        return ok(success(buss).total(buss.size()).build());
+    public ResponseEntity<AppResponse<Bus>> listarAllBuss(@AuthenticationPrincipal Usuario usuario) {
+        if (SecurityUtils.isAdmin()) {
+            List<Bus> buss = busRepository.findAll();
+            return ok(success(buss).total(buss.size()).build());
+        } else {
+            Company company = usuario.getCompanies().parallelStream().findFirst().get();
+            List<Bus> buss = busRepository.findByCompany(company);
+            return ok(success(buss).total(buss.size()).build());
+        }
     }
 
     @PostMapping(value = "/bus")
-    public ResponseEntity<AppResponse<Bus>> insertarBus(@Valid @RequestBody Bus bus) {
-        busRepository.saveAndFlush(bus);
-        return ok(success(bus).build());
+    public ResponseEntity<AppResponse<Bus>> insertarBus(@Valid @RequestBody Bus bus, Locale locale) {
+        Company company = bus.getCompany();
+        long cantidad = busRepository.countByCompany(company);
+        if (cantidad < company.getBusCount()) {
+            busRepository.saveAndFlush(bus);
+            return ok(success(bus).build());
+        } else
+            return ok(failure(messageSource.getMessage("company_bus_excedded", new Object[]{company.getName()}, locale)).build());
     }
 
     @PutMapping(value = "/bus/{idBus}")
@@ -92,6 +113,7 @@ public class BusControl {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<AppResponse> tratarExcepcion(Exception e, Locale locale) {
+        e.printStackTrace();
         GeneralException exception = new BusException(e.getCause(), messageSource, locale);
         return ok(failure(exception.tratarExcepcion()).build());
     }

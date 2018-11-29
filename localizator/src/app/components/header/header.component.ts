@@ -19,6 +19,7 @@ const LANGUAGES: RouteInfo[] = [{
     icon: "flag-icon flag-icon-gb",
     hasChildren: false,
     authority: [],
+    pageTitle: "",
     path: "en",
     routes: []
 }, {
@@ -26,6 +27,7 @@ const LANGUAGES: RouteInfo[] = [{
     title: "Español",
     class: "grey-text text-darken-1",
     hasChildren: false,
+    pageTitle: "",
     path: "es",
     icon: "flag-icon flag-icon-es",
     authority: [],
@@ -41,6 +43,7 @@ const LANGUAGES: RouteInfo[] = [{
 export class HeaderComponent implements OnInit {
     languages = LANGUAGES;
     titulos: Observable<Title[]> = new Observable<Title[]>();
+    pageTitle: Observable<string> = new Observable<string>();
     notificaciones: Notificacion[] = [];
     username: string;
     isAdmin: boolean = false;
@@ -64,7 +67,10 @@ export class HeaderComponent implements OnInit {
         });
         this.titleService.titleEmitter.subscribe(value => {
             this.titulos = of(value);
-        })
+        });
+        this.titleService.pageTitleEmitter.subscribe(value => {
+            this.pageTitle = of(value);
+        });
         this.websocket.connectWebSocket(this.username, this.isAdmin);
         this.websocketNotification = this.websocket.getMessageNotificacion().subscribe(this.onReceiveNotification);
         if (this.isAdmin)
@@ -80,6 +86,7 @@ export class HeaderComponent implements OnInit {
         this.notificationService.listarAllNotificaciones().subscribe(resp => {
             if (resp.body.success)
                 this.notificaciones = resp.body.elementos;
+            this.notificationService.notificationEmitter.emit(this.notificaciones.length);
         });
     }
 
@@ -95,12 +102,14 @@ export class HeaderComponent implements OnInit {
         const notificacion: Notificacion = JSON.parse(message.body);
         this.notificaciones.push(notificacion);
         this.snackBar.openFromComponent(NotificacionMensajeComponent, {
-            duration: 100000,
+            duration: 10000,
             horizontalPosition: "left",
             verticalPosition: "bottom",
-            panelClass: ['blue-snackbar', 'mat-elevation-z5'],
+            panelClass: ['blue-snackbar'],
             data: notificacion
         });
+        this.notificationService.notificationEmitter.emit(this.notificaciones.length);
+        console.log("Recibida la notificacion")
     }
 
     private onStateChange = (state: String) => {
@@ -114,18 +123,18 @@ export class HeaderComponent implements OnInit {
 
     crearNotificacion() {
         let notificacion: Notificacion = {
-            title: "",
-            mensaje: "",
+            title: "Notificacion de Prueba",
+            mensaje: "Hace unos segundos",
             icono: "",
             fecha: new Date(),
-            description: "",
+            description: "Esta es una notificacion de prueba para ver lo que sucede con las notificaciones",
             id: 20
         };
         this.snackBar.openFromComponent(NotificacionMensajeComponent, {
             duration: 100000,
             horizontalPosition: "left",
             verticalPosition: "bottom",
-            panelClass: ['blue-snackbar', 'mat-elevation-z5'],
+            panelClass: ['blue-snackbar'],
             data: notificacion
         });
     }

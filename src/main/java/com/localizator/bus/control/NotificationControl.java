@@ -85,6 +85,17 @@ public class NotificationControl {
         return ok(success(messageSource.getMessage("delete_notification", null, locale)).total(notificationRepository.count()).build());
     }
 
+    @DeleteMapping(value = "/notification/readAll")
+    public ResponseEntity<AppResponse> readAll(@AuthenticationPrincipal Usuario usuario, Locale locale) {
+        List<UsuarioNotification> notifications = usuarioNotificationRepository.findByUsuarioAndVisto(usuario, false);
+        for (UsuarioNotification notification : notifications) {
+            notification.setVisto(true);
+            usuarioNotificationRepository.save(notification);
+        }
+        usuarioNotificationRepository.flush();
+        return ok(success(messageSource.getMessage("notification_read_all", null, locale)).total(notificationRepository.count()).build());
+    }
+
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<AppResponse> tratarExcepciones(EntityNotFoundException e, Locale locale) {
         return ok(failure(messageSource.getMessage(e.getMessage(), null, locale)).build());

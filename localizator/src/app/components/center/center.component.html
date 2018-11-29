@@ -23,17 +23,17 @@
                                 <a href="#" class="btn btn-secondary btn-raised dropdown-toggle" data-toggle="dropdown">
                                     {{usuario|usuario}} </a>
                                 <div class="dropdown-menu dropdown-menu-center from-top">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" routerLink="/user/notification">
                                         <i class="material-icons icon">email</i>
                                         <span class="title">Inbox</span>
                                         <span class="pull-xs-right tag tag-pill tag-raised tag-danger tag-xs">New</span>
                                     </a>
-                                    <a class="dropdown-item" routerLink="/notification">
+                                    <a class="dropdown-item" routerLink="/user/notification">
                                         <i class="material-icons icon">grade</i>
                                         <span class="title">{{'notifications'|translate}}</span>
-                                        <span class="pull-xs-right tag tag-outline-primary tag-rounded tag-xs">5</span>
+                                        <span class="pull-xs-right tag tag-outline-primary tag-rounded tag-xs">{{cantidadNotificaciones|async}}</span>
                                     </a>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" routerLink="/user/profile">
                                         <i class="material-icons icon">settings</i>
                                         <span class="title">{{'userprofile'|translate}}</span>
                                     </a>
@@ -66,14 +66,15 @@
                                 <div class="collapse" id="{{menu.id}}" *ngIf="menu.hasChildren">
                                     <ul class="list-unstyled">
                                         <li *ngFor="let menuItem of menu.routes">
-                                            <a [routerLink]="menuItem.path" class="btn btn-flat" style="padding-left: 40px">
+                                            <a [routerLink]="menuItem.path" class="btn btn-flat" style="padding-left: 40px" routerLinkActive="active">
                                                 <i class="material-icons pull-left icon">{{menuItem.icon}}</i>
                                                 <span class="title">{{menuItem.title|translate}}</span>
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
-                                <a [routerLink]="menu.path" class="btn btn-flat" *ngIf="!menu.hasChildren">
+                                <a [routerLink]="menu.path" class="btn btn-flat" *ngIf="!menu.hasChildren" routerLinkActive="active">
+                                    <span class="{{menu.class}}" *ngIf="menu.title=='notifications'">{{cantidadNotificaciones|async}}</span>
                                     <i class="material-icons pull-left icon">{{menu.icon}}</i>
                                     <span class="title">{{menu.title|translate}}</span>
                                 </a>

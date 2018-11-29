@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {RouteWindow} from "../route/route-window/route-window.component";
-import {Route} from "../../app.model";
+import {Place, Route} from "../../app.model";
 import {SelectionModel} from "@angular/cdk/collections";
 import {catchError, map, startWith, switchMap} from "rxjs/internal/operators";
 import {Confirm, Information} from "../../mensaje/window.mensaje";
@@ -197,6 +197,7 @@ export class RouteComponent implements OnInit {
         }
     }
 
-    showIndex(i: number) {
+    createText(places: Place[]) {
+        return places.map(place => place.name).join(", ");
     }
 }

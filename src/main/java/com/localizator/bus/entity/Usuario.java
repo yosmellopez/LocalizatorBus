@@ -37,11 +37,11 @@ public class Usuario implements UserDetails, Serializable, ClonableEntity<Usuari
     private String username;
 
     @NotNull(message = "usuario_email_not_null")
-    @Size(message = "", min = 0, max = 50)
+    @Size(message = "usuario_email_size", min = 1, max = 50)
     @Column(name = "email")
     private String email;
 
-    @NotNull(message = "usuario_email_not_null")
+    @NotNull(message = "usuario_language_not_null")
     @Size(message = "user_language_size", min = 2, max = 5)
     @Column(name = "language")
     private String language;
@@ -63,7 +63,7 @@ public class Usuario implements UserDetails, Serializable, ClonableEntity<Usuari
     @JoinColumn(name = "rol_id", foreignKey = @ForeignKey(name = "fk_usuario_rol"))
     private Rol rol;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name = "company_usuario", uniqueConstraints = {@UniqueConstraint(name = "usuario_company_unique", columnNames = {"usuario_id"})},
             foreignKey = @ForeignKey(name = "fk_company_usuario_usuario"), inverseForeignKey = @ForeignKey(name = "fk_company_usuario_company"),
             joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "company_id"))
@@ -226,5 +226,7 @@ public class Usuario implements UserDetails, Serializable, ClonableEntity<Usuari
         if (usuario.password != null && !usuario.password.isEmpty()) {
             password = usuario.password;
         }
+        companies.clear();
+        companies.addAll(usuario.companies);
     }
 }

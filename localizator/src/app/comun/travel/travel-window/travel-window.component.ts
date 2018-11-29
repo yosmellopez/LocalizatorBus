@@ -1,9 +1,9 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 import {
     ErrorStateMatcher,
     MAT_DATE_FORMATS,
-    MAT_DIALOG_DATA,
+    MAT_DIALOG_DATA, MatAutocompleteSelectedEvent,
     MatDialog,
     MatDialogRef,
     MatSnackBar,
@@ -21,6 +21,7 @@ import {PassengerTravelService} from "../../../services/passenger-travel.service
 import {Subject} from "rxjs/index";
 import {WTimeDialogComponent} from "../../../components/time-control/w-time-dialog.component";
 import {DatePipe} from "@angular/common";
+import {PlaceWindow} from "../../place/place-window/place-window.component";
 
 export const MY_FORMATS = {
     parse: {
@@ -51,6 +52,9 @@ export class TravelWindow implements OnInit {
     routes: Route[];
     buses: Bus[];
     places: Place[];
+    @ViewChild("dniInput") dniInput: ElementRef;
+    passengers: Passenger[] = [];
+    filteredPassengers: Passenger[] = [];
     step = 0;
     insertarPassenger: boolean = true;
     minDate: Date = new Date();
@@ -60,12 +64,13 @@ export class TravelWindow implements OnInit {
     newTravel: Travel;
     newPassenger: Passenger;
     currentPlace: Place;
+    selectedRoute: Route;
     currentPassengerTravel: PassengerTravel;
     passengerSubcription: Subject<Passenger> = new Subject<Passenger>();
     @ViewChild(MatStepper) steeper: MatStepper;
     private hour = 10;
     private minute = 25;
-    private meridien = 'PM';
+    private meridiem = 'PM';
 
     constructor(public dialogRef: MatDialogRef<TravelWindow>, @Inject(MAT_DIALOG_DATA) {id, active, travelDate, arriveDate, bus, route, passengerTravels, expandido, arriveTime, travelTime}: Travel,
                 private service: TravelService, private routeService: RouteService, private busService: BusService, private passengerService: PassengerService, private datePipe: DatePipe,
@@ -73,6 +78,7 @@ export class TravelWindow implements OnInit {
         if (id) {
             this.insertar = false;
             this.travelInsertado = true;
+            this.selectedRoute = route;
             this.places = route.places;
             this.newTravel = {
                 id: id, active: active, route: route, travelDate: travelDate, arriveDate: arriveDate, bus: bus,
@@ -160,7 +166,6 @@ export class TravelWindow implements OnInit {
         if (this.formPasajero.valid) {
             if (this.newPassenger) {
                 this.currentPlace = this.formPasajero.controls['place'].value;
-                console.log(this.formPasajero.controls['passenger'].value)
                 this.passengerService.modificarPassenger(this.newPassenger.id, this.formPasajero.controls['passenger'].value).subscribe(resp => {
                     if (resp.body.success) {
                         this.newPassenger = resp.body.elemento;
@@ -180,6 +185,7 @@ export class TravelWindow implements OnInit {
                     }
                 });
             }
+            this.filteredPassengers = this.passengers;
         }
     }
 
@@ -217,11 +223,11 @@ export class TravelWindow implements OnInit {
                     this.formPasajero.reset({place: null, passenger: {name: '', lastname: '', dni: ''}});
                     this.formPasajero.setErrors(null);
                 }
-                this.dialog.open(Information, {width: "300px", data: {mensaje: "Pasajero modificado exitosamente"}});
+                this.dialog.open(Information, {width: "350px", data: {mensaje: "Pasajero modificado exitosamente"}});
                 this.newPassenger = null;
                 this.insertarPassenger = true;
             } else {
-                this.dialog.open(MensajeError, {width: "300px", data: {mensaje: resp.body.msg}});
+                this.dialog.open(MensajeError, {width: "350px", data: {mensaje: resp.body.msg}});
             }
         });
     }
@@ -241,6 +247,11 @@ export class TravelWindow implements OnInit {
         this.passengerSubcription.subscribe(passenger => {
             this.finishTravel(passenger);
         });
+        this.passengerService.listarAllPassengers().subscribe(resp => {
+            if (resp.body.success)
+                this.passengers = resp.body.elementos;
+            this.filteredPassengers = this.passengers;
+        });
     }
 
     compararRoutes(inicio: Route, fin: Route) {
@@ -255,12 +266,31 @@ export class TravelWindow implements OnInit {
         return inicio && fin && inicio.id === fin.id;
     };
 
+    seleccionarPassenger(event: MatAutocompleteSelectedEvent) {
+        let elementos: Passenger[] = this.passengers.filter(option => option.dni === event.option.value);
+        if (elementos.length != 0) {
+            this.formPasajero.get("passenger").patchValue(elementos[0]);
+        }
+    }
+
+    filterDnis() {
+        let dni = this.dniInput.nativeElement.value;
+        this.filteredPassengers = this.passengers.filter(passenger => passenger.dni.startsWith(dni));
+    }
+
     onNoClick(): void {
-        this.dialogRef.close(false);
-        this.passengerSubcription.complete();
+        if (this.newTravel && this.insertar)
+            this.service.finalizeTravel(this.newTravel.id).subscribe(resp => {
+                this.dialogRef.close(resp);
+            });
+        else {
+            this.dialogRef.close(false);
+            this.passengerSubcription.complete();
+        }
     }
 
     private filterPlace(value: Route) {
+        this.selectedRoute = value;
         this.routeService.findOneRoutes(value.id).subscribe(resp => {
             if (resp.body.success) {
                 this.places = resp.body.elemento.places;
@@ -277,11 +307,13 @@ export class TravelWindow implements OnInit {
     }
 
     finalizar() {
-        this.dialogRef.close(this.newTravel);
+        this.service.finalizeTravel(this.newTravel.id).subscribe(resp => {
+            this.dialogRef.close(resp);
+        });
     }
 
     private getTime(): string {
-        return `${this.hour < 10 ? '0' + this.hour : this.hour}:${this.minute < 10 ? '0' + this.minute : this.minute} ${this.meridien}`;
+        return `${this.hour < 10 ? '0' + this.hour : this.hour}:${this.minute < 10 ? '0' + this.minute : this.minute} ${this.meridiem}`;
     }
 
     showPicker($event, control: FormControl) {
@@ -291,7 +323,7 @@ export class TravelWindow implements OnInit {
             data: {
                 hour: this.hour,
                 minute: this.minute,
-                meriden: this.meridien
+                meriden: this.meridiem
             }
         });
 
@@ -301,7 +333,7 @@ export class TravelWindow implements OnInit {
             } else if (result !== -1) {
                 this.hour = result.hour;
                 this.minute = result.minute;
-                this.meridien = result.meriden;
+                this.meridiem = result.meriden;
                 control.setValue(this.getTime());
             }
         });
@@ -313,12 +345,12 @@ export class TravelWindow implements OnInit {
         if (time) {
             this.hour = Number.parseInt(time.substr(0, 2));
             this.minute = Number.parseInt(time.substr(3, 5));
-            this.meridien = time.substr(6, 8);
+            this.meridiem = time.substr(6, 8);
         } else {
             let fecha: Date = new Date();
             this.hour = fecha.getHours();
             this.minute = fecha.getMinutes();
-            // this.meridien = fecha.getTimezoneOffset();
+            // this.meridiem = fecha.getTimezoneOffset();
         }
     }
 
@@ -338,6 +370,22 @@ export class TravelWindow implements OnInit {
                     verticalPosition: "top",
                     panelClass: ['failure-snackbar', 'mat-elevation-z5'],
                     data: {title: "Pasajero no encontrado", description: resp.body.msg}
+                });
+            }
+        });
+    }
+
+    newPlace() {
+        let placedialogRef = this.dialog.open(PlaceWindow, {
+            width: '400px', data: new Place()
+        });
+        placedialogRef.afterClosed().subscribe(respuesta => {
+            if (respuesta && respuesta.success) {
+                this.places.push(respuesta.elemento);
+                this.routeService.addPlaceToRoute(this.selectedRoute.id, respuesta.elemento).subscribe(resp => {
+                    if (resp.body.success) {
+                        this.dialog.open(Information, {width: '350px', data: {mensaje: 'Lugar añadido a la ruta exitosmente'}});
+                    }
                 });
             }
         });

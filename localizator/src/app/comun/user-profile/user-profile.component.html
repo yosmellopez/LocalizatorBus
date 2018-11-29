@@ -1,3 +1,18 @@
-<p>
-  user-profile works!
-</p>
+<mat-card>
+    <mat-card-content>
+        <p>
+            Nombre: {{usuario|property:'name'|async}}
+        </p>
+        <p>
+            Apellidos: {{usuario|property:'lastname'|async}}
+        </p>
+        <p>
+            Rol: {{usuario|property:'rol'|async|rol}}
+        </p>
+        <p>
+            Empresa: {{usuario|property:'companies'|async|companies}}
+        </p>
+    </mat-card-content>
+    <mat-card-footer>
+    </mat-card-footer>
+</mat-card>

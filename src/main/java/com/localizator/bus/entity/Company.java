@@ -1,5 +1,7 @@
 package com.localizator.bus.entity;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -22,6 +24,10 @@ public class Company implements Serializable, ClonableEntity<Company> {
     @NotNull(message = "company_bus_count_not_null")
     @Min(message = "company_min_bus_count", value = 1)
     private Integer busCount;
+
+    @Column(name = "canceled")
+    @ColumnDefault(value = "false")
+    private Boolean canceled;
 
     public Long getId() {
         return id;
@@ -47,9 +53,18 @@ public class Company implements Serializable, ClonableEntity<Company> {
         this.busCount = busCount;
     }
 
+    public Boolean getCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(Boolean canceled) {
+        this.canceled = canceled;
+    }
+
     @Override
     public void clone(Company company) {
         name = company.name;
         busCount = company.busCount;
+        canceled = company.canceled;
     }
 }

@@ -30,7 +30,7 @@
                         </mat-select>
                         <mat-error *ngIf="formViaje.controls['bus'].errors?.required">Debe seleccionar el bus que realizará el viaje</mat-error>
                     </mat-form-field>
-                    <mat-slide-toggle formControlName="active">Activo</mat-slide-toggle>
+                    <mat-slide-toggle formControlName="active">{{formViaje.controls['active'].value?'Activo':'Inactivo'}}</mat-slide-toggle>
                 </mat-expansion-panel>
 
                 <mat-expansion-panel [expanded]="true" (opened)="setStep(1)" hideToggle>
@@ -89,8 +89,11 @@
             </form>
         </mat-step>
         <mat-step [stepControl]="formPasajero" label="Datos del Pasajero">
-            <form class="form" [formGroup]="formPasajero" (submit)="addPassenger()">
-                <mat-form-field class="middle-width" style="float: right;margin-right: 5px;">
+            <form class="form" [formGroup]="formPasajero" (submit)="addPassenger()" class="table-actions-theme">
+                <button type="button" mat-mini-fab (click)="newPlace()" color="primary" style="float: right;margin-right: 5px;margin-top: 5px">
+                    <mat-icon>add</mat-icon>
+                </button>
+                <mat-form-field style="float: right;margin-right: 10px;width: 40%">
                     <mat-select matInput placeholder="Seleccione el lugar del viaje" formControlName="place" [compareWith]="compararLugares">
                         <mat-option *ngFor="let place of places" [value]="place">{{place.name}}</mat-option>
                     </mat-select>
@@ -99,7 +102,12 @@
                 <div formGroupName="passenger">
                     <div class="middle-width">
                         <mat-form-field style="margin-right: 15px;width: 15.6em;">
-                            <input matInput placeholder="Documento de Identidad (DNI)" formControlName="dni" type="number">
+                            <input matInput #dniInput placeholder="Documento de Identidad (DNI)" formControlName="dni" type="number" [matAutocomplete]="dniInput" (keyup)="filterDnis()">
+                            <mat-autocomplete #dniInput="matAutocomplete" (optionSelected)="seleccionarPassenger($event)">
+                                <mat-option *ngFor="let passenger of filteredPassengers" [value]="passenger.dni">
+                                    {{passenger.dni}}
+                                </mat-option>
+                            </mat-autocomplete>
                             <mat-error *ngIf="formPasajero.get('passenger.dni').hasError('required')">Debe insertar el dni de la persona</mat-error>
                         </mat-form-field>
                         <button type="button" mat-mini-fab (click)="findPassenger(formPasajero.get('passenger.dni').value)" color="primary">

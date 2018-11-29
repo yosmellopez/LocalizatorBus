@@ -81,7 +81,7 @@ export class TravelComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result != false) {
-                this.dialog.open(Information, {width: '350px', data: {mensaje: 'Se ha insertardo el viaje.'}});
+                this.dialog.open(Information, {width: '350px', data: {mensaje: result.body.msg}});
                 this.paginator.page.emit();
             }
         });
@@ -94,11 +94,10 @@ export class TravelComponent implements OnInit {
         });
 
         editDialogRef.afterClosed().subscribe(result => {
-            console.log(result)
             if (result != false) {
                 this.dialog.open(Information, {
                     width: '350px',
-                    data: {mensaje: 'Se ha modificado el viaje.'}
+                    data: {mensaje: result.body.msg}
                 });
                 this.paginator.page.emit();
             }

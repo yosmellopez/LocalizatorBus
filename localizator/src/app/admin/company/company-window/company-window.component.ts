@@ -17,7 +17,7 @@ export class CompanyWindow implements OnInit {
     insertar = true;
     form: FormGroup;
 
-    constructor(public dialogRef: MatDialogRef<CompanyWindow>, @Inject(MAT_DIALOG_DATA) {id, name, busCount}: Company,
+    constructor(public dialogRef: MatDialogRef<CompanyWindow>, @Inject(MAT_DIALOG_DATA) {id, name, busCount, canceled}: Company,
                 private service: CompanyService, private dialog: MatDialog) {
         if (id)
             this.insertar = false;
@@ -25,6 +25,7 @@ export class CompanyWindow implements OnInit {
         this.form = new FormGroup({
             name: new FormControl(name, [Validators.required]),
             busCount: new FormControl(busCount, [Validators.required]),
+            canceled: new FormControl(canceled, [Validators.required]),
         });
     }
 

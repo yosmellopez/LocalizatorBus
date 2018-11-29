@@ -5,7 +5,7 @@
         </button>
         <hr>
     </h1>
-    <div mat-dialog-content style="min-height: 100%;">
+    <div mat-dialog-content style="min-height: 100%;overflow: hidden;">
         <mat-form-field class="full-width">
             <input matInput placeholder="Nombre" formControlName="name">
             <mat-error *ngIf="form.controls['name'].errors?.required">Debe insertar el nombre de la empresa</mat-error>
@@ -14,6 +14,9 @@
             <input matInput placeholder="Cantidad de Buses a Contratar" formControlName="busCount" type="number">
             <mat-error *ngIf="form.controls['busCount'].errors?.required">Debe insertar la cantidad de buses de la empresa</mat-error>
         </mat-form-field>
+        <div class="row full-width" style="margin-bottom: 10px;">
+            <mat-slide-toggle class="col-sm-6" formControlName="canceled">{{form.controls['canceled'].value?'Cancelado':'Activo'}}</mat-slide-toggle>
+        </div>
     </div>
     <div mat-dialog-actions class="boton-theme">
         <span class="spacer"></span>

@@ -46,6 +46,12 @@ public class PassengerControl {
         return ok(success(passengers).total(passengers.size()).build());
     }
 
+    @GetMapping(value = "/passenger/all")
+    public ResponseEntity<AppResponse<Passenger>> listarAllPassengers() {
+        List<Passenger> passengers = passengerRepository.findAll();
+        return ok(success(passengers).total(passengers.size()).build());
+    }
+
     @GetMapping(value = "/passenger/find")
     public ResponseEntity<AppResponse<Passenger>> findPassengers(String dni) {
         Optional<Passenger> optional = passengerRepository.findByDni(dni);

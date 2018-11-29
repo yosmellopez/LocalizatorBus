@@ -14,6 +14,7 @@ import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.CacheControl;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.LocaleResolver;
@@ -31,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 
 @EnableWebMvc
 @Configuration
+@EnableScheduling
 @EnableSpringDataWebSupport
 public class WebMvcConfig implements WebMvcConfigurer {
 

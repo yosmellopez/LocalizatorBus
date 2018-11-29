@@ -117,8 +117,8 @@ mat-paginator {
 }
 
 .blue-snackbar {
-    background: #ded1d1;
-    color: #000;
+    background: #9e9e9e;
+    color: black;
     position: relative;
     bottom: 30px;
     left: 30px;

@@ -70,11 +70,6 @@ html [data-layout="default-sidebar-1"][data-navbar="white"] {
     color: #212121;
 }
 
-[data-layout="default-sidebar-1"] ::-webkit-scrollbar {
-    display: none;
-    width: 0 !important;
-}
-
 [data-layout="default-sidebar-1"] .navbar-1 {
     z-index: 1031;
     padding-left: 100px;

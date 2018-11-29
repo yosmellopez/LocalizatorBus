@@ -68,4 +68,14 @@ public final class SecurityUtils {
         }
         return false;
     }
+
+    public static boolean isAdmin() {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        if (authentication != null) {
+            return authentication.getAuthorities().stream()
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("Administrador"));
+        }
+        return false;
+    }
 }

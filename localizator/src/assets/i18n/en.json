@@ -62,13 +62,14 @@
         "title": "Title",
         "description": "Description",
         "fecha": "Date",
-        "message": "Message",
-        "list": "Lista de Notificaciones",
-        "listmsg": "Listado de notificaciones del usuario "
+        "message": "Time",
+        "list": "Notifications List",
+        "listmsg": "Show user notifications list."
     },
     "company": {
         "name": "Name",
         "busCount": "Bus Count",
+        "canceled": "Canceled",
         "list": "Company List",
         "listmsg": "Show system companies"
     },
@@ -79,5 +80,6 @@
     "adminTitle": "Administration",
     "gpsTravel": "GPS and Travels",
     "noCompanies": "No Companies",
+    "welcome": "Welcome",
     "accountlock": "Lock Screen"
 }

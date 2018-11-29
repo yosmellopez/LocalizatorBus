@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from "rxjs/index";
 import {SERVER_API_URL} from "../app.constant";
 import {HttpClient} from "@angular/common/http";
-import {AppResponse, ResponseApp, Respuesta, Route} from "../app.model";
+import {AppResponse, Place, ResponseApp, Respuesta, Route} from "../app.model";
 
 @Injectable({
     providedIn: 'root'
@@ -41,5 +41,9 @@ export class RouteService {
 
     eliminarRoute(id: number): Observable<Respuesta<ResponseApp>> {
         return this.http.delete<ResponseApp>(this.routeUrl + "/" + id, {observe: "response"});
+    }
+
+    addPlaceToRoute(id: number, place: Place): Observable<Respuesta<Route>> {
+        return this.http.put<AppResponse<Route>>(this.routeUrl + "/addPlace/" + id, place, {observe: "response"});
     }
 }

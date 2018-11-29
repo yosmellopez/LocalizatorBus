@@ -8,6 +8,8 @@ import {AnimationsService} from "../../animations/animations.service";
 import {TranslateService} from "../../services/translate.service";
 import {TitleService} from "../../services/title.service";
 import {RUTAS} from "../../app.routing";
+import {NotificacionService} from "../../services/notification.service";
+import {Observable, of} from "rxjs";
 
 @Component({
     selector: 'app-center',
@@ -22,9 +24,10 @@ export class CenterComponent implements OnInit {
     rutas: RouteInfo[] = RUTAS;
     rutasUsuario: RouteInfo[] = [];
     routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
+    cantidadNotificaciones: Observable<number> = new Observable();
 
     constructor(private router: Router, private location: Location, private principal: Principal, private animation: AnimationsService,
-                private service: TranslateService, private titleService: TitleService) {
+                private service: TranslateService, private titleService: TitleService, private notificationService: NotificacionService) {
     }
 
     ngOnInit(): void {
@@ -39,6 +42,9 @@ export class CenterComponent implements OnInit {
                 });
             }
         });
+        this.notificationService.notificationEmitter.subscribe(cantidad => {
+            this.cantidadNotificaciones = of(cantidad);
+        });
         this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd)
                 this.getTitle();
@@ -52,6 +58,7 @@ export class CenterComponent implements OnInit {
     getTitle() {
         let titlee = this.location.prepareExternalUrl(this.location.path());
         let titulos: Title[] = [];
+        let pageTitle: string = "";
         for (let item = 0; item < this.rutas.length; item++) {
             let routes = this.rutas[item].routes;
             if (this.rutas[item].hasChildren) {
@@ -60,17 +67,19 @@ export class CenterComponent implements OnInit {
                         this.titulo = this.service.translate(routes[i].title);
                         titulos.push({title: this.service.translate(this.rutas[item].title), active: false});
                         titulos.push({title: this.titulo, active: true});
+                        pageTitle = this.service.translate(routes[i].pageTitle);
                     }
                 }
             }
             else {
                 if (titlee.includes(this.rutas[item].path)) {
                     this.titulo = this.service.translate(this.rutas[item].title);
+                    pageTitle = this.service.translate(this.rutas[item].pageTitle);
                     titulos.push({title: this.titulo, active: false});
                 }
             }
         }
-        this.titleService.emmit(titulos);
+        this.titleService.emmit(titulos, pageTitle);
     }
 
     cerrarSession() {

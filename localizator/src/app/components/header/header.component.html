@@ -25,9 +25,9 @@
 
     <span class="welcome">{{'hello'|translate}}, {{usuario|usuario}}</span>
     <div class="dropdown user-dropdown">
-        <a class="dropdown-toggle no-after" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="dropdown-toggle no-after" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="crearNotificacion()">
             <div class="badge badge-40">
-                <span class="tag tag-sm tag-rounded tag-warning">1</span>
+                <span class="tag tag-sm tag-rounded tag-warning">{{notificaciones.length}}</span>
                 <img src="assets/faces/m7.png" class="max-w-40 img-circle" alt="badge">
             </div>
         </a>
@@ -37,7 +37,7 @@
 <div class="jumbotron-1">
     <div class="jumbotron jumbotron-fluid">
         <div class="container-fluid">
-            <h1 class="display-3">Welcome</h1>
+            <h1 class="display-3">{{pageTitle|async}}</h1>
             <ol class="breadcrumb icon-home icon-angle-right no-bg">
                 <li *ngFor="let title of titulos|async" [class.active]="title.active">
                     {{title.title}}

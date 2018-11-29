@@ -1,14 +1,17 @@
 <div style="max-width: 320px;">
-    <span><strong>{{notification.title}}</strong></span>
+    <mat-icon>notifications</mat-icon>
+    <span style="position: relative;top: -8px;margin-left: 6px;"><strong>{{notification.title}}</strong></span>
     <button mat-icon-button class="close-button" (click)="cerrarSnackbar()">
         <mat-icon style="font-size: 25px">close</mat-icon>
     </button>
+    <hr style="background: transparent;position: relative;left: -16px;width: 110%">
     <p style="justify-content: stretch">
         <strong>{{notification.description}}</strong>
     </p>
+    <hr style="background: black;position: relative;left: -16px;width: 110%">
     <div style="text-align: right">
         <span class="spacer"></span>
-        <mat-icon style="position: relative;top: 5px;font-size: 22px;">access_time</mat-icon>
+        <mat-icon style="position: relative;top: 5px;font-size: 22px;margin-right: 5px;">access_time</mat-icon>
         <span><strong>{{notification.mensaje}}</strong></span>
     </div>
 </div>

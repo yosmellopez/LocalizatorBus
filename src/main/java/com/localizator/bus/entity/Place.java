@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "place")
+@Table(name = "place", uniqueConstraints = {@UniqueConstraint(name = "place_name_unique", columnNames = {"name"})})
 public class Place implements Serializable, ClonableEntity<Place> {
 
     @Id
@@ -15,6 +15,9 @@ public class Place implements Serializable, ClonableEntity<Place> {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "geoference")
+    private String geoference;
 
     public Place() {
     }
@@ -38,6 +41,14 @@ public class Place implements Serializable, ClonableEntity<Place> {
     @Override
     public void clone(Place place) {
         name = place.name;
+    }
+
+    public String getGeoference() {
+        return geoference;
+    }
+
+    public void setGeoference(String geoference) {
+        this.geoference = geoference;
     }
 
     @Override

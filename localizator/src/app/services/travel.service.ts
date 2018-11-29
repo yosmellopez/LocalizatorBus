@@ -20,7 +20,7 @@ export class TravelService {
     }
 
     insertarTravel(travel: Travel): Observable<Respuesta<Travel>> {
-        return this.http.post<AppResponse<Travel>>(this.travelUrl + "?lang=en", travel, {observe: "response",});
+        return this.http.post<AppResponse<Travel>>(this.travelUrl, travel, {observe: "response",});
     }
 
     modificarTravel(id: number, travel: Travel): Observable<Respuesta<Travel>> {
@@ -30,5 +30,10 @@ export class TravelService {
 
     eliminarTravel(id: number): Observable<Respuesta<ResponseApp>> {
         return this.http.delete<ResponseApp>(this.travelUrl + "/" + id, {observe: "response",});
+    }
+
+    finalizeTravel(id: number): Observable<Respuesta<ResponseApp>> {
+        return this.http.put<ResponseApp>(`${this.travelUrl}/finalize/${id}`, {}, {observe: "response",});
+
     }
 }

@@ -8,10 +8,11 @@ export class Usuario {
     dni: string;
     username: string;
     password: string;
-    activated: boolean;
+    activated: boolean = false;
     email: string;
-    companies: Company[];
-    rol: Rol
+    companies: Company[] = [];
+    rol: Rol;
+    language: string = "es";
 }
 
 export class Rol {
@@ -87,6 +88,7 @@ export class Company {
     id: number;
     name: string;
     busCount: number;
+    canceled: boolean = false;
 }
 
 export class Mensaje {
@@ -126,6 +128,7 @@ export declare interface RouteInfo {
     title: string;
     icon: string;
     class: string;
+    pageTitle: string;
     authority: string[];
     routes: AppRoute[];
     hasChildren: boolean;
@@ -136,6 +139,7 @@ export declare interface AppRoute {
     title: string;
     icon: string;
     class: string;
+    pageTitle: string;
 }
 
 export declare class Title {

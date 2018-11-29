@@ -1,5 +1,6 @@
 package com.localizator.bus.control;
 
+import com.localizator.bus.entity.Place;
 import com.localizator.bus.entity.Route;
 import com.localizator.bus.exception.GeneralException;
 import com.localizator.bus.exception.RouteException;
@@ -68,6 +69,14 @@ public class RouteControl {
     public ResponseEntity<AppResponse<Route>> actualizarRoute(@PathVariable("idRoute") Optional<Route> optional, @RequestBody Route route) {
         Route routeBd = optional.orElseThrow(() -> new EntityNotFoundException("route_not_found"));
         routeBd.clone(route);
+        routeRepository.saveAndFlush(routeBd);
+        return ok(success(routeBd).build());
+    }
+
+    @PutMapping(value = "/route/addPlace/{idRoute}")
+    public ResponseEntity<AppResponse<Route>> addPlaceRoute(@PathVariable("idRoute") Optional<Route> optional, @RequestBody Place place) {
+        Route routeBd = optional.orElseThrow(() -> new EntityNotFoundException("route_not_found"));
+        routeBd.getPlaces().add(place);
         routeRepository.saveAndFlush(routeBd);
         return ok(success(routeBd).build());
     }

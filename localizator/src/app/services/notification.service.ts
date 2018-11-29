@@ -10,6 +10,7 @@ import {AppResponse, Notificacion, ResponseApp, Respuesta} from "../app.model";
 export class NotificacionService {
     private notificationUrl = SERVER_API_URL + "api/notification";
     public evento: EventEmitter<boolean> = new EventEmitter<boolean>();
+    public notificationEmitter: EventEmitter<number> = new EventEmitter();
 
     constructor(private http: HttpClient) {
     }
@@ -40,5 +41,9 @@ export class NotificacionService {
 
     eliminarNotificacion(id: number): Observable<Respuesta<ResponseApp>> {
         return this.http.delete<ResponseApp>(this.notificationUrl + "/" + id, {observe: "response"});
+    }
+
+    readAllNotifications(): Observable<Respuesta<ResponseApp>> {
+        return this.http.delete<ResponseApp>(`${this.notificationUrl}/readAll`, {observe: "response"});
     }
 }

@@ -6,11 +6,13 @@ import {Title} from "../app.model";
 })
 export class TitleService {
     titleEmitter: EventEmitter<Title[]> = new EventEmitter<Title[]>();
+    pageTitleEmitter: EventEmitter<string> = new EventEmitter<string>();
 
     constructor() {
     }
 
-    emmit(titulos: Title[]) {
+    emmit(titulos: Title[], pageTitle: string) {
         this.titleEmitter.emit(titulos);
+        this.pageTitleEmitter.emit(pageTitle);
     }
 }

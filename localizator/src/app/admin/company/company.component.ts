@@ -20,7 +20,7 @@ export class CompanyComponent implements OnInit {
     dataSource: MatTableDataSource<Company> = new MatTableDataSource<Company>();
     total: number = 0;
     pageSize: number = 10;
-    displayedColumns = ['seleccionado', 'index', 'name', 'busCount', 'acciones'];
+    displayedColumns = ['seleccionado', 'index', 'name', 'busCount', 'canceled', 'acciones'];
     selection = new SelectionModel<Company>(true, []);
     nombre: string = '';
     resultsLength = 0;

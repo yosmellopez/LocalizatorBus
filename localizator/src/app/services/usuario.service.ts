@@ -20,11 +20,13 @@ export class UsuarioService {
     }
 
     insertarUsuario(usuario: Usuario): Observable<Respuesta<Usuario>> {
+        usuario.language = localStorage.getItem("lang") || "es";
         return this.http.post<AppResponse<Usuario>>(this.usuarioUrl, usuario, {observe: "response"});
     }
 
     modificarUsuario(id: number, usuario: Usuario): Observable<Respuesta<Usuario>> {
         usuario.id = id;
+        usuario.language = localStorage.getItem("lang") || "es";
         return this.http.put<AppResponse<Usuario>>(this.usuarioUrl + "/" + id, usuario, {observe: "response",});
     }
 

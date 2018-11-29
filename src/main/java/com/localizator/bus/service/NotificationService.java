@@ -32,7 +32,7 @@ public class NotificationService {
 
     public void createNotificacion(Notification notification, Usuario usuario, boolean notifyAdmins) {
         notificationRepository.saveAndFlush(notification);
-        template.convertAndSend("/buslocator/notificacion" + usuario.getUsername(), notification);
+        template.convertAndSend("/buslocator/notificacion/" + usuario.getUsername(), notification);
         List<Usuario> usuarios = new ArrayList<>(Arrays.asList(usuario));
         if (notifyAdmins) {
             usuarios.addAll(usuarioRepository.findByRol(new Rol(1)));

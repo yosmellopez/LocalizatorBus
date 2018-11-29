@@ -7,6 +7,7 @@ import com.localizator.bus.repository.NotificationRepository;
 import com.localizator.bus.repository.TravelRepository;
 import com.localizator.bus.repository.UsuarioNotificationRepository;
 import com.localizator.bus.repository.UsuarioRepository;
+import com.localizator.bus.security.SecurityUtils;
 import com.localizator.bus.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -45,33 +46,52 @@ public class TravelControl {
     private MessageSource messageSource;
 
     @GetMapping(value = "/travel")
-    public ResponseEntity<AppResponse<Travel>> listarTravels(Pageable pageable) {
-        Page<Travel> travels = travelRepository.findAll(pageable);
-        return ok(success(travels.getContent()).total(travels.getTotalElements()).build());
+    public ResponseEntity<AppResponse<Travel>> listarTravels(Pageable pageable, @AuthenticationPrincipal Usuario usuario) {
+        if (SecurityUtils.isAdmin()) {
+            Page<Travel> travels = travelRepository.findAll(pageable);
+            return ok(success(travels.getContent()).total(travels.getTotalElements()).build());
+        } else {
+            Company company = usuario.getCompanies().parallelStream().findFirst().get();
+            Page<Travel> page = travelRepository.findByBus_Company(company, pageable);
+            return ok(success(page.getContent()).total(page.getTotalElements()).build());
+        }
     }
 
     @PostMapping(value = "/travel")
-    public ResponseEntity<AppResponse<Travel>> insertarTravel(@Valid @RequestBody Travel travel, @AuthenticationPrincipal Usuario usuario) {
+    public ResponseEntity<AppResponse<Travel>> insertarTravel(@Valid @RequestBody Travel travel, @AuthenticationPrincipal Usuario usuario, Locale locale) {
         travelRepository.saveAndFlush(travel);
-        String mensaje = "Se ha insertado el viaje continue para añadir los viajeros.";
+        String mensaje = messageSource.getMessage("travel_added", null, locale);
         createNotifications(travel, usuario);
         return ok(success(travel).msg(mensaje).build());
     }
 
     @PutMapping(value = "/travel/{idTravel}")
-    public ResponseEntity<AppResponse<Travel>> actualizarTravel(@PathVariable("idTravel") Optional<Travel> optional, @RequestBody Travel travel) {
-        Travel travelBd = optional.orElseThrow(() -> new EntityNotFoundException("Travel no encontrado"));
+    public ResponseEntity<AppResponse<Travel>> actualizarTravel(@PathVariable("idTravel") Optional<Travel> optional, @RequestBody Travel travel, Locale locale) {
+        Travel travelBd = optional.orElseThrow(() -> new EntityNotFoundException("travel_not_found"));
         travelBd.clone(travel);
         travelRepository.saveAndFlush(travelBd);
-        String mensaje = "Se ha modificado el viaje, si desea continue para añadir o modificar los viajeros.";
+        String mensaje = messageSource.getMessage("travel_successfull_updated", null, locale);
+        return ok(success(travelBd).msg(mensaje).build());
+    }
+
+    @PutMapping(value = "/travel/finalize/{idTravel}")
+    public ResponseEntity<AppResponse> finalizeTravel(@PathVariable("idTravel") Optional<Travel> optional, Locale locale) {
+        Travel travelBd = optional.orElseThrow(() -> new EntityNotFoundException("travel_not_found"));
+        List<PassengerTravel> passengerTravels = travelBd.getPassengerTravels();
+        if (passengerTravels.isEmpty()) {
+            travelRepository.delete(travelBd);
+            return ok(failure(messageSource.getMessage("travel_passengers_empty", null, locale)).build());
+        }
+        travelRepository.saveAndFlush(travelBd);
+        String mensaje = messageSource.getMessage("travel_successfull_added", null, locale);
         return ok(success(travelBd).msg(mensaje).build());
     }
 
     @DeleteMapping(value = "/travel/{idTravel}")
-    public ResponseEntity<AppResponse> eliminarTravel(@PathVariable("idTravel") Optional<Travel> optional) {
-        Travel travel = optional.orElseThrow(() -> new EntityNotFoundException("Travel no encontrado en la base de datos"));
+    public ResponseEntity<AppResponse> eliminarTravel(@PathVariable("idTravel") Optional<Travel> optional, Locale locale) {
+        Travel travel = optional.orElseThrow(() -> new EntityNotFoundException("travel_not_found"));
         travelRepository.delete(travel);
-        return ok(success("Travel eliminado correctamente").total(travelRepository.count()).build());
+        return ok(success(messageSource.getMessage("travel_deleted", null, locale)).total(travelRepository.count()).build());
     }
 
     private void createNotifications(Travel travel, Usuario usuario) {
