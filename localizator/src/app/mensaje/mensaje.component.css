@@ -60,6 +60,7 @@ button mat-icon {
 
 .contenido-alineado, .contenido-alineado h6 {
     min-height: 30px;
+    padding: 5px 24px;
 }
 
 .example-full-height {

@@ -51,4 +51,9 @@ public class PassengerTravelPK implements Serializable {
     public int hashCode() {
         return Objects.hash(passengerId, travelId);
     }
+
+    @Override
+    public String toString() {
+        return "PassengerTravelPK{passengerId=" + passengerId + ", travelId=" + travelId + '}';
+    }
 }

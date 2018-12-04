@@ -49,6 +49,7 @@
 @import "assets/css/ui/tooltips.css";
 @import "assets/css/ui/typography.css";
 @import "assets/css/flag-icon.css";
+@import "assets/css/chartist.min.css";
 
 table {
     width: 100%;
@@ -159,4 +160,8 @@ snack-bar-container {
 .mat-icon {
     position: relative;
     top: -2px;
+}
+
+mat-dialog-content {
+    padding: 5px 24px;
 }

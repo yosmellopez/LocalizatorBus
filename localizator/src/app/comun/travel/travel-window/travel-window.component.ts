@@ -47,6 +47,7 @@ export class TravelWindow implements OnInit {
     idTravel: number;
     insertar = true;
     travelInsertado: boolean = false;
+    pasajeroInsertado: boolean = false;
     formViaje: FormGroup;
     formPasajero: FormGroup;
     routes: Route[];
@@ -164,7 +165,7 @@ export class TravelWindow implements OnInit {
 
     addPassenger() {
         if (this.formPasajero.valid) {
-            if (this.newPassenger) {
+            if (this.newPassenger && this.pasajeroInsertado) {
                 this.currentPlace = this.formPasajero.controls['place'].value;
                 this.passengerService.modificarPassenger(this.newPassenger.id, this.formPasajero.controls['passenger'].value).subscribe(resp => {
                     if (resp.body.success) {
@@ -204,11 +205,13 @@ export class TravelWindow implements OnInit {
                 });
                 this.newPassenger = null;
                 this.insertarPassenger = true;
+                this.pasajeroInsertado = true;
                 this.formPasajero.reset();
                 this.formPasajero.clearValidators();
                 this.formPasajero.clearAsyncValidators();
             } else {
                 this.dialog.open(MensajeError, {width: "400px", data: {mensaje: response.body.msg}});
+                this.pasajeroInsertado = false;
             }
         });
     }
@@ -389,6 +392,10 @@ export class TravelWindow implements OnInit {
                 });
             }
         });
+    }
+
+    getTotal() {
+        return this.dataSource.data.length;
     }
 }
 

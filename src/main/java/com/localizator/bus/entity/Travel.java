@@ -154,15 +154,7 @@ public class Travel implements Serializable, ClonableEntity<Travel> {
 
     @Override
     public String toString() {
-        return "Travel{" +
-                "id=" + id +
-                ", active=" + active +
-                ", route=" + route +
-                ", travelDate=" + travelDate +
-                ", arriveDate=" + arriveDate +
-                ", travelTime=" + travelTime +
-                ", arriveTime=" + arriveTime +
-                ", bus=" + bus +
-                '}';
+        return "Travel{id=" + id + ", active=" + active + ", route=" + route + ", travelDate=" + travelDate + ", arriveDate=" + arriveDate + ", travelTime=" + travelTime +
+                ", arriveTime=" + arriveTime + ", bus=" + bus + '}';
     }
 }

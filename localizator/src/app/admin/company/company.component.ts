@@ -71,7 +71,7 @@ export class CompanyComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result != false) {
-                this.dialog.open(Information, {width: '350px', data: {mensaje: 'Se ha insertardo el company.'}});
+                this.dialog.open(Information, {width: '350px', data: {mensaje: 'Se ha insertado la empresa.'}});
                 this.paginator.page.emit();
             }
         });
@@ -87,7 +87,7 @@ export class CompanyComponent implements OnInit {
             if (result != false && result.success) {
                 this.dialog.open(Information, {
                     width: '350px',
-                    data: {mensaje: 'Se ha modificado el company.'}
+                    data: {mensaje: 'Se ha modificado la empresa.'}
                 });
                 this.paginator.page.emit();
             }
@@ -106,7 +106,7 @@ export class CompanyComponent implements OnInit {
                     if (resp.body.success) {
                         this.dialog.open(Information, {
                             width: '350px',
-                            data: {mensaje: 'Se ha eliminado el company.'}
+                            data: {mensaje: 'Se ha eliminado la empresa.'}
                         });
                         this.selection.clear();
                         this.paginator.page.emit();
@@ -145,7 +145,7 @@ export class CompanyComponent implements OnInit {
                     todos.subscribe(value => {
                         this.dialog.open(Information, {
                             width: '350px',
-                            data: {mensaje: value ? 'Se ha eliminado todos los companyes.' : 'No se eliminaron correctamente todos los companyes'}
+                            data: {mensaje: value ? 'Se ha eliminado todas las empresas.' : 'No se eliminaron correctamente todas las empresas'}
                         });
                         this.selection.clear();
                         this.paginator.page.emit();

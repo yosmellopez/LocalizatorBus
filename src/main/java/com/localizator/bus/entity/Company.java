@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "company", uniqueConstraints = {@UniqueConstraint(name = "company_unique_name", columnNames = {})})
+@Table(name = "company", uniqueConstraints = {@UniqueConstraint(name = "company_unique_name", columnNames = {"name"})})
 public class Company implements Serializable, ClonableEntity<Company> {
 
     @Id

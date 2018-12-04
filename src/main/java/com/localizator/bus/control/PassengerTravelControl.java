@@ -59,7 +59,12 @@ public class PassengerTravelControl {
         if (!place.equals(route.getDestiny()) && !route.getPlaces().contains(place)) {
             return ok(failure(messageSource.getMessage("passenger_place_not_match", null, locale)).build());
         }
-        PassengerTravelPK passengerTravelPK = new PassengerTravelPK(passengerTravel.getPassenger().getId(), passengerTravel.getTravel().getId());
+        Passenger passenger = passengerTravel.getPassenger();
+        PassengerTravelPK passengerTravelPK = new PassengerTravelPK(passenger.getId(), passengerTravel.getTravel().getId());
+        boolean exists = passengerTravelRepository.existsById(passengerTravelPK);
+        if (exists) {
+            return ok(failure(messageSource.getMessage("passenger_travel_exist", new Object[]{passenger.getName(), passenger.getLastname()}, locale)).build());
+        }
         passengerTravel.setPassengerTravelPK(passengerTravelPK);
         passengerTravelRepository.saveAndFlush(passengerTravel);
         return ok(success(passengerTravel).build());

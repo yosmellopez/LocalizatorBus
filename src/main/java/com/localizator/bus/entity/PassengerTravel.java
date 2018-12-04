@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Entity
-@Table(name = "passenger_travel")
+@Table(name = "passenger_travel", uniqueConstraints = {@UniqueConstraint(name = "passenger_travel_unique", columnNames = {"passenger_id", "travel_id"})})
 public class PassengerTravel implements Serializable, ClonableEntity<PassengerTravel> {
 
     @EmbeddedId
@@ -84,7 +84,6 @@ public class PassengerTravel implements Serializable, ClonableEntity<PassengerTr
 
     @Override
     public int hashCode() {
-
         return Objects.hash(passengerTravelPK);
     }
 
