@@ -36,11 +36,15 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping(value = "/api")
 public class BusControl {
 
-    @Autowired
-    private BusRepository busRepository;
+    private final BusRepository busRepository;
+
+    private final MessageSource messageSource;
 
     @Autowired
-    private MessageSource messageSource;
+    public BusControl(BusRepository busRepository, MessageSource messageSource) {
+        this.busRepository = busRepository;
+        this.messageSource = messageSource;
+    }
 
     @GetMapping(value = "/bus")
     public ResponseEntity<AppResponse<Bus>> listarBuss(Pageable pageable, @AuthenticationPrincipal Usuario usuario) {

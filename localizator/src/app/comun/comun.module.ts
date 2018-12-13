@@ -24,7 +24,8 @@ import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
 import {WMatTimePickerComponent} from "../components/time-control/w-mat-timepicker.component";
 import {WTimeDialogComponent} from "../components/time-control/w-time-dialog.component";
 import {WClockComponent} from "../components/time-control/w-clock.component";
-import { PlaceSelectorComponent } from './route/place-selector/place-selector.component';
+import {PlaceSelectorComponent} from './route/place-selector/place-selector.component';
+import {ChartsModule} from "ng2-charts";
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { PlaceSelectorComponent } from './route/place-selector/place-selector.co
         ReactiveFormsModule,
         AmazingTimePickerModule,
         RouterModule.forChild(routesComun),
-        NgxMaterialTimepickerModule
+        NgxMaterialTimepickerModule,
+        ChartsModule
     ],
     declarations: [BusComponent, PlaceComponent, UserProfileComponent, RouteComponent, TravelComponent, BusWindow, PlaceWindow, RouteWindow,
         TravelWindow, DashboardComponent, NotificationComponent, WMatTimePickerComponent, WTimeDialogComponent, WClockComponent, PlaceSelectorComponent],

@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class NotificationService {
@@ -30,10 +28,10 @@ public class NotificationService {
     @Autowired
     private SimpMessagingTemplate template;
 
-    public void createNotificacion(Notification notification, Usuario usuario, boolean notifyAdmins) {
+    public void createNotificacion(final Notification notification, Usuario usuario, boolean notifyAdmins) {
         notificationRepository.saveAndFlush(notification);
         template.convertAndSend("/buslocator/notificacion/" + usuario.getUsername(), notification);
-        List<Usuario> usuarios = new ArrayList<>(Arrays.asList(usuario));
+        Set<Usuario> usuarios = new HashSet<>(Arrays.asList(usuario));
         if (notifyAdmins) {
             usuarios.addAll(usuarioRepository.findByRol(new Rol(1)));
             template.convertAndSend("/buslocator/notificacion/admin", notification);

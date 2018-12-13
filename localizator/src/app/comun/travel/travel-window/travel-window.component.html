@@ -126,6 +126,9 @@
 
                 </div>
                 <mat-action-row class="boton-theme" style="clear: both;top: 10px;position: relative">
+                    <button type="button" mat-mini-fab color="warn" style="position:relative;right: 240px" (click)="eliminarPassengersTravel($event)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
                     <button mat-raised-button color="warn" (click)="prevStep()" type="button" style="margin-right: 10px;" matStepperPrevious>
                         <mat-icon>navigate_before</mat-icon>
                         Anterior
@@ -140,18 +143,33 @@
                 </div>
                 <div class="example-container mat-elevation-z8" style="top: -30px;position:relative;">
                     <table mat-table [dataSource]="dataSource">
+                        <ng-container matColumnDef="seleccionado">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <mat-checkbox (change)="$event ? masterToggle() : null"
+                                              [checked]="selection.hasValue() && isAllSelected()"
+                                              [indeterminate]="selection.hasValue() && !isAllSelected()">
+                                </mat-checkbox>
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                <mat-checkbox (click)="$event.stopPropagation()"
+                                              (change)="$event ? selection.toggle(row) : null"
+                                              [checked]="selection.isSelected(row)">
+                                </mat-checkbox>
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef></td>
+                        </ng-container>
                         <!-- Position Column -->
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef> Nombre</th>
                             <td mat-cell *matCellDef="let element"> {{element.passenger.name}}</td>
-                            <td mat-footer-cell *matFooterCellDef> Total </td>
+                            <td mat-footer-cell *matFooterCellDef><strong> Total</strong></td>
                         </ng-container>
 
                         <!-- Name Column -->
                         <ng-container matColumnDef="lastname">
                             <th mat-header-cell *matHeaderCellDef> Apellidos</th>
                             <td mat-cell *matCellDef="let element"> {{element.passenger.lastname}}</td>
-                            <td mat-footer-cell *matFooterCellDef>{{getTotal()}}</td>
+                            <td mat-footer-cell *matFooterCellDef><strong>{{getTotal()}}</strong></td>
                         </ng-container>
 
                         <!-- Weight Column -->
@@ -187,14 +205,3 @@
         </mat-step>
     </mat-horizontal-stepper>
 </div>
-<!--<div mat-dialog-actions class="boton-theme">-->
-<!--<span class="spacer"></span>-->
-<!--<button type="submit" mat-raised-button cdkFocusInitial color="primary">-->
-<!--<mat-icon>check_circle</mat-icon>-->
-<!--{{insertar?'Guardar Viaje':'Modificar Viaje'}}-->
-<!--</button>-->
-<!--<button type="button" mat-raised-button (click)="onNoClick()" color="warn">-->
-<!--<mat-icon>cancel</mat-icon>-->
-<!--Cancelar-->
-<!--</button>-->
-<!--</div>-->

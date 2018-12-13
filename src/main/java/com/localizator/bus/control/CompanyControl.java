@@ -32,11 +32,15 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping(value = "/api")
 public class CompanyControl {
 
-    @Autowired
-    private CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
+
+    private final MessageSource messageSource;
 
     @Autowired
-    private MessageSource messageSource;
+    public CompanyControl(CompanyRepository companyRepository, MessageSource messageSource) {
+        this.companyRepository = companyRepository;
+        this.messageSource = messageSource;
+    }
 
     @GetMapping(value = "/company")
     public ResponseEntity<AppResponse<Company>> listarCompanys(Pageable pageable) {

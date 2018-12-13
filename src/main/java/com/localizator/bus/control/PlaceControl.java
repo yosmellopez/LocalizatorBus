@@ -32,11 +32,15 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping(value = "/api")
 public class PlaceControl {
 
-    @Autowired
-    private PlaceRepository placeRepository;
+    private final PlaceRepository placeRepository;
+
+    private final MessageSource messageSource;
 
     @Autowired
-    private MessageSource messageSource;
+    public PlaceControl(PlaceRepository placeRepository, MessageSource messageSource) {
+        this.placeRepository = placeRepository;
+        this.messageSource = messageSource;
+    }
 
     @GetMapping(value = "/place")
     public ResponseEntity<AppResponse<Place>> listarPlaces(Pageable pageable) {

@@ -35,17 +35,18 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping(value = "/api")
 public class NotificationControl {
 
-    @Autowired
-    private NotificationRepository notificationRepository;
+    private final NotificationRepository notificationRepository;
+
+    private final UsuarioNotificationRepository usuarioNotificationRepository;
+
+    private final MessageSource messageSource;
 
     @Autowired
-    private UsuarioNotificationRepository usuarioNotificationRepository;
-
-    @Autowired
-    private MessageSource messageSource;
-
-    @Autowired
-    private LocaleResolver localeResolver;
+    public NotificationControl(NotificationRepository notificationRepository, UsuarioNotificationRepository usuarioNotificationRepository, MessageSource messageSource) {
+        this.notificationRepository = notificationRepository;
+        this.usuarioNotificationRepository = usuarioNotificationRepository;
+        this.messageSource = messageSource;
+    }
 
     @GetMapping(value = "/notification")
     public ResponseEntity<AppResponse<Notification>> listarNotifications(Pageable pageable, @AuthenticationPrincipal Usuario usuario) {

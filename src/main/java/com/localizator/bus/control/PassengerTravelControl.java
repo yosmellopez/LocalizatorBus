@@ -33,21 +33,32 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping(value = "/api")
 public class PassengerTravelControl {
 
-    @Autowired
-    private PassengerTravelRepository passengerTravelRepository;
+    private final PassengerTravelRepository passengerTravelRepository;
+
+    private final TravelRepository travelRepository;
+
+    private final RouteRepository routeRepository;
+
+    private final MessageSource messageSource;
 
     @Autowired
-    private TravelRepository travelRepository;
-
-    @Autowired
-    private RouteRepository routeRepository;
-
-    @Autowired
-    private MessageSource messageSource;
+    public PassengerTravelControl(PassengerTravelRepository passengerTravelRepository, TravelRepository travelRepository, RouteRepository routeRepository, MessageSource messageSource) {
+        this.passengerTravelRepository = passengerTravelRepository;
+        this.travelRepository = travelRepository;
+        this.routeRepository = routeRepository;
+        this.messageSource = messageSource;
+    }
 
     @GetMapping(value = "/passengerTravel")
     public ResponseEntity<AppResponse<PassengerTravel>> listarPassengerTravelPlaces() {
         List<PassengerTravel> passengerTravels = passengerTravelRepository.findAll();
+        return ok(success(passengerTravels).total(passengerTravels.size()).build());
+    }
+
+    @GetMapping(value = "/passengerTravel/passengerByTravel/{optTravel}")
+    public ResponseEntity<AppResponse<PassengerTravel>> listarPassengerTravelPlacesByTravel(@PathVariable Optional<Travel> optTravel) {
+        Travel travel = optTravel.orElseThrow(() -> new EntityNotFoundException("travel_not_found"));
+        List<PassengerTravel> passengerTravels = passengerTravelRepository.findByTravel(travel);
         return ok(success(passengerTravels).total(passengerTravels.size()).build());
     }
 

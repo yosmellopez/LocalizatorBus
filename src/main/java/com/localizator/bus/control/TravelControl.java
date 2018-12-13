@@ -3,10 +3,7 @@ package com.localizator.bus.control;
 import com.localizator.bus.entity.*;
 import com.localizator.bus.exception.TravelException;
 import com.localizator.bus.exception.GeneralException;
-import com.localizator.bus.repository.NotificationRepository;
-import com.localizator.bus.repository.TravelRepository;
-import com.localizator.bus.repository.UsuarioNotificationRepository;
-import com.localizator.bus.repository.UsuarioRepository;
+import com.localizator.bus.repository.*;
 import com.localizator.bus.security.SecurityUtils;
 import com.localizator.bus.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,14 +33,21 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping(value = "/api")
 public class TravelControl {
 
-    @Autowired
-    private TravelRepository travelRepository;
+    private final TravelRepository travelRepository;
+
+    private final PassengerTravelRepository passengerTravelRepository;
+
+    private final NotificationService notificationService;
+
+    private final MessageSource messageSource;
 
     @Autowired
-    private NotificationService notificationService;
-
-    @Autowired
-    private MessageSource messageSource;
+    public TravelControl(TravelRepository travelRepository, PassengerTravelRepository passengerTravelRepository, NotificationService notificationService, MessageSource messageSource) {
+        this.travelRepository = travelRepository;
+        this.passengerTravelRepository = passengerTravelRepository;
+        this.notificationService = notificationService;
+        this.messageSource = messageSource;
+    }
 
     @GetMapping(value = "/travel")
     public ResponseEntity<AppResponse<Travel>> listarTravels(Pageable pageable, @AuthenticationPrincipal Usuario usuario) {
@@ -61,7 +65,7 @@ public class TravelControl {
     public ResponseEntity<AppResponse<Travel>> insertarTravel(@Valid @RequestBody Travel travel, @AuthenticationPrincipal Usuario usuario, Locale locale) {
         travelRepository.saveAndFlush(travel);
         String mensaje = messageSource.getMessage("travel_added", null, locale);
-        createNotifications(travel, usuario);
+        createNotifications(travel, usuario, locale);
         return ok(success(travel).msg(mensaje).build());
     }
 
@@ -90,14 +94,15 @@ public class TravelControl {
     @DeleteMapping(value = "/travel/{idTravel}")
     public ResponseEntity<AppResponse> eliminarTravel(@PathVariable("idTravel") Optional<Travel> optional, Locale locale) {
         Travel travel = optional.orElseThrow(() -> new EntityNotFoundException("travel_not_found"));
-        travelRepository.delete(travel);
+        boolean deleted = passengerTravelRepository.deleteByTravel(travel);
+        if (deleted)
+            travelRepository.delete(travel);
         return ok(success(messageSource.getMessage("travel_deleted", null, locale)).total(travelRepository.count()).build());
     }
 
-    private void createNotifications(Travel travel, Usuario usuario) {
+    private void createNotifications(Travel travel, Usuario usuario, Locale locale) {
         Route route = travel.getRoute();
-        String descripcion = "El viaje de " + route.getOrigin().getName() + " a " + route.getDestiny().getName() + " con el bus " +
-                travel.getBus().getCode() + " ha sido insertado satisfactoriamente.";
+        String descripcion = messageSource.getMessage("notification_description_msg", new Object[]{route.getOrigin().getName(), route.getDestiny().getName(), travel.getBus().getCode()}, locale);
         Notification notification = new Notification("Nuevo viaje insertado", descripcion, new Date());
         notification.setIcono("airplanemode_active");
         notificationService.createNotificacion(notification, usuario, true);

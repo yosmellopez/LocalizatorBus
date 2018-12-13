@@ -33,17 +33,21 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping(value = "/api")
 public class UsuarioControl {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+
+    private final MessageSource messageSource;
+
+    private final RolRepository rolRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    private MessageSource messageSource;
-
-    @Autowired
-    private RolRepository rolRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public UsuarioControl(UsuarioRepository usuarioRepository, MessageSource messageSource, RolRepository rolRepository, PasswordEncoder passwordEncoder) {
+        this.usuarioRepository = usuarioRepository;
+        this.messageSource = messageSource;
+        this.rolRepository = rolRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @GetMapping(value = "/usuario")
     public ResponseEntity<AppResponse<Usuario>> listarUsuarios(Pageable pageable) {
@@ -59,10 +63,10 @@ public class UsuarioControl {
     }
 
     @PutMapping(value = "/usuario/{idUsuario}")
-    public ResponseEntity<AppResponse<Usuario>> actualizarUsuario(@PathVariable("idUsuario") Optional<Usuario> optional, @RequestBody Usuario usuario, @AuthenticationPrincipal Usuario logeado) {
+    public ResponseEntity<AppResponse<Usuario>> actualizarUsuario(@PathVariable("idUsuario") Optional<Usuario> optional, @RequestBody Usuario usuario, @AuthenticationPrincipal Usuario logeado, Locale locale) {
         final Usuario usuarioBd = optional.orElseThrow(() -> new EntityNotFoundException("user_not_found"));
         if (!usuario.getActivated() && logeado.equals(usuarioBd)) {
-            return ok(failure("No se puede desactivar usted mismo.").build());
+            return ok(failure(messageSource.getMessage("usuario_cannot_desactivate_self", null, locale)).build());
         }
         usuarioBd.clone(usuario);
         Optional.ofNullable(usuario.getPassword()).ifPresent(password -> {

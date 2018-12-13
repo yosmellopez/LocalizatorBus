@@ -26,6 +26,7 @@ import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {PERFECT_SCROLLBAR_CONFIG} from 'ngx-perfect-scrollbar';
 import {PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
 import {DatePipe} from "@angular/common";
+import {ChartsModule} from "ng2-charts";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -52,7 +53,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         AppRoutingModule,
         RouterModule,
         ReactiveFormsModule,
-        PerfectScrollbarModule
+        PerfectScrollbarModule,
+        ChartsModule
     ],
     providers: [
         {provide: DateAdapter, useClass: DateFormat},

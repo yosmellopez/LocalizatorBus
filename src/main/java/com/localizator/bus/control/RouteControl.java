@@ -34,11 +34,15 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping(value = "/api")
 public class RouteControl {
 
-    @Autowired
-    private RouteRepository routeRepository;
+    private final RouteRepository routeRepository;
+
+    private final MessageSource messageSource;
 
     @Autowired
-    private MessageSource messageSource;
+    public RouteControl(RouteRepository routeRepository, MessageSource messageSource) {
+        this.routeRepository = routeRepository;
+        this.messageSource = messageSource;
+    }
 
     @GetMapping(value = "/route")
     public ResponseEntity<AppResponse<Route>> listarRoutes(Pageable pageable) {

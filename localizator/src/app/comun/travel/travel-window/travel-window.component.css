@@ -33,3 +33,7 @@ table {
     width: 82%;
 }
 
+mat-checkbox {
+    position: relative;
+    top: 4px;
+}

@@ -11,17 +11,18 @@ import {
     MatTableDataSource
 } from "@angular/material";
 import {Bus, Passenger, PassengerTravel, Place, Route, Travel} from "../../../app.model";
-import {Information, MensajeError, MensajeToast} from "../../../mensaje/window.mensaje";
+import {Confirm, Information, MensajeError, MensajeToast} from "../../../mensaje/window.mensaje";
 import {TravelService} from "../../../services/travel.service";
 import {RouteService} from "../../../services/route.service";
 import {BusService} from "../../../services/bus.service";
 import {PassengerService} from "../../../services/passenger.service";
 import {PlaceService} from "../../../services/place.service";
 import {PassengerTravelService} from "../../../services/passenger-travel.service";
-import {Subject} from "rxjs/index";
+import {forkJoin, Subject} from "rxjs/index";
 import {WTimeDialogComponent} from "../../../components/time-control/w-time-dialog.component";
 import {DatePipe} from "@angular/common";
 import {PlaceWindow} from "../../place/place-window/place-window.component";
+import {SelectionModel} from "@angular/cdk/collections";
 
 export const MY_FORMATS = {
     parse: {
@@ -59,9 +60,10 @@ export class TravelWindow implements OnInit {
     step = 0;
     insertarPassenger: boolean = true;
     minDate: Date = new Date();
-    displayedColumns: string[] = ['name', 'lastname', 'dni', 'place', 'acciones'];
+    displayedColumns: string[] = ['seleccionado', 'name', 'lastname', 'dni', 'place', 'acciones'];
     datos: Array<PassengerTravel> = new Array<PassengerTravel>();
     dataSource = new MatTableDataSource<PassengerTravel>();
+    selection = new SelectionModel<PassengerTravel>(true, []);
     newTravel: Travel;
     newPassenger: Passenger;
     currentPlace: Place;
@@ -323,11 +325,7 @@ export class TravelWindow implements OnInit {
         this.getTimeElement(control);
         let dialogRef = this.dialog.open(WTimeDialogComponent, {
             maxHeight: "300px",
-            data: {
-                hour: this.hour,
-                minute: this.minute,
-                meriden: this.meridiem
-            }
+            data: {hour: this.hour, minute: this.minute, meriden: this.meridiem}
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -394,8 +392,61 @@ export class TravelWindow implements OnInit {
         });
     }
 
+    eliminarPassengersTravel(event: Event): void {
+        event.stopPropagation();
+        let passegersTravel = this.selection.selected;
+        if (passegersTravel.length === 0) {
+            this.dialog.open(Information, {width: '320px', data: {mensaje: "No se han seleccionado elementos"}});
+        } else {
+            let dialogRef = this.dialog.open(Confirm, {
+                width: '400px',
+                data: {mensaje: 'Desea eliminar los pasajeros: <br>- ' + passegersTravel.map(passengerTravel => `${passengerTravel.passenger.name} ${passengerTravel.passenger.lastname}`).join("<br> -")},
+            });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    let allProgressObservables = [];
+                    const todos = new Subject<boolean>();
+                    passegersTravel.forEach(passenger => {
+                        allProgressObservables.push(this.passengerTravelService.eliminarPassengerTravel(passenger.passenger.id, this.newTravel.id));
+                    });
+                    forkJoin(allProgressObservables).subscribe(response => {
+                        let completo = true;
+                        response.forEach(resp => {
+                            if (!resp.body.success) {
+                                completo = false;
+                            }
+                        });
+                        todos.next(completo);
+                    });
+                    todos.subscribe(value => {
+                        this.dialog.open(Information, {
+                            width: '350px',
+                            data: {mensaje: value ? 'Se ha eliminado todos los pasajeros.' : 'No se eliminaron correctamente todos los pasajeros'}
+                        });
+                        this.selection.clear();
+                        this.passengerTravelService.listarPassengerTravelByTravel(this.newTravel.id).subscribe(resp => {
+                            if (resp.body.success) {
+                                this.dataSource = new MatTableDataSource(resp.body.elementos);
+                            }
+                        });
+                    });
+                }
+            });
+        }
+    }
+
     getTotal() {
         return this.dataSource.data.length;
+    }
+
+    isAllSelected() {
+        const numSelected = this.selection.selected.length;
+        const numRows = this.dataSource.data.length;
+        return numSelected === numRows;
+    }
+
+    masterToggle() {
+        this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
     }
 }
 
