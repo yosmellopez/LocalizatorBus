@@ -31,6 +31,11 @@ export class Bus {
 export class Place {
     id: number;
     name: string;
+    address: string;
+    postalCode: number = 0;
+    lat: number = 0;
+    lon: number = 0;
+    stretch: boolean = false;
 }
 
 export class Route {
@@ -96,6 +101,31 @@ export class Mensaje {
     description: string;
 }
 
+export class Localization {
+    placeId: number;
+    lat: number;
+    lon: number;
+    licence: string;
+    osmType: string;
+    displayName: string;
+    address: Address;
+    boundingbox: any[] = [];
+}
+
+export class Address {
+    road: string;
+    suburb: string;
+    hamlet: string;
+    county: string;
+    state: string;
+    country: string;
+    countryCode: string;
+    postcode: number;
+    village: string;
+    town: string;
+    neighbourhood: string;
+}
+
 export class ObjectParam<T> {
     object: T;
 }
@@ -106,12 +136,14 @@ export class AppResponse<T> {
     elemento?: T;
     elementos?: T[];
     total: number;
+    existe: boolean = false;
 }
 
 export class ResponseApp {
     success: boolean;
     msg: string;
     total: number;
+    existe: boolean = false;
 }
 
 export declare class Respuesta<T> extends HttpResponseBase {

@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs/index";
 import {SERVER_API_URL} from "../app.constant";
-import {AppResponse, Place, ResponseApp, Respuesta} from "../app.model";
-import {HttpClient} from "@angular/common/http";
+import {AppResponse, Localization, Place, ResponseApp, Respuesta} from "../app.model";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 
 @Injectable({providedIn: 'root'})
 export class PlaceService {
@@ -33,5 +33,10 @@ export class PlaceService {
 
     eliminarPlace(id: number): Observable<Respuesta<ResponseApp>> {
         return this.http.delete<ResponseApp>(this.placeUrl + "/" + id, {observe: "response"});
+    }
+
+    findPlaceByCoord(lat: any, lon: any): Observable<Respuesta<Localization>> {
+        const apiUrl = `${this.placeUrl}/findProperties`;
+        return this.http.get<AppResponse<Localization>>(apiUrl, {params: {lat: lat, lon: lon}, observe: "response"});
     }
 }

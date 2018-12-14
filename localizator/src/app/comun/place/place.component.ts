@@ -20,7 +20,7 @@ export class PlaceComponent implements OnInit {
     dataSource: MatTableDataSource<Place> = new MatTableDataSource<Place>();
     total: number = 0;
     pageSize: number = 10;
-    displayedColumns = ['seleccionado', 'index', 'name', 'acciones'];
+    displayedColumns = ['seleccionado', 'index', 'name', 'address', 'stretch', 'acciones'];
     selection = new SelectionModel<Place>(true, []);
     nombre: string = '';
     resultsLength = 0;
@@ -68,12 +68,12 @@ export class PlaceComponent implements OnInit {
 
     abrirVentana() {
         let dialogRef = this.dialog.open(PlaceWindow, {
-            width: '400px', disableClose: true, data: new Place(),
+            width: '700px', disableClose: true, data: new Place(),
         });
 
         dialogRef.afterClosed().subscribe(result => {
             if (result != false) {
-                this.dialog.open(Information, {width: '350px', data: {mensaje: 'Se ha insertardo el place.'}});
+                this.dialog.open(Information, {width: '350px', data: {mensaje: 'Se ha insertardo el lugar.'}});
                 this.paginator.page.emit();
             }
         });
@@ -82,14 +82,14 @@ export class PlaceComponent implements OnInit {
     editarPlace(event: Event, place: Place): void {
         event.stopPropagation();
         let editDialogRef = this.dialog.open(PlaceWindow, {
-            width: '400px', data: place, disableClose: true
+            width: '700px', data: place, disableClose: true
         });
 
         editDialogRef.afterClosed().subscribe(result => {
             if (result != false && result.success) {
                 this.dialog.open(Information, {
                     width: '350px',
-                    data: {mensaje: 'Se ha modificado el place.'}
+                    data: {mensaje: 'Se ha modificado el lugar.'}
                 });
                 this.paginator.page.emit();
             }
@@ -108,7 +108,7 @@ export class PlaceComponent implements OnInit {
                     if (resp.body.success) {
                         this.dialog.open(Information, {
                             width: '350px',
-                            data: {mensaje: 'Se ha eliminado el place.'}
+                            data: {mensaje: 'Se ha eliminado el lugar.'}
                         });
                         this.selection.clear();
                         this.paginator.page.emit();
@@ -147,7 +147,7 @@ export class PlaceComponent implements OnInit {
                     todos.subscribe(value => {
                         this.dialog.open(Information, {
                             width: '350px',
-                            data: {mensaje: value ? 'Se ha eliminado todos los placees.' : 'No se eliminaron correctamente todos los placees'}
+                            data: {mensaje: value ? 'Se ha eliminado todos los lugares.' : 'No se eliminaron correctamente todos los lugares'}
                         });
                         this.selection.clear();
                         this.paginator.page.emit();

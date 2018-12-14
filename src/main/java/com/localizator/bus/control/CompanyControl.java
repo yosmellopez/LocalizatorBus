@@ -61,7 +61,7 @@ public class CompanyControl {
     }
 
     @PutMapping(value = "/company/{idCompany}")
-    public ResponseEntity<AppResponse<Company>> actualizarCompany(@PathVariable("idCompany") Optional<Company> optional, @RequestBody Company company) {
+    public ResponseEntity<AppResponse<Company>> actualizarCompany(@PathVariable("idCompany") Optional<Company> optional, @Valid @RequestBody Company company) {
         Company companyBd = optional.orElseThrow(() -> new EntityNotFoundException("company_not_found"));
         companyBd.clone(company);
         companyRepository.saveAndFlush(companyBd);

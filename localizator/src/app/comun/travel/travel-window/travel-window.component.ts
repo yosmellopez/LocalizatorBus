@@ -59,7 +59,8 @@ export class TravelWindow implements OnInit {
     filteredPassengers: Passenger[] = [];
     step = 0;
     insertarPassenger: boolean = true;
-    minDate: Date = new Date();
+    minTravelDate: Date = new Date();
+    minArriveDate: Date = new Date();
     displayedColumns: string[] = ['seleccionado', 'name', 'lastname', 'dni', 'place', 'acciones'];
     datos: Array<PassengerTravel> = new Array<PassengerTravel>();
     dataSource = new MatTableDataSource<PassengerTravel>();
@@ -70,6 +71,7 @@ export class TravelWindow implements OnInit {
     selectedRoute: Route;
     currentPassengerTravel: PassengerTravel;
     passengerSubcription: Subject<Passenger> = new Subject<Passenger>();
+    huboCambios: boolean = false;
     @ViewChild(MatStepper) steeper: MatStepper;
     private hour = 10;
     private minute = 25;
@@ -87,6 +89,8 @@ export class TravelWindow implements OnInit {
                 id: id, active: active, route: route, travelDate: travelDate, arriveDate: arriveDate, bus: bus,
                 passengerTravels: passengerTravels, expandido: expandido, travelTime: travelTime, arriveTime: arriveTime
             };
+            this.minTravelDate = new Date(travelDate);
+            this.minArriveDate = new Date(arriveDate);
             passengerTravels.forEach(passengerTravel => {
                 this.datos.push(passengerTravel);
             });
@@ -182,6 +186,10 @@ export class TravelWindow implements OnInit {
                     if (resp.body.success) {
                         this.newPassenger = resp.body.elemento;
                         this.currentPlace = this.formPasajero.controls['place'].value;
+                        if (!resp.body.existe) {
+                            this.passengers.push(this.newPassenger);
+                        }
+                        this.huboCambios = true;
                         this.passengerSubcription.next(this.newPassenger);
                     } else {
                         this.dialog.open(MensajeError, {width: "400px", data: {mensaje: resp.body.msg}});
@@ -231,6 +239,7 @@ export class TravelWindow implements OnInit {
                 this.dialog.open(Information, {width: "350px", data: {mensaje: "Pasajero modificado exitosamente"}});
                 this.newPassenger = null;
                 this.insertarPassenger = true;
+                this.huboCambios = true;
             } else {
                 this.dialog.open(MensajeError, {width: "350px", data: {mensaje: resp.body.msg}});
             }
@@ -289,8 +298,12 @@ export class TravelWindow implements OnInit {
                 this.dialogRef.close(resp);
             });
         else {
-            this.dialogRef.close(false);
-            this.passengerSubcription.complete();
+            if (this.huboCambios) {
+                this.dialogRef.close(this.newTravel);
+            } else {
+                this.dialogRef.close(false);
+                this.passengerSubcription.complete();
+            }
         }
     }
 
@@ -378,7 +391,7 @@ export class TravelWindow implements OnInit {
 
     newPlace() {
         let placedialogRef = this.dialog.open(PlaceWindow, {
-            width: '400px', data: new Place()
+            width: '700px', data: new Place()
         });
         placedialogRef.afterClosed().subscribe(respuesta => {
             if (respuesta && respuesta.success) {
@@ -427,6 +440,8 @@ export class TravelWindow implements OnInit {
                         this.passengerTravelService.listarPassengerTravelByTravel(this.newTravel.id).subscribe(resp => {
                             if (resp.body.success) {
                                 this.dataSource = new MatTableDataSource(resp.body.elementos);
+                                this.newTravel.passengerTravels = resp.body.elementos;
+                                this.huboCambios = true;
                             }
                         });
                     });

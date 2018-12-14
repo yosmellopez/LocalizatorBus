@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -70,7 +71,7 @@ public class TravelControl {
     }
 
     @PutMapping(value = "/travel/{idTravel}")
-    public ResponseEntity<AppResponse<Travel>> actualizarTravel(@PathVariable("idTravel") Optional<Travel> optional, @RequestBody Travel travel, Locale locale) {
+    public ResponseEntity<AppResponse<Travel>> actualizarTravel(@PathVariable("idTravel") Optional<Travel> optional, @Valid @RequestBody Travel travel, Locale locale) {
         Travel travelBd = optional.orElseThrow(() -> new EntityNotFoundException("travel_not_found"));
         travelBd.clone(travel);
         travelRepository.saveAndFlush(travelBd);
@@ -91,11 +92,12 @@ public class TravelControl {
         return ok(success(travelBd).msg(mensaje).build());
     }
 
+    @Transactional
     @DeleteMapping(value = "/travel/{idTravel}")
     public ResponseEntity<AppResponse> eliminarTravel(@PathVariable("idTravel") Optional<Travel> optional, Locale locale) {
         Travel travel = optional.orElseThrow(() -> new EntityNotFoundException("travel_not_found"));
-        boolean deleted = passengerTravelRepository.deleteByTravel(travel);
-        if (deleted)
+        int deleted = passengerTravelRepository.deleteByTravel(travel);
+        if (deleted == 1)
             travelRepository.delete(travel);
         return ok(success(messageSource.getMessage("travel_deleted", null, locale)).total(travelRepository.count()).build());
     }

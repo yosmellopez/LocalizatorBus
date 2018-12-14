@@ -70,7 +70,7 @@ public class RouteControl {
     }
 
     @PutMapping(value = "/route/{idRoute}")
-    public ResponseEntity<AppResponse<Route>> actualizarRoute(@PathVariable("idRoute") Optional<Route> optional, @RequestBody Route route) {
+    public ResponseEntity<AppResponse<Route>> actualizarRoute(@PathVariable("idRoute") Optional<Route> optional, @Valid @RequestBody Route route) {
         Route routeBd = optional.orElseThrow(() -> new EntityNotFoundException("route_not_found"));
         routeBd.clone(route);
         routeRepository.saveAndFlush(routeBd);

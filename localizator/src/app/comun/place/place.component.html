@@ -42,6 +42,20 @@
                 </td>
             </ng-container>
 
+            <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="ajustado"> Dirección</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.address}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="stretch">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="ajustado"> Tramo</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.stretch?'Si':'No'}}
+                </td>
+            </ng-container>
+
             <ng-container matColumnDef="acciones" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef style="text-align: center;">Acciones</th>
                 <td mat-cell *matCellDef="let element" align="center" class="acciones table-actions-theme">

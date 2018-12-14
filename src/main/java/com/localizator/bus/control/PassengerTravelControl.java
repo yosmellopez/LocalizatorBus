@@ -82,7 +82,7 @@ public class PassengerTravelControl {
     }
 
     @PutMapping(value = "/passengerTravel/{optPassenger}/{optTravel}")
-    public ResponseEntity<AppResponse<PassengerTravel>> modificar(@PathVariable Optional<Passenger> optPassenger, @PathVariable Optional<Travel> optTravel, @RequestBody PassengerTravel passengerTravel) {
+    public ResponseEntity<AppResponse<PassengerTravel>> modificar(@PathVariable Optional<Passenger> optPassenger, @PathVariable Optional<Travel> optTravel, @Valid @RequestBody PassengerTravel passengerTravel) {
         Passenger passenger = optPassenger.orElseThrow(() -> new EntityNotFoundException("passenger_not_found"));
         Travel travel = optTravel.orElseThrow(() -> new EntityNotFoundException("travel_not_found"));
         PassengerTravelPK passengerTravelPK = new PassengerTravelPK(passenger.getId(), travel.getId());

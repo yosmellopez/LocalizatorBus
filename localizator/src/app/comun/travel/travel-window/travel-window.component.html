@@ -45,14 +45,14 @@
                     </mat-expansion-panel-header>
 
                     <mat-form-field class="middle-width">
-                        <input matInput [matDatepicker]="travelDatePicker" formControlName="travelDate" placeholder="Fecha de Viaje" [min]="minDate" [errorStateMatcher]="matcher">
+                        <input matInput [matDatepicker]="travelDatePicker" formControlName="travelDate" placeholder="Fecha de Viaje" [min]="minTravelDate" [errorStateMatcher]="matcher">
                         <mat-datepicker-toggle matSuffix [for]="travelDatePicker"></mat-datepicker-toggle>
                         <mat-datepicker #travelDatePicker></mat-datepicker>
                         <mat-error *ngIf="formViaje.controls['travelDate'].hasError('required')">Debe seleccionar una fecha de viaje.</mat-error>
                         <mat-error *ngIf="formViaje.controls['travelDate'].hasError('min')">Debe seleccionar una fecha de viaje.</mat-error>
                     </mat-form-field>
                     <mat-form-field class="middle-width">
-                        <input matInput [matDatepicker]="arriveDatePicker" formControlName="arriveDate" placeholder="Fecha de Arrivo" [min]="minDate" [errorStateMatcher]="matcher">
+                        <input matInput [matDatepicker]="arriveDatePicker" formControlName="arriveDate" placeholder="Fecha de Arrivo" [min]="minArriveDate" [errorStateMatcher]="matcher">
                         <mat-datepicker-toggle matSuffix [for]="arriveDatePicker"></mat-datepicker-toggle>
                         <mat-datepicker #arriveDatePicker></mat-datepicker>
                         <mat-error *ngIf="formViaje.controls['arriveDate'].hasError('required')">Debe seleccionar una fecha de arrivo.</mat-error>

@@ -26,6 +26,8 @@ import {WTimeDialogComponent} from "../components/time-control/w-time-dialog.com
 import {WClockComponent} from "../components/time-control/w-clock.component";
 import {PlaceSelectorComponent} from './route/place-selector/place-selector.component';
 import {ChartsModule} from "ng2-charts";
+import {GooglePlaceModule} from "ngx-google-places-autocomplete";
+import {AgmCoreModule} from "@agm/core";
 
 
 @NgModule({
@@ -37,7 +39,12 @@ import {ChartsModule} from "ng2-charts";
         AmazingTimePickerModule,
         RouterModule.forChild(routesComun),
         NgxMaterialTimepickerModule,
-        ChartsModule
+        ChartsModule,
+        GooglePlaceModule,
+        AgmCoreModule.forRoot({
+            apiKey: "AIzaSyAnDqakUyibq-yMTc5MSYVqdXf99H8-In0",
+            libraries: ["places"]
+        }),
     ],
     declarations: [BusComponent, PlaceComponent, UserProfileComponent, RouteComponent, TravelComponent, BusWindow, PlaceWindow, RouteWindow,
         TravelWindow, DashboardComponent, NotificationComponent, WMatTimePickerComponent, WTimeDialogComponent, WClockComponent, PlaceSelectorComponent],

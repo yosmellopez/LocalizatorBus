@@ -82,7 +82,7 @@ public class BusControl {
     }
 
     @PutMapping(value = "/bus/{idBus}")
-    public ResponseEntity<AppResponse<Bus>> actualizarBus(@PathVariable("idBus") Optional<Bus> optional, @RequestBody Bus bus) {
+    public ResponseEntity<AppResponse<Bus>> actualizarBus(@PathVariable("idBus") Optional<Bus> optional, @Valid @RequestBody Bus bus) {
         Bus busBd = optional.orElseThrow(() -> new EntityNotFoundException("bus_not_found"));
         busBd.clone(bus);
         busRepository.saveAndFlush(busBd);

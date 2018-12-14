@@ -27,6 +27,7 @@ import {PERFECT_SCROLLBAR_CONFIG} from 'ngx-perfect-scrollbar';
 import {PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
 import {DatePipe} from "@angular/common";
 import {ChartsModule} from "ng2-charts";
+import {GooglePlaceModule} from "ngx-google-places-autocomplete";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -54,7 +55,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         RouterModule,
         ReactiveFormsModule,
         PerfectScrollbarModule,
-        ChartsModule
+        ChartsModule,
+        GooglePlaceModule
     ],
     providers: [
         {provide: DateAdapter, useClass: DateFormat},

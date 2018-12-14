@@ -95,10 +95,12 @@ export class TravelComponent implements OnInit {
 
         editDialogRef.afterClosed().subscribe(result => {
             if (result != false) {
-                this.dialog.open(Information, {
-                    width: '350px',
-                    data: {mensaje: result.body.msg}
-                });
+                if (result.body) {
+                    this.dialog.open(Information, {
+                        width: '350px',
+                        data: {mensaje: result.body.msg}
+                    });
+                }
                 this.paginator.page.emit();
             }
         });
@@ -108,7 +110,7 @@ export class TravelComponent implements OnInit {
         event.stopPropagation();
         let dialogRef = this.dialog.open(Confirm, {
             width: '400px',
-            data: {mensaje: 'Desea eliminar la travel:<br>- ' + travel.travelDate},
+            data: {mensaje: 'Desea eliminar el viaje: <br>- ' + travel.travelDate},
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {

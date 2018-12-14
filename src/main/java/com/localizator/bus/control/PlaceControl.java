@@ -1,14 +1,18 @@
 package com.localizator.bus.control;
 
+import com.localizator.bus.dto.Localization;
 import com.localizator.bus.entity.Place;
 import com.localizator.bus.exception.GeneralException;
 import com.localizator.bus.exception.PlaceException;
 import com.localizator.bus.repository.PlaceRepository;
+import com.localizator.bus.service.LocalizationService;
+import com.localizator.bus.service.Posicion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +58,13 @@ public class PlaceControl {
         return ok(success(places).total(places.size()).build());
     }
 
+    @GetMapping(value = "/place/findProperties")
+    public ResponseEntity<AppResponse<Place>> findPlaceProperties(Double lat, Double lon) {
+        Posicion posicion = new Posicion(lat, lon);
+        Localization localization = LocalizationService.getLocalizationByCoord(posicion);
+        return ok(success(localization).build());
+    }
+
     @PostMapping(value = "/place")
     public ResponseEntity<AppResponse<Place>> insertarPlace(@Valid @RequestBody Place place) {
         placeRepository.saveAndFlush(place);
@@ -61,7 +72,7 @@ public class PlaceControl {
     }
 
     @PutMapping(value = "/place/{idPlace}")
-    public ResponseEntity<AppResponse<Place>> actualizarPlace(@PathVariable("idPlace") Optional<Place> optional, @RequestBody Place place) {
+    public ResponseEntity<AppResponse<Place>> actualizarPlace(@PathVariable("idPlace") Optional<Place> optional, @Valid @RequestBody Place place) {
         Place placeBd = optional.orElseThrow(() -> new EntityNotFoundException("place_not_found"));
         placeBd.clone(place);
         placeRepository.saveAndFlush(placeBd);

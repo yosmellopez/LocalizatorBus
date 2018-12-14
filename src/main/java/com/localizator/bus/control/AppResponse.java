@@ -27,12 +27,16 @@ public class AppResponse<T> {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Long total;
 
-    public AppResponse(boolean success, String msg, T elemento, Collection<T> elementos, long total) {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Boolean existe;
+
+    public AppResponse(boolean success, String msg, T elemento, Collection<T> elementos, long total, Boolean existe) {
         this.success = success;
         this.msg = msg;
         this.elemento = elemento;
         this.elementos = elementos;
         this.total = total == -1 ? null : total;
+        this.existe = existe;
     }
 
     @JsonIgnoreType
@@ -48,8 +52,10 @@ public class AppResponse<T> {
 
         private long total = -1;
 
+        private Boolean existe = null;
+
         public <T> AppResponse build() {
-            return new AppResponse(success, msg, elemento, elementos, total);
+            return new AppResponse(success, msg, elemento, elementos, total, existe);
         }
 
         public ResponseBuilder success(boolean success) {
@@ -74,6 +80,11 @@ public class AppResponse<T> {
 
         public ResponseBuilder elemento(T elemento) {
             this.elemento = elemento;
+            return this;
+        }
+
+        public ResponseBuilder existe(boolean existe) {
+            this.existe = existe;
             return this;
         }
     }
@@ -125,6 +136,12 @@ public class AppResponse<T> {
         return builder;
     }
 
+    public static ResponseBuilder existe(boolean existe) {
+        ResponseBuilder builder = new ResponseBuilder();
+        builder.existe(existe);
+        return builder;
+    }
+
     public boolean isSuccess() {
         return success;
     }
@@ -161,4 +178,7 @@ public class AppResponse<T> {
         return total;
     }
 
+    public Boolean getExiste() {
+        return existe;
+    }
 }

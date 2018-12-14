@@ -1,12 +1,12 @@
 package com.localizator.bus.service;
 
-public class Localization {
+public class Posicion {
 
     private double latitud;
 
     private double longitud;
 
-    public Localization(double latitud, double longitud) {
+    public Posicion(double latitud, double longitud) {
         this.latitud = latitud;
         this.longitud = longitud;
     }

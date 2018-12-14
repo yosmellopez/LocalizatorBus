@@ -7,9 +7,32 @@
     </h1>
     <div mat-dialog-content style="min-height: 100%;">
         <mat-form-field class="full-width">
-            <input matInput placeholder="Nombre" formControlName="name">
-            <mat-error *ngIf="form.controls['name'].errors?.required">Debe insertar el nombre de la persona</mat-error>
+            <input matInput placeholder="Nombre" formControlName="name" #name>
+            <mat-error *ngIf="form.controls['name'].errors?.required">Debe insertar el nombre del lugar</mat-error>
         </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Dirección" formControlName="address" #search>
+            <mat-error *ngIf="form.controls['address'].errors?.required">Debe insertar la dirección del lugar</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width hidden">
+            <input matInput placeholder="Codigo Postal" formControlName="postalCode" class="hidden">
+        </mat-form-field>
+        <mat-form-field class="full-width hidden">
+            <input matInput placeholder="Codigo Postal" formControlName="lat" class="hidden">
+        </mat-form-field>
+        <mat-form-field class="full-width hidden">
+            <input matInput placeholder="Codigo Postal" formControlName="lon" class="hidden">
+        </mat-form-field>
+        <mat-checkbox formControlName="stretch">Tramo</mat-checkbox>
+        <div class="form-group ic-form-group ng-hide" id="form-group-mapa">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="map" style="width:100%;height:300px;" #mapa>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div mat-dialog-actions class="boton-theme">
         <span class="spacer"></span>

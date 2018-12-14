@@ -63,14 +63,14 @@ public class PassengerControl {
     public ResponseEntity<AppResponse<Passenger>> insertarPassenger(@Valid @RequestBody Passenger passenger) {
         Optional<Passenger> optional = passengerRepository.findByDni(passenger.getDni());
         if (optional.isPresent()) {
-            return ok(success(optional.get()).build());
+            return ok(success(optional.get()).existe(true).build());
         }
         passengerRepository.saveAndFlush(passenger);
-        return ok(success(passenger).build());
+        return ok(success(passenger).existe(false).build());
     }
 
     @PutMapping(value = "/passenger/{idPassenger}")
-    public ResponseEntity<AppResponse<Passenger>> actualizarPassenger(@PathVariable("idPassenger") Optional<Passenger> optional, @RequestBody Passenger passenger) {
+    public ResponseEntity<AppResponse<Passenger>> actualizarPassenger(@PathVariable("idPassenger") Optional<Passenger> optional, @Valid @RequestBody Passenger passenger) {
         Passenger passengerBd = optional.orElseThrow(() -> new EntityNotFoundException("passenger_not_found"));
         passengerBd.clone(passenger);
         passengerRepository.saveAndFlush(passengerBd);

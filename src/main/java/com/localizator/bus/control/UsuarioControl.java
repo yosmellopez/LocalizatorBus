@@ -63,7 +63,7 @@ public class UsuarioControl {
     }
 
     @PutMapping(value = "/usuario/{idUsuario}")
-    public ResponseEntity<AppResponse<Usuario>> actualizarUsuario(@PathVariable("idUsuario") Optional<Usuario> optional, @RequestBody Usuario usuario, @AuthenticationPrincipal Usuario logeado, Locale locale) {
+    public ResponseEntity<AppResponse<Usuario>> actualizarUsuario(@PathVariable("idUsuario") Optional<Usuario> optional, @Valid @RequestBody Usuario usuario, @AuthenticationPrincipal Usuario logeado, Locale locale) {
         final Usuario usuarioBd = optional.orElseThrow(() -> new EntityNotFoundException("user_not_found"));
         if (!usuario.getActivated() && logeado.equals(usuarioBd)) {
             return ok(failure(messageSource.getMessage("usuario_cannot_desactivate_self", null, locale)).build());

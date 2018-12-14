@@ -81,3 +81,8 @@ button mat-icon {
 .md-30 {
     font-size: 30px;
 }
+
+mat-icon {
+    position: relative;
+    top: 0;
+}

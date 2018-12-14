@@ -11,5 +11,5 @@ public interface PassengerTravelRepository extends JpaRepository<PassengerTravel
 
     List<PassengerTravel> findByTravel(Travel travel);
 
-    boolean deleteByTravel(Travel travel);
+    int deleteByTravel(Travel travel);
 }
