@@ -40,11 +40,7 @@ import {AgmCoreModule} from "@agm/core";
         RouterModule.forChild(routesComun),
         NgxMaterialTimepickerModule,
         ChartsModule,
-        GooglePlaceModule,
-        AgmCoreModule.forRoot({
-            apiKey: "AIzaSyAnDqakUyibq-yMTc5MSYVqdXf99H8-In0",
-            libraries: ["places"]
-        }),
+        GooglePlaceModule
     ],
     declarations: [BusComponent, PlaceComponent, UserProfileComponent, RouteComponent, TravelComponent, BusWindow, PlaceWindow, RouteWindow,
         TravelWindow, DashboardComponent, NotificationComponent, WMatTimePickerComponent, WTimeDialogComponent, WClockComponent, PlaceSelectorComponent],
