@@ -63,7 +63,7 @@ public class Usuario implements UserDetails, Serializable, ClonableEntity<Usuari
     @JoinColumn(name = "rol_id", foreignKey = @ForeignKey(name = "fk_usuario_rol"))
     private Rol rol;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinTable(name = "company_usuario", uniqueConstraints = {@UniqueConstraint(name = "usuario_company_unique", columnNames = {"usuario_id"})},
             foreignKey = @ForeignKey(name = "fk_company_usuario_usuario"), inverseForeignKey = @ForeignKey(name = "fk_company_usuario_company"),
             joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "company_id"))
@@ -149,7 +149,7 @@ public class Usuario implements UserDetails, Serializable, ClonableEntity<Usuari
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username.toLowerCase();
     }
 
     @Override
@@ -206,13 +206,7 @@ public class Usuario implements UserDetails, Serializable, ClonableEntity<Usuari
 
     @Override
     public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", username='" + username + '\'' +
-                ", rol=" + rol +
-                '}';
+        return "Usuario{" + "id=" + id + ", name='" + name + '\'' + ", lastname='" + lastname + '\'' + ", username='" + username + '\'' + ", rol=" + rol + '}';
     }
 
     @Override

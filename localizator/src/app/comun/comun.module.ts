@@ -28,7 +28,6 @@ import {PlaceSelectorComponent} from './route/place-selector/place-selector.comp
 import {ChartsModule} from "ng2-charts";
 import {GooglePlaceModule} from "ngx-google-places-autocomplete";
 
-
 @NgModule({
     imports: [
         CommonModule,

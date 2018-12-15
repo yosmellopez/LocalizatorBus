@@ -15,7 +15,7 @@ public class Address {
 
     private String state;
 
-    private Long postcode;
+    private String postcode;
 
     private String country;
 
@@ -71,11 +71,11 @@ public class Address {
         this.state = state;
     }
 
-    public Long getPostcode() {
+    public String getPostcode() {
         return postcode;
     }
 
-    public void setPostcode(Long postcode) {
+    public void setPostcode(String postcode) {
         this.postcode = postcode;
     }
 

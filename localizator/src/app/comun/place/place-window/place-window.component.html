@@ -1,3 +1,6 @@
+<div class="loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+</div>
 <form class="form" [formGroup]="form" (submit)="insertarPlace()">
     <h1 mat-dialog-title style="margin: 0 0">{{insertar?'Nuevo Lugar':'Modificar Lugar'}}
         <button type="button" mat-icon-button class="close-button" (click)="onNoClick()">
@@ -11,7 +14,7 @@
             <mat-error *ngIf="form.controls['name'].errors?.required">Debe insertar el nombre del lugar</mat-error>
         </mat-form-field>
         <mat-form-field class="full-width">
-            <input matInput placeholder="Dirección" formControlName="address" #search>
+            <input matInput placeholder="Dirección" ngx-google-places-autocomplete formControlName="address" #placesRef (onAddressChange)="handleAddressChange($event)">
             <mat-error *ngIf="form.controls['address'].errors?.required">Debe insertar la dirección del lugar</mat-error>
         </mat-form-field>
         <mat-form-field class="full-width hidden">

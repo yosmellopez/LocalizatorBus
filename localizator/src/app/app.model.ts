@@ -160,6 +160,7 @@ export declare interface RouteInfo {
     title: string;
     icon: string;
     class: string;
+    isActive: boolean;
     pageTitle: string;
     authority: string[];
     routes: AppRoute[];

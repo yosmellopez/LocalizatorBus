@@ -19,7 +19,7 @@ export class UsuarioComponent implements OnInit {
     dataSource: MatTableDataSource<Usuario> = new MatTableDataSource<Usuario>();
     total: number = 0;
     pageSize: number = 10;
-    displayedColumns = ['seleccionado', 'name', 'lastname', 'username', 'email', 'company', 'rol', 'activated', 'acciones'];
+    displayedColumns = ['index', 'seleccionado', 'name', 'lastname', 'username', 'email', 'company', 'rol', 'activated', 'acciones'];
     selection = new SelectionModel<Usuario>(true, []);
     nombre: string = '';
     resultsLength = 0;
@@ -42,28 +42,26 @@ export class UsuarioComponent implements OnInit {
         this.principal.identity().then(user => {
             this.usuario = user;
         });
-        merge(this.sort.sortChange, this.paginator.page)
-            .pipe(
-                startWith({}),
-                switchMap(() => {
-                    this.isLoadingResults = true;
-                    return this.service.listarUsuarios(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
-                }),
-                map(data => {
-                    this.total = data.body.total;
-                    this.isLoadingResults = false;
-                    return data.body.elementos;
-                }),
-                catchError(data => {
-                    return [];
-                })
-            )
-            .subscribe(datos => {
-                this.dataSource = new MatTableDataSource(datos);
-                this.paginator.length = this.total;
-                this.table.dataSource = this.dataSource;
-                this.table.renderRows();
-            });
+        merge(this.sort.sortChange, this.paginator.page).pipe(
+            startWith({}),
+            switchMap(() => {
+                this.isLoadingResults = true;
+                return this.service.listarUsuarios(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+            }),
+            map(data => {
+                this.total = data.body.total;
+                this.isLoadingResults = false;
+                return data.body.elementos;
+            }),
+            catchError(data => {
+                return [];
+            })
+        ).subscribe(datos => {
+            this.dataSource = new MatTableDataSource(datos);
+            this.paginator.length = this.total;
+            this.table.dataSource = this.dataSource;
+            this.table.renderRows();
+        });
     }
 
     abrirVentana() {
@@ -100,7 +98,7 @@ export class UsuarioComponent implements OnInit {
         event.stopPropagation();
         let dialogRef = this.dialog.open(Confirm, {
             width: '400px',
-            data: {mensaje: 'Desea eliminar la usuario:<br>- ' + usuario.name},
+            data: {mensaje: 'Desea eliminar el usuario:<br>- ' + usuario.name},
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -126,7 +124,7 @@ export class UsuarioComponent implements OnInit {
         } else {
             let dialogRef = this.dialog.open(Confirm, {
                 width: '400px',
-                data: {mensaje: 'Desea eliminar los buses:<br>- ' + usuarios.map(user => user.name + " " + user.lastname).join("<br> -")},
+                data: {mensaje: 'Desea eliminar los usuarios:<br>- ' + usuarios.map(user => user.name + " " + user.lastname).join("<br> -")},
             });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
@@ -159,14 +157,27 @@ export class UsuarioComponent implements OnInit {
 
     activarUsuario(event: Event, usuario: Usuario) {
         event.stopPropagation();
-        usuario.activated = !usuario.activated;
-        let accion: string = usuario.activated ? "activado" : "desactivado";
-        this.service.modificarUsuario(usuario.id, usuario).subscribe(response => {
-            if (response.body.success) {
-                this.dialog.open(Information, {data: {mensaje: `Usuario ${accion} exitosamente`}, width: "350px"});
-            } else {
+        let dialogRef = this.dialog.open(Confirm, {
+            width: '400px',
+            data: {
+                mensaje: `Desea ${usuario.activated ? 'desactivar' : 'activar'} el usuario:  ${usuario.name}  ${usuario.lastname}`,
+                accion: usuario.activated ? 'Desactivar' : 'Activar'
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.isLoadingResults = true;
                 usuario.activated = !usuario.activated;
-                this.dialog.open(MensajeError, {data: {mensaje: response.body.msg}, width: "350px"});
+                let accion: string = usuario.activated ? "activado" : "desactivado";
+                this.service.modificarUsuario(usuario.id, usuario).subscribe(response => {
+                    this.isLoadingResults = false;
+                    if (response.body.success) {
+                        this.dialog.open(Information, {data: {mensaje: `Usuario ${accion} exitosamente`}, width: "350px"});
+                    } else {
+                        usuario.activated = !usuario.activated;
+                        this.dialog.open(MensajeError, {data: {mensaje: response.body.msg}, width: "350px"});
+                    }
+                });
             }
         });
     }

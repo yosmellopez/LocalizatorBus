@@ -8,7 +8,12 @@ import {Mensaje} from "../app.model";
     styleUrls: ['./mensaje.component.css'],
 })
 export class Confirm {
+    accion: string = "Eliminar";
+
     constructor(public dialogRef: MatDialogRef<Confirm>, @Inject(MAT_DIALOG_DATA) public data: any) {
+        if (data.accion) {
+            this.accion = data.accion;
+        }
     }
 
     confirmar(confirm: boolean): void {

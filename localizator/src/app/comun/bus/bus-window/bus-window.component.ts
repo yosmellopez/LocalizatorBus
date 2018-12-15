@@ -5,6 +5,7 @@ import {Bus, Company} from "../../../app.model";
 import {MensajeError} from "../../../mensaje/window.mensaje";
 import {BusService} from "../../../services/bus.service";
 import {CompanyService} from "../../../services/company.service";
+import {Principal} from "../../../services/principal.service";
 
 @Component({
     selector: 'app-bus-window',
@@ -20,7 +21,7 @@ export class BusWindow implements OnInit {
     companies: Company[] = [];
 
     constructor(public dialogRef: MatDialogRef<BusWindow>, @Inject(MAT_DIALOG_DATA) {id, code, siteNumber, number, company}: Bus,
-                private service: BusService, private dialog: MatDialog, private companyService: CompanyService) {
+                private service: BusService, private dialog: MatDialog, private companyService: CompanyService, private principal: Principal) {
         if (id)
             this.insertar = false;
         this.idUser = id;
@@ -63,8 +64,14 @@ export class BusWindow implements OnInit {
         this.companyService.listarAllCompanys().subscribe(resp => {
             if (resp.body.success) {
                 this.companies = resp.body.elementos;
+                if (this.principal.hasAuthority("Usuario")) {
+                    let company = this.companies.find((value: Company, index: number) => index == 0);
+                    console.log(company)
+                    this.form.controls['company'].setValue(company);
+                }
             }
         });
+
     }
 
     compararCompanies(inicio: Company, fin: Company) {

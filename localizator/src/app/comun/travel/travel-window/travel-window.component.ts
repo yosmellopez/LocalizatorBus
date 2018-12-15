@@ -1,5 +1,5 @@
 import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
-import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+import {FormControl, FormGroup, FormGroupDirective, NgForm, ValidationErrors, Validators} from "@angular/forms";
 import {
     ErrorStateMatcher,
     MAT_DATE_FORMATS,
@@ -217,8 +217,6 @@ export class TravelWindow implements OnInit {
                 this.insertarPassenger = true;
                 this.pasajeroInsertado = true;
                 this.formPasajero.reset();
-                this.formPasajero.clearValidators();
-                this.formPasajero.clearAsyncValidators();
             } else {
                 this.dialog.open(MensajeError, {width: "400px", data: {mensaje: response.body.msg}});
                 this.pasajeroInsertado = false;

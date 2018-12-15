@@ -1,14 +1,17 @@
 package com.localizator.bus.control;
 
 import com.localizator.bus.entity.Company;
+import com.localizator.bus.entity.Usuario;
 import com.localizator.bus.exception.CompanyException;
 import com.localizator.bus.exception.GeneralException;
 import com.localizator.bus.repository.CompanyRepository;
+import com.localizator.bus.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -49,9 +52,14 @@ public class CompanyControl {
     }
 
     @GetMapping(value = "/company/all")
-    public ResponseEntity<AppResponse<Company>> listarAllCompanys() {
-        List<Company> companys = companyRepository.findAll();
-        return ok(success(companys).total(companys.size()).build());
+    public ResponseEntity<AppResponse<Company>> listarAllCompanys(@AuthenticationPrincipal Usuario usuario) {
+        if (SecurityUtils.isAdmin()) {
+            List<Company> companys = companyRepository.findAll();
+            return ok(success(companys).total(companys.size()).build());
+        } else {
+            Set<Company> companys = usuario.getCompanies();
+            return ok(success(companys).total(companys.size()).build());
+        }
     }
 
     @PostMapping(value = "/company")

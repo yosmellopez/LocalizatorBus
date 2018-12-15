@@ -1,5 +1,6 @@
 package com.localizator.bus.exception;
 
+import org.hibernate.PersistentObjectException;
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,13 +17,9 @@ public abstract class GeneralException extends Exception {
 
     protected Locale locale;
 
-    public GeneralException(String message) {
-        super(message);
-        this.mensaje = message;
-    }
-
     public GeneralException(Throwable cause, MessageSource messageSource, Locale locale) {
         super(cause);
+        System.out.println(cause);
         this.messageSource = messageSource;
         this.locale = locale;
     }
@@ -38,6 +35,9 @@ public abstract class GeneralException extends Exception {
         } else if (e instanceof DataIntegrityViolationException) {
             DataIntegrityViolationException exception = (DataIntegrityViolationException) e;
             mensaje = exception.getMostSpecificCause().getLocalizedMessage();
+        } else if (e instanceof PersistentObjectException) {
+            PersistentObjectException exception = (PersistentObjectException) e;
+            mensaje = exception.getCause().getLocalizedMessage();
         } else if (e instanceof SQLGrammarException) {
             SQLGrammarException exception = (SQLGrammarException) e;
             mensaje = exception.getCause().getLocalizedMessage();

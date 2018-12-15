@@ -9,6 +9,7 @@ import {LanguageService} from "../../services/language.service";
 import {TranslateService} from "../../services/translate.service";
 import {Principal} from "../../services/principal.service";
 import {TitleService} from "../../services/title.service";
+import {Howl, Howler} from 'howler';
 
 declare function my_init_plugins();
 
@@ -16,6 +17,7 @@ const LANGUAGES: RouteInfo[] = [{
     id: "",
     title: "English",
     class: "grey-text text-darken-1",
+    isActive: false,
     icon: "flag-icon flag-icon-gb",
     hasChildren: false,
     authority: [],
@@ -26,6 +28,7 @@ const LANGUAGES: RouteInfo[] = [{
     id: "",
     title: "Español",
     class: "grey-text text-darken-1",
+    isActive: false,
     hasChildren: false,
     pageTitle: "",
     path: "es",
@@ -44,6 +47,7 @@ export class HeaderComponent implements OnInit {
     languages = LANGUAGES;
     titulos: Observable<Title[]> = new Observable<Title[]>();
     pageTitle: Observable<string> = new Observable<string>();
+    usuarioTitle: Observable<string> = new Observable<string>();
     notificaciones: Notificacion[] = [];
     username: string;
     isAdmin: boolean = false;
@@ -70,6 +74,9 @@ export class HeaderComponent implements OnInit {
         });
         this.titleService.pageTitleEmitter.subscribe(value => {
             this.pageTitle = of(value);
+        });
+        this.principal.usuarioEmitter.subscribe(texto => {
+            this.usuarioTitle = of(texto);
         });
         this.websocket.connectWebSocket(this.username, this.isAdmin);
         this.websocketNotification = this.websocket.getMessageNotificacion().subscribe(this.onReceiveNotification);
@@ -109,6 +116,8 @@ export class HeaderComponent implements OnInit {
             data: notificacion
         });
         this.notificationService.notificationEmitter.emit(this.notificaciones.length);
+        let sound = new Howl({src: ['assets/sound.mp3']});
+        sound.play();
         console.log("Recibida la notificacion")
     }
 
@@ -135,7 +144,8 @@ export class HeaderComponent implements OnInit {
             horizontalPosition: "left",
             verticalPosition: "bottom",
             panelClass: ['blue-snackbar'],
-            data: notificacion
+            data: notificacion,
+            announcementMessage: "Esto es una prueba"
         });
     }
 }

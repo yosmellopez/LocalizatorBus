@@ -37,7 +37,7 @@
 <div class="jumbotron-1">
     <div class="jumbotron jumbotron-fluid">
         <div class="container-fluid">
-            <h1 class="display-3">{{pageTitle|async}}</h1>
+            <h1 class="display-3">{{pageTitle|async}} {{usuarioTitle|async}}</h1>
             <ol class="breadcrumb icon-home icon-angle-right no-bg">
                 <li *ngFor="let title of titulos|async" [class.active]="title.active">
                     {{title.title}}

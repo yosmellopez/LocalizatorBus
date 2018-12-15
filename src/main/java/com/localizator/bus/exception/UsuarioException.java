@@ -6,10 +6,6 @@ import java.util.Locale;
 
 public class UsuarioException extends GeneralException {
 
-    public UsuarioException(String message) {
-        super(message);
-    }
-
     public UsuarioException(Throwable cause, MessageSource messageSource, Locale locale) {
         super(cause, messageSource, locale);
     }
@@ -22,6 +18,6 @@ public class UsuarioException extends GeneralException {
             int finalIndex = mensaje.lastIndexOf(")");
             return messageSource.getMessage("unique_username", null, locale) + mensaje.substring(index + 11, finalIndex);
         }
-        return null;
+        return mensaje;
     }
 }

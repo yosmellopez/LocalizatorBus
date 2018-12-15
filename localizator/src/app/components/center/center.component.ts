@@ -19,12 +19,14 @@ import {Observable, of} from "rxjs";
 })
 export class CenterComponent implements OnInit {
     titulo: string;
+    ruta: string;
     usuario: Usuario = null;
     rol: Promise<String> = Promise.resolve("");
     rutas: RouteInfo[] = RUTAS;
     rutasUsuario: RouteInfo[] = [];
     routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
     cantidadNotificaciones: Observable<number> = new Observable();
+    currentClass: string = "";
 
     constructor(private router: Router, private location: Location, private principal: Principal, private animation: AnimationsService,
                 private service: TranslateService, private titleService: TitleService, private notificationService: NotificacionService) {
@@ -40,6 +42,7 @@ export class CenterComponent implements OnInit {
                     if (this.hasAuthority(ruta))
                         this.rutasUsuario.push(ruta);
                 });
+                this.principal.usuarioEmitter.emit(this.ruta.includes("dashboard") ? this.usuario.name : "");
             }
         });
         this.notificationService.notificationEmitter.subscribe(cantidad => {
@@ -56,7 +59,7 @@ export class CenterComponent implements OnInit {
     }
 
     getTitle() {
-        let titlee = this.location.prepareExternalUrl(this.location.path());
+        let titlee = this.ruta = this.location.prepareExternalUrl(this.location.path());
         let titulos: Title[] = [];
         let pageTitle: string = "";
         for (let item = 0; item < this.rutas.length; item++) {
@@ -80,6 +83,11 @@ export class CenterComponent implements OnInit {
             }
         }
         this.titleService.emmit(titulos, pageTitle);
+        this.principal.identity().then(valor => {
+            if (valor) {
+                this.principal.usuarioEmitter.emit(this.ruta.includes("dashboard") ? `${this.usuario.name} ${this.usuario.lastname}` : "");
+            }
+        });
     }
 
     cerrarSession() {

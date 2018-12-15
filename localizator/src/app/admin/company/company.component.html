@@ -1,3 +1,6 @@
+<div class="loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+</div>
 <mat-card color="primary" class="animated fadeInUp">
     <mat-card-header color="primary">
         <mat-card-title>{{'company.list'|translate}}</mat-card-title>

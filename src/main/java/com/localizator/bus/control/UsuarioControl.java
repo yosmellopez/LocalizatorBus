@@ -1,9 +1,11 @@
 package com.localizator.bus.control;
 
+import com.localizator.bus.entity.Company;
 import com.localizator.bus.entity.Rol;
 import com.localizator.bus.entity.Usuario;
 import com.localizator.bus.exception.GeneralException;
 import com.localizator.bus.exception.UsuarioException;
+import com.localizator.bus.repository.CompanyRepository;
 import com.localizator.bus.repository.RolRepository;
 import com.localizator.bus.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -39,14 +42,17 @@ public class UsuarioControl {
 
     private final RolRepository rolRepository;
 
-    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder encoder;
+
+    private final CompanyRepository companyRepository;
 
     @Autowired
-    public UsuarioControl(UsuarioRepository usuarioRepository, MessageSource messageSource, RolRepository rolRepository, PasswordEncoder passwordEncoder) {
+    public UsuarioControl(UsuarioRepository usuarioRepository, MessageSource messageSource, RolRepository rolRepository, PasswordEncoder encoder, CompanyRepository companyRepository) {
         this.usuarioRepository = usuarioRepository;
         this.messageSource = messageSource;
         this.rolRepository = rolRepository;
-        this.passwordEncoder = passwordEncoder;
+        this.encoder = encoder;
+        this.companyRepository = companyRepository;
     }
 
     @GetMapping(value = "/usuario")
@@ -55,9 +61,12 @@ public class UsuarioControl {
         return ok(success(usuarios.getContent()).total(usuarios.getTotalElements()).build());
     }
 
+    @Transactional
     @PostMapping(value = "/usuario")
     public ResponseEntity<AppResponse<Usuario>> insertarUsuario(@Valid @RequestBody Usuario usuario) {
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        usuario.setPassword(encoder.encode(usuario.getPassword()));
+        if (!usuario.getCompanies().isEmpty())
+            updateUsuarioCompanies(usuario);
         usuarioRepository.saveAndFlush(usuario);
         return ok(success(usuario).build());
     }
@@ -71,9 +80,11 @@ public class UsuarioControl {
         usuarioBd.clone(usuario);
         Optional.ofNullable(usuario.getPassword()).ifPresent(password -> {
             if (!password.isEmpty()) {
-                usuarioBd.setPassword(passwordEncoder.encode(password));
+                usuarioBd.setPassword(encoder.encode(password));
             }
         });
+        if (!usuario.getCompanies().isEmpty())
+            updateUsuarioCompanies(usuarioBd);
         usuarioRepository.saveAndFlush(usuarioBd);
         return ok(success(usuarioBd).build());
     }
@@ -83,6 +94,17 @@ public class UsuarioControl {
         Usuario usuario = optional.orElseThrow(() -> new EntityNotFoundException("user_not_found"));
         usuarioRepository.delete(usuario);
         return ok(success("Usuario eliminado correctamente").total(usuarioRepository.count()).build());
+    }
+
+    private void updateUsuarioCompanies(Usuario usuario) {
+        Set<Company> companies = usuario.getCompanies();
+        final Set<Company> companiesFromDatabase = new HashSet<>();
+        companies.forEach(company -> {
+            Optional<Company> optional = companyRepository.findById(company.getId());
+            companiesFromDatabase.add(optional.orElseThrow(() -> new EntityNotFoundException("company_not_found")));
+        });
+        companies.clear();
+        companies.addAll(companiesFromDatabase);
     }
 
     @GetMapping(value = "/roles")

@@ -1,3 +1,6 @@
+<div class="loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+</div>
 <form class="form" [formGroup]="form" (submit)="insertarUsuario()">
     <h1 mat-dialog-title style="margin: 0 0">{{insertar?'Nuevo Usuario':'Modificar Usuario'}}
         <button type="button" mat-icon-button class="close-button" (click)="onNoClick()">

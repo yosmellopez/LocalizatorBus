@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {TravelWindow} from "../travel/travel-window/travel-window.component";
-import {Passenger, PassengerTravel, Travel} from "../../app.model";
+import {PassengerTravel, Travel} from "../../app.model";
 import {SelectionModel} from "@angular/cdk/collections";
 import {catchError, map, startWith, switchMap} from "rxjs/internal/operators";
 import {Confirm, Information, MensajeError} from "../../mensaje/window.mensaje";

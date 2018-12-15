@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {AccountService} from "./account.service";
 import {Observable, Subject} from "rxjs/index";
 import {Usuario} from "../app.model";
@@ -8,6 +8,7 @@ export class Principal {
     private userIdentity: any;
     private authenticated = false;
     public authenticationState = new Subject<any>();
+    public usuarioEmitter: EventEmitter<string> = new EventEmitter();
 
     constructor(private account: AccountService) {
     }

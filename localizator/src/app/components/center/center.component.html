@@ -63,10 +63,10 @@
                                     <i class="material-icons pull-left icon">{{menu.icon}}</i>
                                     <i class="pull-right fa fa-caret-down" *ngIf="menu.hasChildren"></i>
                                 </button>
-                                <div class="collapse" id="{{menu.id}}" *ngIf="menu.hasChildren">
+                                <div class="collapse" id="{{menu.id}}" *ngIf="menu.hasChildren" routerLinkActive="in">
                                     <ul class="list-unstyled">
                                         <li *ngFor="let menuItem of menu.routes">
-                                            <a [routerLink]="menuItem.path" class="btn btn-flat" style="padding-left: 40px" routerLinkActive="active">
+                                            <a [routerLink]="menuItem.path" class="btn btn-flat" style="padding-left: 40px">
                                                 <i class="material-icons pull-left icon">{{menuItem.icon}}</i>
                                                 <span class="title">{{menuItem.title|translate}}</span>
                                             </a>
