@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {TravelWindow} from "../travel/travel-window/travel-window.component";
-import {Travel} from "../../app.model";
+import {Passenger, PassengerTravel, Travel} from "../../app.model";
 import {SelectionModel} from "@angular/cdk/collections";
 import {catchError, map, startWith, switchMap} from "rxjs/internal/operators";
 import {Confirm, Information, MensajeError} from "../../mensaje/window.mensaje";
@@ -8,6 +8,7 @@ import {MatDialog, MatPaginator, MatSort, MatTable, MatTableDataSource} from "@a
 import {TravelService} from "../../services/travel.service";
 import {forkJoin, merge, Subject} from "rxjs/index";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {PassengerTravelService} from "../../services/passenger-travel.service";
 
 declare function my_init_plugins();
 
@@ -28,6 +29,7 @@ export class TravelComponent implements OnInit {
     total: number = 0;
     pageSize: number = 10;
     displayedColumns = ['seleccionado', 'expandido', 'active', 'travelDate', 'arriveDate', 'bus', 'route', 'acciones'];
+    childColumns = ['name', 'lastname', 'dni', 'place', 'acciones'];
     selection = new SelectionModel<Travel>(true, []);
     nombre: string = '';
     resultsLength = 0;
@@ -38,7 +40,7 @@ export class TravelComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatTable) table: MatTable<Travel>;
 
-    constructor(private service: TravelService, private dialog: MatDialog) {
+    constructor(private service: TravelService, private passengerTravelService: PassengerTravelService, private dialog: MatDialog) {
     }
 
     ngOnInit() {
@@ -141,7 +143,7 @@ export class TravelComponent implements OnInit {
         } else {
             let dialogRef = this.dialog.open(Confirm, {
                 width: '400px',
-                data: {mensaje: 'Desea eliminar los traveles:<br>- ' + traveles.map(travel => travel.travelDate).join("<br> -")},
+                data: {mensaje: 'Desea eliminar los viajes:<br>- ' + traveles.map(travel => travel.travelDate).join("<br> -")},
             });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
@@ -172,6 +174,27 @@ export class TravelComponent implements OnInit {
         }
     }
 
+    eliminarPassengerTravel(event: Event, passTrav: PassengerTravel) {
+        event.stopPropagation();
+        let dialogRef = this.dialog.open(Confirm, {
+            width: '400px',
+            data: {mensaje: 'Desea eliminar el pasajero: <br>- ' + passTrav.passenger.name + ' ' + passTrav.passenger.lastname},
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.passengerTravelService.eliminarPassengerTravel(passTrav.passenger.id, passTrav.travel.id).subscribe(resp => {
+                    if (resp.body.success) {
+                        this.dialog.open(Information, {
+                            width: '380px',
+                            data: {mensaje: resp.body.msg}
+                        });
+                        this.paginator.page.emit();
+                    }
+                });
+            }
+        });
+    }
+
     isAllSelected() {
         const numSelected = this.selection.selected.length;
         const numRows = this.dataSource.data.length;
@@ -184,7 +207,7 @@ export class TravelComponent implements OnInit {
 
     expandCollapse(event: Event, elemento: Travel) {
         event.stopPropagation();
-        elemento.expandido = !elemento.expandido;
+        this.expandedElement = this.expandedElement === elemento ? null : elemento;
     }
 
     private inicializarElementos(): void {
@@ -205,5 +228,9 @@ export class TravelComponent implements OnInit {
     }
 
     showIndex(i: number) {
+    }
+
+    createDatasSource(passengerTravels: PassengerTravel[]) {
+        return new MatTableDataSource<PassengerTravel>(passengerTravels);
     }
 }

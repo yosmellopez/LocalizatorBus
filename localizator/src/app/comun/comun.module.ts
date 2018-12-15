@@ -27,7 +27,6 @@ import {WClockComponent} from "../components/time-control/w-clock.component";
 import {PlaceSelectorComponent} from './route/place-selector/place-selector.component';
 import {ChartsModule} from "ng2-charts";
 import {GooglePlaceModule} from "ngx-google-places-autocomplete";
-import {AgmCoreModule} from "@agm/core";
 
 
 @NgModule({

@@ -34,7 +34,7 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
                 <td mat-cell *matCellDef="let element">
                     <button mat-icon-button color="primary" (click)="expandCollapse($event,element)">
-                        <mat-icon aria-label="Example icon-button with a heart icon" class="boton" [class.rotate-180]="element.expandido">expand_more</mat-icon>
+                        <mat-icon aria-label="Example icon-button with a heart icon" class="boton" [class.rotate-180]="element==expandedElement">expand_more</mat-icon>
                     </button>
                 </td>
             </ng-container>
@@ -67,10 +67,10 @@
             <ng-container matColumnDef="acciones" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef style="text-align: center;">Acciones</th>
                 <td mat-cell *matCellDef="let element" align="center" class="acciones table-actions-theme">
-                    <button mat-mini-fab color="accent" (click)="editarTravel($event,element)" matTooltip="Editar Travel">
+                    <button mat-mini-fab color="accent" (click)="editarTravel($event,element)" matTooltip="Editar Viaje">
                         <mat-icon>mode_edit</mat-icon>
                     </button>
-                    <button mat-mini-fab color="warn" (click)="eliminarTravel($event,element)" matTooltip="Eliminar Travel">
+                    <button mat-mini-fab color="warn" (click)="eliminarTravel($event,element)" matTooltip="Eliminar Viaje">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </td>
@@ -79,16 +79,59 @@
             <ng-container matColumnDef="expandedDetail">
                 <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
                     <div class="element-detail"
-                         [@detailExpand]="element.expandido ? 'expanded' : 'collapsed'">
+                         [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                         <div class="element-description" style="width: 80%">
-                            <mat-list *ngIf="element.passengerTravels.length!==0">
-                                <mat-list-item *ngFor="let passengerTravel of element.passengerTravels;let i = index" class="row" style="height: 40px">
-                                    <span class="col s5">{{passengerTravel.passenger|passenger}}</span>
-                                    <span class="col s3">{{passengerTravel.passenger|dni}}</span>
-                                    <span class="col s4">{{passengerTravel.place|place}}</span>
-                                    <mat-divider *ngIf="i+1!==element.passengerTravels.length"></mat-divider>
-                                </mat-list-item>
-                            </mat-list>
+                            <div *ngIf="element.passengerTravels.length!==0">
+                                <div class="card" style="padding: 0 10px;">
+                                    <div class="card-block with-icon table-actions-theme" style="padding: 1em 1em 0">
+                                        <i>
+                                            <mat-icon [matBadge]="element.passengerTravels.length" matBadgeColor="primary">assignment_ind</mat-icon>
+                                        </i>
+                                        <h4 class="card-title" style="position:relative;top: 10px;">Lista de pasajeros del viaje: {{element.route|route}}</h4>
+                                    </div>
+                                    <div class="card-block" style="position:relative;top: -15px;">
+                                        <table mat-table [dataSource]="createDatasSource(element.passengerTravels)" class="mat-elevation-z8">
+                                            <!-- Position Column -->
+                                            <ng-container matColumnDef="place">
+                                                <th mat-header-cell *matHeaderCellDef> Lugar</th>
+                                                <td mat-cell *matCellDef="let element"> {{element.place|place}}</td>
+                                            </ng-container>
+
+                                            <!-- Name Column -->
+                                            <ng-container matColumnDef="name">
+                                                <th mat-header-cell *matHeaderCellDef> Nombre</th>
+                                                <td mat-cell *matCellDef="let element"> {{element.passenger.name}}</td>
+                                            </ng-container>
+
+                                            <!-- Weight Column -->
+                                            <ng-container matColumnDef="lastname">
+                                                <th mat-header-cell *matHeaderCellDef> Apellidos</th>
+                                                <td mat-cell *matCellDef="let element"> {{element.passenger.lastname}}</td>
+                                            </ng-container>
+
+                                            <!-- Symbol Column -->
+                                            <ng-container matColumnDef="dni">
+                                                <th mat-header-cell *matHeaderCellDef> Dni</th>
+                                                <td mat-cell *matCellDef="let element"> {{element.passenger.dni}}</td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="acciones" stickyEnd>
+                                                <th mat-header-cell *matHeaderCellDef style="text-align: center;">Acciones</th>
+                                                <td mat-cell *matCellDef="let passengerTravel" align="center" class="acciones table-actions-theme">
+                                                    <!--<button mat-mini-fab color="accent" (click)="editarTravel($event,passengerTravel)" matTooltip="Editar Pasajero">-->
+                                                    <!--<mat-icon>mode_edit</mat-icon>-->
+                                                    <!--</button>-->
+                                                    <button mat-mini-fab color="warn" (click)="eliminarPassengerTravel($event,passengerTravel)" matTooltip="Eliminar Pasajero">
+                                                        <mat-icon>delete</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </ng-container>
+                                            <tr mat-header-row *matHeaderRowDef="childColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: childColumns;"></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                             <span *ngIf="element.passengerTravels.length===0">Sin pasajeros</span>
                         </div>
                     </div>
@@ -98,7 +141,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"
                 class="element-row"
-                [class.expanded-row]="row.expandido"
+                [class.expanded-row]="expandedElement === row"
                 (click)="selection.toggle(row)">
             </tr>
             <tr mat-row *matRowDef="let element; columns: ['expandedDetail']" class="detail-row"></tr>
