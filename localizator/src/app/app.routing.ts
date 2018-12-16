@@ -109,6 +109,12 @@ export const RUTAS: RouteInfo[] = [
             pageTitle: 'travel.list',
             icon: 'airplanemode_active',
             class: 'waves-effect waves-cyan',
+        }, {
+            path: '/user/follow-travel',
+            title: 'travel.follow',
+            pageTitle: 'travel.follow',
+            icon: 'pin_drop',
+            class: 'waves-effect waves-cyan',
         }]
     }, {
         id: "user-profile",

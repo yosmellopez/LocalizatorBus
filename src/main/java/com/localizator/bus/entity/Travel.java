@@ -28,6 +28,10 @@ public class Travel implements Serializable, ClonableEntity<Travel> {
     @NotNull(message = "travel_active_not_null")
     private Boolean active;
 
+    @Column(name = "late")
+    @ColumnDefault(value = "false")
+    @NotNull(message = "travel_active_not_null")
+    private Boolean late;
 
     @Column(name = "travel_date")
     @NotNull(message = "travel_date_not_null")
@@ -139,6 +143,14 @@ public class Travel implements Serializable, ClonableEntity<Travel> {
 
     public void setArriveTime(Date arriveTime) {
         this.arriveTime = arriveTime;
+    }
+
+    public Boolean getLate() {
+        return late;
+    }
+
+    public void setLate(Boolean late) {
+        this.late = late;
     }
 
     @Override

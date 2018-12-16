@@ -27,6 +27,7 @@ import {WClockComponent} from "../components/time-control/w-clock.component";
 import {PlaceSelectorComponent} from './route/place-selector/place-selector.component';
 import {ChartsModule} from "ng2-charts";
 import {GooglePlaceModule} from "ngx-google-places-autocomplete";
+import { FollowTravelComponent } from './follow-travel/follow-travel.component';
 
 @NgModule({
     imports: [
@@ -41,7 +42,7 @@ import {GooglePlaceModule} from "ngx-google-places-autocomplete";
         GooglePlaceModule
     ],
     declarations: [BusComponent, PlaceComponent, UserProfileComponent, RouteComponent, TravelComponent, BusWindow, PlaceWindow, RouteWindow,
-        TravelWindow, DashboardComponent, NotificationComponent, WMatTimePickerComponent, WTimeDialogComponent, WClockComponent, PlaceSelectorComponent],
+        TravelWindow, DashboardComponent, NotificationComponent, WMatTimePickerComponent, WTimeDialogComponent, WClockComponent, PlaceSelectorComponent, FollowTravelComponent],
     entryComponents: [BusWindow, PlaceWindow, RouteWindow, TravelWindow, WTimeDialogComponent],
     providers: [
         {provide: DateAdapter, useClass: DateFormat},

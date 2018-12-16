@@ -19,6 +19,11 @@ export class TravelService {
         return this.http.get<AppResponse<Travel>>(constUrl, {observe: "response",});
     }
 
+    listarTravelsOnCurrentDate(): Observable<Respuesta<Travel>> {
+        let constUrl = `${this.travelUrl}/onCurrentDate`;
+        return this.http.get<AppResponse<Travel>>(constUrl, {observe: "response",});
+    }
+
     insertarTravel(travel: Travel): Observable<Respuesta<Travel>> {
         return this.http.post<AppResponse<Travel>>(this.travelUrl, travel, {observe: "response",});
     }

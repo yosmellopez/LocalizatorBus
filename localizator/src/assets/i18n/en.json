@@ -49,7 +49,7 @@
         "listmsg": "Show the system routes list"
     },
     "travel": {
-        "name": "Name",
+        "follow": "Follow Travels",
         "lastname": "Lastname",
         "username": "Username",
         "email": "Email",

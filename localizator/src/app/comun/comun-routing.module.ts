@@ -11,6 +11,7 @@ import {NotificacionService} from "../services/notification.service";
 import {Notificacion} from "../app.model";
 import {Observable} from "rxjs/index";
 import {map} from "rxjs/internal/operators";
+import {FollowTravelComponent} from "./follow-travel/follow-travel.component";
 
 
 @Injectable({providedIn: 'root'})
@@ -37,6 +38,7 @@ export const routesComun: Routes = [
     {path: 'place-list', component: PlaceComponent, data: {animation: true}},
     {path: 'route-list', component: RouteComponent, data: {animation: true}},
     {path: 'travel-list', component: TravelComponent, data: {animation: true}},
+    {path: 'follow-travel', component: FollowTravelComponent, data: {animation: true}},
     {path: 'dashboard', component: DashboardComponent, data: {animation: true}},
     {path: 'profile', component: UserProfileComponent},
     {

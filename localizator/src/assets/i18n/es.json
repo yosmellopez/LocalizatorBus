@@ -39,7 +39,6 @@
         "listmsg": "Muestra el Listado de Lugares del Sistema"
     },
     "route": {
-        "name": "Nombre",
         "lastname": "Apellidos",
         "username": "Nombre de Usuario",
         "email": "Correo",
@@ -49,7 +48,7 @@
         "listmsg": "Muestra el Listado de Rutas del Sistema"
     },
     "travel": {
-        "name": "Nombre",
+        "follow": "Seguimiento del Viajes",
         "lastname": "Apellidos",
         "username": "Nombre de Usuario",
         "email": "Correo",

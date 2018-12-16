@@ -62,6 +62,13 @@ public class TravelControl {
         }
     }
 
+    @GetMapping(value = "/travel/onCurrentDate")
+    public ResponseEntity<AppResponse<Travel>> searchTravelsOnDate(@AuthenticationPrincipal Usuario usuario) {
+        Date currentDate = new Date();
+        List<Travel> travels = travelRepository.findByTravelDateAfterAndArriveDateBefore(currentDate, currentDate);
+        return ok(success(travels).build());
+    }
+
     @PostMapping(value = "/travel")
     public ResponseEntity<AppResponse<Travel>> insertarTravel(@Valid @RequestBody Travel travel, @AuthenticationPrincipal Usuario usuario, Locale locale) {
         travelRepository.saveAndFlush(travel);
