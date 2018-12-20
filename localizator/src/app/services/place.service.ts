@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs/index";
-import {SERVER_API_URL} from "../app.constant";
-import {AppResponse, Localization, Place, ResponseApp, Respuesta} from "../app.model";
+import {SERVER_API_URL, TRACCAR_SERVER_API_URL} from "../app.constant";
+import {AppResponse, Autocomplete, Localization, Place, ResponseApp, Respuesta} from "../app.model";
 import {HttpClient, HttpResponse} from "@angular/common/http";
 
 @Injectable({providedIn: 'root'})
 export class PlaceService {
 
     private placeUrl = SERVER_API_URL + "api/place";
+    private traccarUrl = TRACCAR_SERVER_API_URL + "/api/server";
 
     constructor(private http: HttpClient) {
     }
@@ -38,5 +39,14 @@ export class PlaceService {
     findPlaceByCoord(lat: any, lon: any): Observable<Respuesta<Localization>> {
         const apiUrl = `${this.placeUrl}/findProperties`;
         return this.http.get<AppResponse<Localization>>(apiUrl, {params: {lat: lat, lon: lon}, observe: "response"});
+    }
+
+    autocompletePlace(query: string): Observable<Respuesta<Autocomplete>> {
+        const apiUrl = `${this.placeUrl}/autocomplete`;
+        return this.http.get<AppResponse<Autocomplete>>(apiUrl, {params: {query: query}, observe: "response"});
+    }
+
+    findDevices(): Observable<Respuesta<Autocomplete>> {
+        return this.http.get<AppResponse<Autocomplete>>(this.traccarUrl, {observe: "response"});
     }
 }

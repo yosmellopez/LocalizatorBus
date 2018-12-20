@@ -29,7 +29,6 @@
                             "src/assets/tema.scss"
                         ],
                         "scripts": [
-                            "src/assets/js/google/google-maps-api.js",
                             "src/assets/vendors/jquery.min.js",
                             "src/assets/vendors/tether.js",
                             "src/assets/vendors/bootstrap-material-design.iife.js",

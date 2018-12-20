@@ -27,8 +27,8 @@
     flex-direction: row;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    width: 250px;
-    padding: 0 25px;
+    width: 305px;
+    padding: 0 0 0 15px;
 }
 
 .left-sidebar-1 .wrapper .content .logo .text {

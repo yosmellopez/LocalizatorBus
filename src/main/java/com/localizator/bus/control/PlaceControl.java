@@ -1,6 +1,7 @@
 package com.localizator.bus.control;
 
 import com.localizator.bus.dto.Localization;
+import com.localizator.bus.dto.Result;
 import com.localizator.bus.entity.Place;
 import com.localizator.bus.exception.GeneralException;
 import com.localizator.bus.exception.PlaceException;
@@ -21,10 +22,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.localizator.bus.control.AppResponse.failure;
@@ -56,6 +54,12 @@ public class PlaceControl {
     public ResponseEntity<AppResponse<Place>> listarAllPlaces() {
         List<Place> places = placeRepository.findAll();
         return ok(success(places).total(places.size()).build());
+    }
+
+    @GetMapping(value = "/place/autocomplete")
+    public ResponseEntity<AppResponse<Place>> autocompletePlace(String query) {
+        Set<Result> results = LocalizationService.getAutoComplete(query).getResponse().getResult();
+        return ok(success(results).total(results.size()).build());
     }
 
     @GetMapping(value = "/place/findProperties")

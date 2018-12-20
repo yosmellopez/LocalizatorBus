@@ -21,7 +21,7 @@ export class PlaceWindow implements OnInit {
     insertar = true;
     form: FormGroup;
     public zoom: number;
-    @ViewChild("search")
+    @ViewChild("placesRef")
     public searchElementRef: ElementRef;
     @ViewChild("mapa")
     public mapa: ElementRef;
@@ -82,11 +82,22 @@ export class PlaceWindow implements OnInit {
     ngOnInit() {
         if (!this.insertar) {
             this.puntos.push(this.form.controls['lat'].value, this.form.controls['lon'].value);
+            let me = this;
+            let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {types: ['geocode']});
             this.initMapa();
+            autocomplete.addListener('place_changed', function () {
+                let place = autocomplete.getPlace();
+                let geometry = place.geometry;
+                let location = geometry.location;
+                me.puntos.push(location.lat());
+                me.puntos.push(location.lng());
+                me.initMapa();
+                me.seacrhProperties(location.lat(), location.lng());
+            });
         }
     }
 
-    public handleAddressChange(direccion: Address) {
+    handleAddressChange(direccion: Address) {
         let geometry = direccion.geometry;
         let location = geometry.location;
         this.puntos.push(location.lat(), location.lng());

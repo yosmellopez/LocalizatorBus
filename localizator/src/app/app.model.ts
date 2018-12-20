@@ -126,6 +126,30 @@ export class Address {
     neighbourhood: string;
 }
 
+export class Autocomplete {
+    feature_id: number;
+    name: string;
+    label: string;
+    fully_qualified_name: string;
+    lat: number;
+    lng: number;
+    lat_admin_centre: number;
+    lng_admin_centre: number;
+    placetype: string
+    country_code: string;
+    municipality: boolean;
+    feature_class: string;
+    feature_code: string;
+    name_ascii: string;
+    gtopo30: number;
+    timezone: string;
+    amenity: string;
+    population: number;
+    country_name: string;
+    score: number;
+    zipcode: string[];
+}
+
 export class ObjectParam<T> {
     object: T;
 }
