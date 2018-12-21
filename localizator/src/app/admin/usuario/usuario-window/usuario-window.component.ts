@@ -38,7 +38,7 @@ export class UsuarioWindow implements OnInit {
             password: new FormControl(password),
             passwordRepeat: new FormControl(password),
             activated: new FormControl(activated),
-            email: new FormControl(email, [Validators.required]),
+            email: new FormControl(email, [Validators.required, Validators.email]),
             rol: new FormControl(rol, [Validators.required]),
             company: new FormControl(companies.pop(), [Validators.required]),
         });

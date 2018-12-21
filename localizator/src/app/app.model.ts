@@ -20,12 +20,24 @@ export class Rol {
     name: string;
 }
 
+export class MyLocation {
+    latitude: number;
+    longitude: number;
+}
+
 export class Bus {
     id: number;
     siteNumber: number;
     number: number;
     code: string;
-    company: Company
+    company: Company;
+    device: Device;
+}
+
+export class Device {
+    deviceId: number;
+    latitude: number;
+    longitude: number;
 }
 
 export class Place {

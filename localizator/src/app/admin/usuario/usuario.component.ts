@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {forkJoin, merge, Subject} from "rxjs/index";
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {forkJoin, fromEvent, merge, Subject} from "rxjs/index";
 import {Usuario} from "../../app.model";
 import {MatDialog, MatPaginator, MatSort, MatTable, MatTableDataSource} from "@angular/material";
-import {catchError, map, startWith, switchMap} from "rxjs/internal/operators";
+import {catchError, debounceTime, distinctUntilChanged, map, startWith, switchMap, tap} from "rxjs/internal/operators";
 import {UsuarioService} from "../../services/usuario.service";
 import {SelectionModel} from "@angular/cdk/collections";
 import {UsuarioWindow} from "./usuario-window/usuario-window.component";
@@ -14,16 +14,17 @@ import {Principal} from "../../services/principal.service";
     templateUrl: './usuario.component.html',
     styleUrls: ['./usuario.component.css'],
 })
-export class UsuarioComponent implements OnInit {
+export class UsuarioComponent implements OnInit, AfterViewInit {
 
     dataSource: MatTableDataSource<Usuario> = new MatTableDataSource<Usuario>();
     total: number = 0;
     pageSize: number = 10;
-    displayedColumns = ['index', 'seleccionado', 'name', 'lastname', 'username', 'email', 'company', 'rol', 'activated', 'acciones'];
+    displayedColumns = ['seleccionado', 'index', 'name', 'lastname', 'username', 'email', 'company', 'rol', 'activated', 'acciones'];
     selection = new SelectionModel<Usuario>(true, []);
     nombre: string = '';
     resultsLength = 0;
     isLoadingResults = true;
+    @ViewChild('input') input: ElementRef;
     usuario: Usuario = new Usuario();
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
@@ -57,11 +58,13 @@ export class UsuarioComponent implements OnInit {
                 return [];
             })
         ).subscribe(datos => {
-            this.dataSource = new MatTableDataSource(datos);
+            this.dataSource = new MatTableDataSource<Usuario>(datos);
             this.paginator.length = this.total;
-            this.table.dataSource = this.dataSource;
-            this.table.renderRows();
         });
+    }
+
+    applyFilter(filterValue: string) {
+        this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
     abrirVentana() {
@@ -211,5 +214,14 @@ export class UsuarioComponent implements OnInit {
             const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
             return `${startIndex + 1} - ${endIndex} de ${length}`;
         }
+    }
+
+    ngAfterViewInit(): void {
+        fromEvent(this.input.nativeElement, 'keyup').pipe(
+            debounceTime(150),
+            distinctUntilChanged(),
+            tap((elem) => {
+                this.paginator.pageIndex = 0;
+            })).subscribe();
     }
 }

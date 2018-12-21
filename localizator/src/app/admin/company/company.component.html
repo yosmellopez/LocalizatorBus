@@ -6,6 +6,11 @@
         <mat-card-title>{{'company.list'|translate}}</mat-card-title>
         <mat-card-subtitle>{{'company.listmsg'|translate}}</mat-card-subtitle>
         <span class="spacer"></span>
+        <mat-form-field class="pull-right" style="width: 200px;margin-right: 50px">
+            <input matInput (keyup)="applyFilter($event.target.value)" style="padding-left: 5px" #input>
+            <mat-label style="margin-left: 5px;">Buscar Empresas</mat-label>
+            <mat-icon matPrefix style="position: relative;top: 8px;font-size: 25px">search</mat-icon>
+        </mat-form-field>
         <div class="card-actions">
             <button mat-fab color="primary" (click)="abrirVentana()">
                 <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>

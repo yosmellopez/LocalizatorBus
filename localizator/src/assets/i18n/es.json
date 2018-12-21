@@ -48,12 +48,14 @@
         "listmsg": "Muestra el Listado de Rutas del Sistema"
     },
     "travel": {
-        "follow": "Seguimiento del Viajes",
+        "follow": "Seguimiento de Viajes",
         "lastname": "Apellidos",
         "username": "Nombre de Usuario",
         "email": "Correo",
         "role": "Rol",
         "activated": "Activo",
+        "course": "Viajes en Curso",
+        "coursemsg": "Viajes en Curso Hasta el Momento",
         "list": "Lista de Viajes",
         "listmsg": "Muestra el Listado de Viajes Realizados"
     },

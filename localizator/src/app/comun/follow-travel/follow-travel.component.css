@@ -1,0 +1,11 @@
+.example-input-label,
+.example-add-tab-button,
+.example-delete-tab-button {
+    margin: 8px;
+}
+
+.close-button {
+    position: relative;
+    top: 2px;
+    right: -26px;
+}

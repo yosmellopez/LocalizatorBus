@@ -20,6 +20,7 @@
         <mat-form-field class="middle-width">
             <input matInput placeholder="Correo del Usuario" formControlName="email">
             <mat-error *ngIf="form.controls['email'].errors?.required">Debe insertar el correo del usuario</mat-error>
+            <mat-error *ngIf="form.controls['email'].errors?.email">Debe insertar un correo valido para el usuario.</mat-error>
         </mat-form-field>
         <mat-form-field class="middle-width">
             <input matInput placeholder="Nombre de Usuario" formControlName="username">

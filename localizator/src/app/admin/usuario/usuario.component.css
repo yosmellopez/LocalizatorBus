@@ -10,8 +10,12 @@
     width: 50px;
 }
 
+.mat-column-index {
+    width: 50px;
+}
+
 .mat-column-acciones {
-    width: 140px;
+    width: 120px;
 }
 
 .mat-col-rol {
