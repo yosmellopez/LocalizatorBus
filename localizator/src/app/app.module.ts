@@ -28,6 +28,7 @@ import {PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
 import {DatePipe} from "@angular/common";
 import {ChartsModule} from "ng2-charts";
 import {GooglePlaceModule} from "ngx-google-places-autocomplete";
+import {TraccarStompService, traccarStompServiceFactory} from "./services/traccar-stomp.service";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -71,6 +72,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         }, {
             provide: PERFECT_SCROLLBAR_CONFIG,
             useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+        }, {
+            provide: TraccarStompService,
+            useFactory: traccarStompServiceFactory
         }
     ],
     bootstrap: [AppComponent],

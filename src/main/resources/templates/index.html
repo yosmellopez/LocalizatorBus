@@ -4,21 +4,23 @@
         <meta charset="utf-8">
         <title>Localizator</title>
         <base th:href="@{/}">
-
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/x-icon" href="favicon.ico">
-        <script>
-            localStorage.setItem("serverUrl", "http://localhost:8050/Bus/");
-            localStorage.setItem("socketDir", "ws://localhost:8050/Bus/localizator/");
+        <link rel="stylesheet" th:href="@{/recursos/static/styles.eaf4e624c5299acdf0bb.css}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.20.1/ol.css" type="text/css">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8l1rN0PWx-ABg5ryh35dTpJ-dHkOxVxc&libraries=places&language=es&region=ES"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.20.1/ol.js" type="text/javascript"></script>
+        <script th:inline="javascript">
+            var rootUrl = [[@{/}]];
+                localStorage.setItem("serverUrl", rootUrl);
+                localStorage.setItem("socketDir", "ws://" + window.location.host + rootUrl + "localizator/");
         </script>
     </head>
     <body class="animated fadeIn" id="dashboards-analytics" data-layout="default-sidebar-1" data-sidebar="primary" data-navbar="primary" data-controller="dashboards" data-view="analytics" #body>
         <app-root></app-root>
-        <script type="text/javascript" th:src="@{/recursos/static/runtime.js}"></script>
-        <script type="text/javascript" th:src="@{/recursos/static/polyfills.js}"></script>
-        <script type="text/javascript" th:src="@{/recursos/static/styles.js}"></script>
-        <script type="text/javascript" th:src="@{/recursos/static/scripts.js}"></script>
-        <script type="text/javascript" th:src="@{/recursos/static/vendor.js}"></script>
-        <script type="text/javascript" th:src="@{/recursos/static/main.js}"></script>
+        <script type="text/javascript" th:src="@{/recursos/static/runtime.4abdf186c57854a0793f.js}"></script>
+        <script type="text/javascript" th:src="@{/recursos/static/polyfills.c1da48c5c45ccdef1eb4.js}"></script>
+        <script type="text/javascript" th:src="@{/recursos/static/scripts.cb8c365d18dac55a86e1.js}"></script>
+        <script type="text/javascript" th:src="@{/recursos/static/main.1aa5c2e2295c0b4134e2.js}"></script>
     </body>
 </html>

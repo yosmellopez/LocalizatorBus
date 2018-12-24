@@ -34,10 +34,23 @@ export class Bus {
     device: Device;
 }
 
+
 export class Device {
     deviceId: number;
     latitude: number;
     longitude: number;
+    uniqueId: number;
+}
+
+export class TraccarDevice {
+    uniqueId: number;
+    groupId: number;
+    id: number;
+    model: string;
+    name: string;
+    phone: string;
+    positionId: number;
+    status: string;
 }
 
 export class Place {
@@ -76,6 +89,7 @@ export class PassengerTravel {
 export class Travel {
     id: number;
     active: boolean = false;
+    late: boolean = false;
     route: Route;
     travelDate: Date;
     travelTime: Date;
@@ -160,6 +174,26 @@ export class Autocomplete {
     country_name: string;
     score: number;
     zipcode: string[];
+}
+
+export class DevicePosition {
+    accuracy: number;
+    address: string;
+    altitude: number;
+    course: number;
+    deviceId: number;
+    deviceTime: Date;
+    fixTime: Date;
+    id: number;
+    latitude: number;
+    longitude: number;
+    network: {};
+    outdated: boolean;
+    protocol: string;
+    serverTime: Date;
+    speed: number;
+    type: {};
+    valid: boolean;
 }
 
 export class ObjectParam<T> {

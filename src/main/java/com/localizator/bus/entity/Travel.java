@@ -162,6 +162,7 @@ public class Travel implements Serializable, ClonableEntity<Travel> {
         travelTime = travel.travelTime;
         arriveTime = travel.arriveTime;
         bus = travel.bus;
+        late = travel.late;
     }
 
     @Override

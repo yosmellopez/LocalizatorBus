@@ -1,6 +1,7 @@
 package com.localizator.bus.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -11,6 +12,10 @@ public class Device implements Serializable {
     @Column(name = "device_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long deviceId;
+
+    @Column(name = "unique_id")
+    @NotNull(message = "device_traccar_id_not_null")
+    private Long uniqueId;
 
     @Column(name = "latitude")
     private Double latitude;
@@ -33,6 +38,14 @@ public class Device implements Serializable {
 
     public void setDeviceId(Long deviceId) {
         this.deviceId = deviceId;
+    }
+
+    public Long getUniqueId() {
+        return uniqueId;
+    }
+
+    public void setUniqueId(Long uniqueId) {
+        this.uniqueId = uniqueId;
     }
 
     public Double getLatitude() {

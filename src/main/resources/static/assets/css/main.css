@@ -137,7 +137,6 @@ hr {
 
 button,
 input,
-select,
 textarea {
     font: inherit;
 }
@@ -147,20 +146,17 @@ optgroup {
 }
 
 button,
-input,
-select {
+input {
     overflow: visible;
 }
 
 button,
 input,
-select,
 textarea {
     margin: 0;
 }
 
-button,
-select {
+button {
     text-transform: none;
 }
 
@@ -210,12 +206,6 @@ legend {
 
 textarea {
     overflow: auto;
-}
-
-[type="checkbox"],
-[type="radio"] {
-    box-sizing: border-box;
-    padding: 0;
 }
 
 [type="number"]::-webkit-inner-spin-button,
@@ -315,6 +305,10 @@ html {
 *::before,
 *::after {
     box-sizing: inherit;
+}
+
+.mat-pseudo-checkbox::after {
+    box-sizing: unset;
 }
 
 @-ms-viewport {
@@ -441,7 +435,6 @@ button,
 [role="button"],
 input,
 label,
-select,
 summary,
 textarea {
     -ms-touch-action: manipulation;
@@ -477,16 +470,10 @@ button:focus {
 
 input,
 button,
-select,
 textarea {
     margin: 0;
     line-height: inherit;
     border-radius: 0;
-}
-
-input[type="radio"]:disabled,
-input[type="checkbox"]:disabled {
-    cursor: not-allowed;
 }
 
 input[type="date"],
@@ -7301,18 +7288,21 @@ button:focus {
     color: rgba(0, 0, 0, 0.87);
     background-color: inherit;
     border-color: #ccc;
+    z-index: 1400;
 }
 
 .bg-inverse .btn:hover, .bg-inverse .custom-file-control:hover::before {
     color: rgba(0, 0, 0, 0.87);
     background-color: rgba(204, 204, 204, 0.15);
     border-color: rgba(204, 204, 204, 0.15);
+    z-index: 1400;
 }
 
 .bg-inverse .btn:focus, .bg-inverse .custom-file-control:focus::before, .bg-inverse .btn.focus, .bg-inverse .focus.custom-file-control::before {
     color: rgba(0, 0, 0, 0.87);
     background-color: rgba(204, 204, 204, 0.15);
     border-color: rgba(204, 204, 204, 0.15);
+    z-index: 1400;
 }
 
 .bg-inverse .btn:active, .bg-inverse .custom-file-control:active::before, .bg-inverse .btn.active, .bg-inverse .active.custom-file-control::before,
@@ -8797,7 +8787,7 @@ button:focus {
 .btn-group-raised .custom-file-control:focus::before,
 .btn-group-raised .btn:hover,
 .btn-group-raised .custom-file-control:hover::before {
-    z-index: 1000;
+    z-index: 1;
     box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
 }
 
@@ -8806,7 +8796,7 @@ button:focus {
 .btn-group-raised .active.custom-file-control::before,
 .btn-group-raised .btn:active,
 .btn-group-raised .custom-file-control:active::before {
-    z-index: 1000;
+    z-index: 1;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.18), 0 8px 16px rgba(0, 0, 0, 0.36);
 }
 

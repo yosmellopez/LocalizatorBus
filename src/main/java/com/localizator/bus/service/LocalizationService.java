@@ -1,5 +1,6 @@
 package com.localizator.bus.service;
 
+import com.localizator.bus.dto.Geofence;
 import com.localizator.bus.dto.Gisgraphy;
 import com.localizator.bus.dto.Localization;
 import org.springframework.http.*;
@@ -8,6 +9,8 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class LocalizationService {
@@ -41,5 +44,16 @@ public class LocalizationService {
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
         return webClient.get().retrieve().bodyToMono(Gisgraphy.class).block();
+    }
+
+    public static List<Geofence> listGeofence() {
+        String fooResourceUrl = "http://localhost:8082/api/geofences";
+        UriComponents builder = UriComponentsBuilder.fromHttpUrl(fooResourceUrl).build();
+        String uriString = builder.toUriString();
+        WebClient webClient = WebClient.builder().baseUrl(uriString)
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .defaultHeader(HttpHeaders.AUTHORIZATION, "Basic eW9zbWVsbG9wZXpAZ21haWwuY29tOnNlbWVvbHZpZG8=")
+                .build();
+        return webClient.get().exchange().block().toEntityList(Geofence.class).block().getBody();
     }
 }

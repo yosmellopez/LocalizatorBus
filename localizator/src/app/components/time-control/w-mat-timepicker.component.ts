@@ -20,11 +20,11 @@ export class WMatTimePickerComponent {
     }
 
 
-    private getTime(): string {
+    getTime(): string {
         return `${this.hour}:${this.minute} ${this.meridien}`;
     }
 
-    private showPicker($event) {
+    showPicker($event) {
         let dialogRef = this.dialog.open(WTimeDialogComponent, {
             maxHeight: "300px",
             data: {

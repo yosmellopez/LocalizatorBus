@@ -30,7 +30,12 @@
                         </mat-select>
                         <mat-error *ngIf="formViaje.controls['bus'].errors?.required">Debe seleccionar el bus que realizará el viaje</mat-error>
                     </mat-form-field>
-                    <mat-slide-toggle formControlName="active">{{formViaje.controls['active'].value?'Activo':'Inactivo'}}</mat-slide-toggle>
+                    <mat-slide-toggle formControlName="active" class="middle-width">
+                        {{formViaje.controls['active'].value?'Activo':'Inactivo'}}
+                    </mat-slide-toggle>
+                    <mat-slide-toggle formControlName="late" class="middle-width">
+                        {{formViaje.controls['late'].value?'Retrasado':'En Tiempo'}}
+                    </mat-slide-toggle>
                 </mat-expansion-panel>
 
                 <mat-expansion-panel [expanded]="true" (opened)="setStep(1)" hideToggle>

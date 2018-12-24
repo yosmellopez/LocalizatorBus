@@ -1,5 +1,5 @@
 import {Component, Inject, ChangeDetectorRef} from '@angular/core';
-import {MatDialog, MatDialogRef} from '@angular/material';
+import {MatDialogRef} from '@angular/material';
 import {MAT_DIALOG_DATA} from '@angular/material';
 
 import {CLOCK_TYPE} from './w-clock.component';
@@ -11,10 +11,10 @@ import {CLOCK_TYPE} from './w-clock.component';
 })
 export class WTimeDialogComponent {
 
-    private userTime: any = {};
-    private VIEW_HOURS = CLOCK_TYPE.HOURS;
-    private VIEW_MINUTES = CLOCK_TYPE.MINUTES;
-    private currentView: CLOCK_TYPE = this.VIEW_HOURS;
+    userTime: any = {};
+    VIEW_HOURS = CLOCK_TYPE.HOURS;
+    VIEW_MINUTES = CLOCK_TYPE.MINUTES;
+    currentView: CLOCK_TYPE = this.VIEW_HOURS;
 
 
     constructor(
@@ -26,7 +26,7 @@ export class WTimeDialogComponent {
     }
 
 
-    private formatMinute(): string {
+    formatMinute(): string {
 
         if (this.userTime.minute < 10) {
 
@@ -37,19 +37,19 @@ export class WTimeDialogComponent {
         }
     }
 
-    private setCurrentView(type: CLOCK_TYPE) {
+    setCurrentView(type: CLOCK_TYPE) {
         this.currentView = type;
     }
 
-    private setMeridien(m: string) {
+    setMeridien(m: string) {
         this.userTime.meriden = m;
     }
 
-    private revert() {
+    revert() {
         this.dialogRef.close(-1);
     }
 
-    private submit() {
+    submit() {
         this.dialogRef.close(this.userTime);
     }
 }

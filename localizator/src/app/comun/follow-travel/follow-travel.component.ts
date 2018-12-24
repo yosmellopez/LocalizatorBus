@@ -66,11 +66,9 @@ export class FollowTravelComponent implements OnInit {
         this.inicializarElementos();
         this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
         merge(this.sort.sortChange, this.paginator.page)
-            .pipe(
-                startWith({}),
-                switchMap(() => {
+            .pipe(startWith({}), switchMap(() => {
                     this.isLoadingResults = true;
-                    return this.service.listarTravels(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+                    return this.service.listarTravelsOnCurrentDate();
                 }),
                 map(data => {
                     this.total = data.body.total;
@@ -88,11 +86,10 @@ export class FollowTravelComponent implements OnInit {
                 this.table.dataSource = this.dataSource;
                 this.table.renderRows();
             });
-        this.service.listarTravelsOnCurrentDate().subscribe(resp => {
-            if (resp.body.success) {
-                this.travels = resp.body.elementos;
-            }
-        });
+    }
+
+    applyFilter(filterValue: string) {
+        this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
     private inicializarElementos(): void {

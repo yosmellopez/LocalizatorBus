@@ -16,7 +16,7 @@ export class WClockComponent implements OnChanges {
     @Output() viewChange = new EventEmitter<CLOCK_TYPE>();
 
     private STEP_DEG = 360 / 12;
-    private steps = [];
+    steps = [];
     private selectedTimePart;
 
 
@@ -47,7 +47,7 @@ export class WClockComponent implements OnChanges {
         }
     }
 
-    private getPointerStyle() {
+    getPointerStyle() {
         let divider = 1;
         switch (this.currentView) {
             case CLOCK_TYPE.HOURS:
@@ -72,7 +72,7 @@ export class WClockComponent implements OnChanges {
         return style;
     }
 
-    private getTimeValueClass(step: number, index: number) {
+    getTimeValueClass(step: number, index: number) {
         let classes = 'mat-button mat-raised w-clock-deg' + (this.STEP_DEG * (index + 1));
         if (this.selectedTimePart === step) {
             classes += ' mat-primary';
@@ -80,7 +80,7 @@ export class WClockComponent implements OnChanges {
         return classes;
     }
 
-    private changeTimeValue(step: number) {
+    changeTimeValue(step: number) {
         if (this.currentView === CLOCK_TYPE.HOURS) {
             this.userTime.hour = step;
             // auto switch to minutes

@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {Message} from '@stomp/stompjs';
 import {map} from 'rxjs/operators';
 import {StompService, StompState} from '@stomp/ng2-stompjs';
-import {NOTIFICATION_TOPIC, TRACCAR_WEBSOCKET_API_URL} from "../app.constant";
+import {NOTIFICATION_TOPIC} from "../app.constant";
 
 @Injectable({
     providedIn: 'root',
@@ -11,7 +11,6 @@ import {NOTIFICATION_TOPIC, TRACCAR_WEBSOCKET_API_URL} from "../app.constant";
 export class WebsocketService {
     private messageNotificacion: Observable<Message>;
     private messageAdminNotificacion: Observable<Message>;
-    private traccarWeb: Observable<Message>;
     public wsstate: Observable<string>;
 
     constructor(private stompService: StompService) {
@@ -24,10 +23,6 @@ export class WebsocketService {
             this.messageAdminNotificacion = this.stompService.subscribe(`${NOTIFICATION_TOPIC}/admin`);
     }
 
-    public connectTraccarWebSocket() {
-        this.traccarWeb = this.stompService.subscribe(TRACCAR_WEBSOCKET_API_URL);
-    }
-
     public getSocketStateObservable(): Observable<string> {
         return this.wsstate;
     }
@@ -38,9 +33,5 @@ export class WebsocketService {
 
     public getMessageAdminNotificacion(): Observable<Message> {
         return this.messageAdminNotificacion;
-    }
-
-    getTraccarWeb(): Observable<Message> {
-        return this.traccarWeb;
     }
 }

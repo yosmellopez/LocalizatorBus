@@ -1,5 +1,6 @@
 package com.localizator.bus;
 
+import com.localizator.bus.dto.Geofence;
 import com.localizator.bus.dto.Gisgraphy;
 import com.localizator.bus.dto.Result;
 import com.localizator.bus.repository.PassengerTravelRepository;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @RunWith(SpringRunner.class)
@@ -22,11 +24,13 @@ public class BusApplicationTests {
 
     @Test
     public void contextLoads() {
-        Gisgraphy gisgraphy = LocalizationService.getAutoComplete("Las Tunas");
-        Set<Result> results = gisgraphy.getResponse().getResult();
-        for (Result result : results) {
-            System.out.println(result);
-        }
+//        Gisgraphy gisgraphy = LocalizationService.getAutoComplete("Las Tunas");
+//        Set<Result> results = gisgraphy.getResponse().getResult();
+//        for (Result result : results) {
+//            System.out.println(result);
+//        }
+        List<Geofence> geofences = LocalizationService.listGeofence();
+        geofences.forEach(System.out::println);
     }
 
 }

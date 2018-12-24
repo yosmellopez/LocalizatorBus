@@ -65,8 +65,8 @@ public class TravelControl {
     @GetMapping(value = "/travel/onCurrentDate")
     public ResponseEntity<AppResponse<Travel>> searchTravelsOnDate(@AuthenticationPrincipal Usuario usuario) {
         Date currentDate = new Date();
-        List<Travel> travels = travelRepository.findByTravelDateAfterAndArriveDateBefore(currentDate, currentDate);
-        return ok(success(travels).build());
+        List<Travel> travels = travelRepository.findByTravelDateBeforeAndArriveDateAfterAndActive(currentDate, currentDate, true);
+        return ok(success(travels).total(travels.size()).build());
     }
 
     @PostMapping(value = "/travel")

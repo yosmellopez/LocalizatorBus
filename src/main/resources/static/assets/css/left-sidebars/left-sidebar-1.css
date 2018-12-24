@@ -18,7 +18,7 @@
 .left-sidebar-1 .wrapper .content .logo {
     display: -ms-flexbox;
     display: flex;
-    height: 80px;
+    height: 110px;
     -ms-flex-pack: distribute;
     justify-content: space-around;
     -ms-flex-align: center;
@@ -27,8 +27,8 @@
     flex-direction: row;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    width: 250px;
-    padding: 0 25px;
+    width: 305px;
+    padding: 0 0 0 15px;
 }
 
 .left-sidebar-1 .wrapper .content .logo .text {
@@ -648,6 +648,7 @@ fieldset[disabled][disabled] [data-sidebar="primary"] .content .left-sidebar-sea
 [data-sidebar="primary"] .content .left-sidebar-section {
     background: #fff;
     color: #212121;
+    height: 76%;
 }
 
 [data-sidebar="primary"] .content .left-sidebar-section .section-title {

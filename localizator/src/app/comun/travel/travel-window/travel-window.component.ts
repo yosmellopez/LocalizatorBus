@@ -1,5 +1,5 @@
 import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
-import {FormControl, FormGroup, FormGroupDirective, NgForm, ValidationErrors, Validators} from "@angular/forms";
+import {AbstractControl, FormControl, FormGroup, FormGroupDirective, NgForm, ValidationErrors, Validators} from "@angular/forms";
 import {
     ErrorStateMatcher,
     MAT_DATE_FORMATS,
@@ -69,6 +69,7 @@ export class TravelWindow implements OnInit {
     newPassenger: Passenger;
     currentPlace: Place;
     selectedRoute: Route;
+    matcher: ErrorStateMatcher = new ErrorStateMatcher();
     currentPassengerTravel: PassengerTravel;
     passengerSubcription: Subject<Passenger> = new Subject<Passenger>();
     huboCambios: boolean = false;
@@ -77,7 +78,7 @@ export class TravelWindow implements OnInit {
     private minute = 25;
     private meridiem = 'PM';
 
-    constructor(public dialogRef: MatDialogRef<TravelWindow>, @Inject(MAT_DIALOG_DATA) {id, active, travelDate, arriveDate, bus, route, passengerTravels, expandido, arriveTime, travelTime}: Travel,
+    constructor(public dialogRef: MatDialogRef<TravelWindow>, @Inject(MAT_DIALOG_DATA) {id, active, travelDate, arriveDate, bus, route, passengerTravels, expandido, arriveTime, travelTime, late}: Travel,
                 private service: TravelService, private routeService: RouteService, private busService: BusService, private passengerService: PassengerService, private datePipe: DatePipe,
                 private placeService: PlaceService, private passengerTravelService: PassengerTravelService, private dialog: MatDialog, private snackBar: MatSnackBar) {
         if (id) {
@@ -86,7 +87,7 @@ export class TravelWindow implements OnInit {
             this.selectedRoute = route;
             this.places = route.places;
             this.newTravel = {
-                id: id, active: active, route: route, travelDate: travelDate, arriveDate: arriveDate, bus: bus,
+                id: id, active: active, route: route, travelDate: travelDate, arriveDate: arriveDate, bus: bus, late: late,
                 passengerTravels: passengerTravels, expandido: expandido, travelTime: travelTime, arriveTime: arriveTime
             };
             this.minTravelDate = new Date(travelDate);
@@ -98,6 +99,7 @@ export class TravelWindow implements OnInit {
         this.idTravel = id;
         this.formViaje = new FormGroup({
             active: new FormControl(active),
+            late: new FormControl(late),
             travelDate: new FormControl(travelDate ? new Date(travelDate) : '', [Validators.required]),
             travelTime: new FormControl(travelTime ? this.convertDate(new Date(travelTime)) : '', [Validators.required]),
             arriveDate: new FormControl(arriveDate ? new Date(arriveDate) : '', [Validators.required]),
@@ -332,7 +334,7 @@ export class TravelWindow implements OnInit {
         return `${this.hour < 10 ? '0' + this.hour : this.hour}:${this.minute < 10 ? '0' + this.minute : this.minute} ${this.meridiem}`;
     }
 
-    showPicker($event, control: FormControl) {
+    showPicker($event, control: AbstractControl) {
         this.getTimeElement(control);
         let dialogRef = this.dialog.open(WTimeDialogComponent, {
             maxHeight: "300px",
@@ -352,7 +354,7 @@ export class TravelWindow implements OnInit {
         return false;
     }
 
-    private getTimeElement(control: FormControl) {
+    private getTimeElement(control: AbstractControl) {
         let time: string = control.value;
         if (time) {
             this.hour = Number.parseInt(time.substr(0, 2));
