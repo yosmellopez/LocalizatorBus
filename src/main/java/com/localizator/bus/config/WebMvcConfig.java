@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.localizator.bus.resolver.SpecificationArgumentResolver;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -74,10 +75,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         AuthenticationPrincipalArgumentResolver resolver = new AuthenticationPrincipalArgumentResolver();
         PageableHandlerMethodArgumentResolver phmar = new PageableHandlerMethodArgumentResolver();
+        SpecificationArgumentResolver argumentResolver = new SpecificationArgumentResolver();
         phmar.setOneIndexedParameters(true);
         phmar.setSizeParameterName("limit");
         argumentResolvers.add(resolver);
         argumentResolvers.add(phmar);
+        argumentResolvers.add(argumentResolver);
     }
 
     @Bean

@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/
 import {forkJoin, fromEvent, merge, Subject} from "rxjs/index";
 import {Usuario} from "../../app.model";
 import {MatDialog, MatPaginator, MatSort, MatTable, MatTableDataSource} from "@angular/material";
-import {catchError, debounceTime, distinctUntilChanged, map, startWith, switchMap, tap} from "rxjs/internal/operators";
+import {catchError, debounceTime, distinctUntilChanged, map, startWith, switchMap} from "rxjs/internal/operators";
 import {UsuarioService} from "../../services/usuario.service";
 import {SelectionModel} from "@angular/cdk/collections";
 import {UsuarioWindow} from "./usuario-window/usuario-window.component";
@@ -14,7 +14,7 @@ import {Principal} from "../../services/principal.service";
     templateUrl: './usuario.component.html',
     styleUrls: ['./usuario.component.css'],
 })
-export class UsuarioComponent implements OnInit, AfterViewInit {
+export class UsuarioComponent implements OnInit {
 
     dataSource: MatTableDataSource<Usuario> = new MatTableDataSource<Usuario>();
     total: number = 0;
@@ -216,12 +216,15 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
         }
     }
 
-    ngAfterViewInit(): void {
-        fromEvent(this.input.nativeElement, 'keyup').pipe(
-            debounceTime(150),
-            distinctUntilChanged(),
-            tap((elem) => {
-                this.paginator.pageIndex = 0;
-            })).subscribe();
-    }
+    // ngAfterViewInit(): void {
+    //     fromEvent(this.input.nativeElement, 'keyup').pipe(
+    //         debounceTime(150),
+    //         distinctUntilChanged(),
+    //         switchMap(() => {
+    //             return this.service.buscarUsuarios(this.input.nativeElement.value);
+    //         }))
+    //         .subscribe(resp => {
+    //             this.dataSource.data = resp.body.elementos;
+    //         });
+    // }
 }

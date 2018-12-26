@@ -60,10 +60,10 @@
             <ng-container matColumnDef="acciones" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef style="text-align: center;">{{'actions'|translate}}</th>
                 <td mat-cell *matCellDef="let element" align="center" class="acciones table-actions-theme">
-                    <button mat-mini-fab color="accent" (click)="editarCompany($event,element)" matTooltip="Editar Company">
+                    <button mat-mini-fab color="accent" (click)="editarCompany($event,element)" matTooltip="Editar Empresa">
                         <mat-icon>mode_edit</mat-icon>
                     </button>
-                    <button mat-mini-fab color="warn" (click)="eliminarCompany($event,element)" matTooltip="Eliminar Company">
+                    <button mat-mini-fab color="warn" (click)="eliminarCompany($event,element)" matTooltip="Eliminar Empresa">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </td>

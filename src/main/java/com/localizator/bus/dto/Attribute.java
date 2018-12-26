@@ -1,15 +1,22 @@
 package com.localizator.bus.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 public class Attribute {
 
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private Integer id;
 
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private String description;
 
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private String attribute;
 
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private String expression;
 
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private String type;
 
     public Attribute() {

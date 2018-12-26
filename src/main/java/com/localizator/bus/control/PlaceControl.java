@@ -1,10 +1,12 @@
 package com.localizator.bus.control;
 
+import com.localizator.bus.dto.Geofence;
 import com.localizator.bus.dto.Localization;
 import com.localizator.bus.dto.Result;
 import com.localizator.bus.entity.Place;
 import com.localizator.bus.exception.GeneralException;
 import com.localizator.bus.exception.PlaceException;
+import com.localizator.bus.implement.ObservableGeofence;
 import com.localizator.bus.repository.PlaceRepository;
 import com.localizator.bus.service.LocalizationService;
 import com.localizator.bus.service.Posicion;
@@ -72,6 +74,8 @@ public class PlaceControl {
     @PostMapping(value = "/place")
     public ResponseEntity<AppResponse<Place>> insertarPlace(@Valid @RequestBody Place place) {
         placeRepository.saveAndFlush(place);
+        Thread hilo = new Thread(new ObservableGeofence(place, placeRepository));
+        hilo.start();
         return ok(success(place).build());
     }
 

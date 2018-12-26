@@ -1,15 +1,21 @@
 package com.localizator.bus.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 @Entity
-@Table(name = "device")
-public class Device implements Serializable {
+@Table(name = "device", uniqueConstraints = {@UniqueConstraint(name = "device_unique_id", columnNames = {"unique_id"})})
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Device implements Serializable, ClonableEntity<Device> {
 
     @Id
     @Column(name = "device_id")
+    @JsonProperty(value = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long deviceId;
 
@@ -28,6 +34,28 @@ public class Device implements Serializable {
 
     @Column(name = "hours")
     private Integer hours;
+
+    private String status;
+
+    private Boolean disabled;
+//    lastUpdate: string (date-time)
+//    in IS0 8601 format. eg. 1963-11-22T18:30:00Z
+
+    @Column(name = "position_id")
+    private Integer positionId;
+
+    @Column(name = "group_id")
+    private Integer groupId;
+
+    private String phone;
+
+    private String model;
+
+    private String contact;
+
+    private String category;
+
+    private ArrayList<Integer> geofenceIds = new ArrayList<>();
 
     public Device() {
     }
@@ -80,8 +108,98 @@ public class Device implements Serializable {
         this.hours = hours;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Boolean getDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    public Integer getPositionId() {
+        return positionId;
+    }
+
+    public void setPositionId(Integer positionId) {
+        this.positionId = positionId;
+    }
+
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public ArrayList<Integer> getGeofenceIds() {
+        return geofenceIds;
+    }
+
+    public void setGeofenceIds(ArrayList<Integer> geofenceIds) {
+        this.geofenceIds = geofenceIds;
+    }
+
     @Override
     public String toString() {
         return "Device{" + "deviceId=" + deviceId + ", latitude=" + latitude + ", longitude=" + longitude + '}';
+    }
+
+    @Override
+    public void clone(Device device) {
+        category = device.category;
+        contact = device.contact;
+        model = device.model;
+        phone = device.phone;
+        status = device.status;
+        uniqueId = device.uniqueId;
+        groupId = device.groupId;
+        positionId = device.positionId;
+        hours = device.hours;
+        totalDistance = device.totalDistance;
+        disabled = device.disabled;
+        geofenceIds = device.geofenceIds;
+        latitude = device.latitude;
+        longitude = device.longitude;
     }
 }

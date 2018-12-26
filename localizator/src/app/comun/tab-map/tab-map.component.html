@@ -1,8 +1,38 @@
-<div class="row">
-    <div class="col-md-12">
-        <div style="width:100%;height:600px;" #mapa id="mapa">
-
+<mat-card color="primary">
+    <mat-card-header color="primary">
+        <mat-card-title>
+            Seguimiento del Viaje: {{travel.route|route}}
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card mat-elevation-z10" style="height: 100%">
+                    <div class="card-block with-icon">
+                        <i>
+                            <mat-icon color="primary">directions_bus</mat-icon>
+                        </i>
+                        <h4 class="card-title">Pasajeros del viaje</h4>
+                        <p class="card-subtitle text-muted">{{travel.route|route}}</p>
+                    </div>
+                    <div class="card-block">
+                        <mat-list *ngFor="let passenger of passengersTravel">
+                            <mat-list-item class="row">
+                                <div class="col-md-11">
+                                    {{passenger.passenger|passenger}}
+                                </div>
+                                <div class="col-md-1">
+                                    <mat-checkbox [checked]="true"></mat-checkbox>
+                                </div>
+                            </mat-list-item>
+                            <mat-divider></mat-divider>
+                        </mat-list>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div style="width:100%;height:600px;" #mapa id="mapa"></div>
+            </div>
         </div>
-        <div id="map" style="width: 100%; height: 100%; position:fixed;"></div>
-    </div>
-</div>
+    </mat-card-content>
+</mat-card>

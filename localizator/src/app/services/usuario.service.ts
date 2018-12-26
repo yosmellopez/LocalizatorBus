@@ -33,4 +33,9 @@ export class UsuarioService {
     eliminarUsuario(id: number): Observable<Respuesta<Usuario>> {
         return this.http.delete<AppResponse<Usuario>>(this.usuarioUrl + "/" + id, {observe: "response",});
     }
+
+    buscarUsuarios(query: string): Observable<Respuesta<Usuario>> {
+        const params = JSON.stringify({likeLname: query, likeLlastname: query});
+        return this.http.get<AppResponse<Usuario>>(this.usuarioUrl, {params: {parametros: params}, observe: "response"});
+    }
 }

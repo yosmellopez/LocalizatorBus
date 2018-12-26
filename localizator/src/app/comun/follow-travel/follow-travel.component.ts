@@ -23,15 +23,15 @@ export class FollowTravelComponent implements OnInit {
     dataSource: MatTableDataSource<Travel> = new MatTableDataSource<Travel>();
     total: number = 0;
     pageSize: number = 10;
-    displayedColumns = ['seleccionado', 'active', 'travelDate', 'arriveDate', 'bus', 'route', 'acciones'];
+    displayedColumns = ['active', 'travelDate', 'arriveDate', 'bus', 'route', 'acciones'];
     locations: MyLocation[] = [];
     selection = new SelectionModel<Travel>(true, []);
     nombre: string = '';
     resultsLength = 0;
     isLoadingResults = true;
     cont = 0;
-    expandedElement: Travel;
     indexTab: number = 0;
+    today = new Date();
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatTable) table: MatTable<Travel>;

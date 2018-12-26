@@ -45,6 +45,9 @@ public class Place implements Serializable, ClonableEntity<Place> {
     @Column(name = "geoference")
     private String geoference;
 
+    @Column(name = "geoference_id")
+    private Long geoferenceId;
+
     @Column(name = "postal_code", length = 10)
     private Integer postalCode;
 
@@ -114,6 +117,14 @@ public class Place implements Serializable, ClonableEntity<Place> {
 
     public void setLon(Double lon) {
         this.lon = lon;
+    }
+
+    public Long getGeoferenceId() {
+        return geoferenceId;
+    }
+
+    public void setGeoferenceId(Long geoferenceId) {
+        this.geoferenceId = geoferenceId;
     }
 
     @Override

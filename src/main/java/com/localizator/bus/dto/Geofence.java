@@ -1,8 +1,11 @@
 package com.localizator.bus.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 public class Geofence {
 
-    private Integer id;
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
+    private Long id;
 
     private String name;
 
@@ -12,16 +15,25 @@ public class Geofence {
 
     private Integer calendarId;
 
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private Attribute attributes;
 
     public Geofence() {
     }
 
-    public Integer getId() {
+    public Geofence(Long id, String name, String description, String area) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.area = area;
+        calendarId = 0;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

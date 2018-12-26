@@ -3,6 +3,9 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AccountService} from "../../services/account.service";
 import {Principal} from "../../services/principal.service";
 import {Router} from "@angular/router";
+import {catchError, map} from "rxjs/operators";
+import {Observable} from "rxjs";
+import {Respuesta, Usuario} from "../../app.model";
 
 declare function my_init_plugins();
 
@@ -33,7 +36,11 @@ export class LoginComponent implements OnInit {
     iniciarSesion() {
         if (this.form.valid) {
             this.isLoading = true;
-            this.accoutService.iniciarSesion(this.form.value).subscribe(response => {
+            this.accoutService.iniciarSesion(this.form.value).pipe(catchError((resp) => {
+                this.isLoading = false;
+                this.mensaje = resp.status == 0 ? "No se ha podido conectar al servidor" : resp.message;
+                return [];
+            })).subscribe(response => {
                 if (response.body.success) {
                     const usuario = response.body.elemento;
                     localStorage.setItem("user_token", response.headers.get("Authorization"));

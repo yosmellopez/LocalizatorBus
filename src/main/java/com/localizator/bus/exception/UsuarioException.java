@@ -17,6 +17,10 @@ public class UsuarioException extends GeneralException {
             int index = mensaje.lastIndexOf("username");
             int finalIndex = mensaje.lastIndexOf(")");
             return messageSource.getMessage("unique_username", null, locale) + mensaje.substring(index + 11, finalIndex);
+        } else if (mensaje.contains("fk_bus_company")) {
+            int index = mensaje.lastIndexOf("username");
+            int finalIndex = mensaje.lastIndexOf(")");
+            return messageSource.getMessage("unique_username", null, locale) + mensaje.substring(index + 11, finalIndex);
         }
         return mensaje;
     }

@@ -3,7 +3,7 @@ import {AppResponse, Respuesta, Company, ResponseApp} from "../../app.model";
 import {SelectionModel} from "@angular/cdk/collections";
 import {catchError, map, startWith, switchMap} from "rxjs/internal/operators";
 import {CompanyService} from "../../services/company.service";
-import {Confirm, Information} from "../../mensaje/window.mensaje";
+import {Confirm, Information, MensajeError} from "../../mensaje/window.mensaje";
 import {MatDialog, MatPaginator, MatSort, MatTable, MatTableDataSource} from "@angular/material";
 import {forkJoin, merge, Subject} from "rxjs/index";
 import {CompanyWindow} from "./company-window/company-window.component";
@@ -98,7 +98,7 @@ export class CompanyComponent implements OnInit {
         event.stopPropagation();
         let dialogRef = this.dialog.open(Confirm, {
             width: '400px',
-            data: {mensaje: 'Desea eliminar la company:<br>- ' + company.name},
+            data: {mensaje: 'Desea eliminar la empresa:<br>- ' + company.name},
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -110,6 +110,11 @@ export class CompanyComponent implements OnInit {
                         });
                         this.selection.clear();
                         this.paginator.page.emit();
+                    } else {
+                        this.dialog.open(MensajeError, {
+                            width: '380px',
+                            data: {mensaje: resp.body.msg}
+                        });
                     }
                 });
             }

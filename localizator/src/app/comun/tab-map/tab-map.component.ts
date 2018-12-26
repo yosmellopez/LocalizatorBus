@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {DevicePosition, TraccarDevice, Travel} from "../../app.model";
+import {DevicePosition, PassengerTravel, TraccarDevice, Travel} from "../../app.model";
 import {TRACCAR_WEBSOCKET_API_URL} from "../../app.constant";
 
 declare var google;
@@ -19,11 +19,13 @@ export class TabMapComponent implements OnInit, AfterViewInit {
     devicePositions: DevicePosition[] = [];
     devices: TraccarDevice[] = [];
     device: TraccarDevice;
+    passengersTravel: PassengerTravel[] = [];
 
     constructor() {
     }
 
     ngOnInit(): void {
+        this.passengersTravel = this.travel.passengerTravels;
         let socket = new WebSocket(TRACCAR_WEBSOCKET_API_URL);
         socket.onmessage = this.onReceiveNotification;
     }
@@ -40,10 +42,8 @@ export class TabMapComponent implements OnInit, AfterViewInit {
             draggable: true,
             title: "Mi Ubicación"
         });
-        // google.maps.event.addListener(this.marker, 'dragend', function (evt) {
-        //     me.infoWindow.open(me.map, me.marker);
-        // });
-        // this.inipTraccarMap();
+        this.infoWindow.setOptions({content: '<p>Ubicacion del viaje: ' + this.getTitle() + '</p>'});
+        this.infoWindow.open(this.map, this.marker);
     }
 
     private onReceiveNotification = (event) => {
@@ -53,10 +53,13 @@ export class TabMapComponent implements OnInit, AfterViewInit {
             if (this.device) {
                 let filteredPositions = this.devicePositions.filter(value => value.deviceId == this.device.id);
                 if (filteredPositions.length !== 0) {
+                    console.log("Llego la data positions en: " + this.travel.route.code)
                     let devicePosition = filteredPositions[0];
                     let location = new google.maps.LatLng(devicePosition.latitude, devicePosition.longitude);
                     this.map.setCenter(location);
                     this.marker.setPosition(location);
+                    this.infoWindow.setOptions({content: '<p>Ubicacion del viaje: ' + this.getTitle() + '</p>'});
+                    this.infoWindow.open(this.map, this.marker);
                 }
             }
         }
@@ -67,6 +70,10 @@ export class TabMapComponent implements OnInit, AfterViewInit {
                 this.device = traccarDevices[0];
             }
         }
+    }
+
+    getTitle(): string {
+        return `${this.travel.route.code}  ${this.travel.route.origin.name}  ${this.travel.route.destiny.name}`;
     }
 
     inipTraccarMap() {

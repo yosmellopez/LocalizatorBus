@@ -3,7 +3,10 @@ package com.localizator.bus;
 import com.localizator.bus.dto.Geofence;
 import com.localizator.bus.dto.Gisgraphy;
 import com.localizator.bus.dto.Result;
+import com.localizator.bus.dto.TraccarPosition;
+import com.localizator.bus.entity.Place;
 import com.localizator.bus.repository.PassengerTravelRepository;
+import com.localizator.bus.repository.PlaceRepository;
 import com.localizator.bus.service.LocalizationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @RunWith(SpringRunner.class)
@@ -22,6 +26,9 @@ public class BusApplicationTests {
     @Autowired
     PassengerTravelRepository passengerTravelRepository;
 
+    @Autowired
+    PlaceRepository placeRepository;
+
     @Test
     public void contextLoads() {
 //        Gisgraphy gisgraphy = LocalizationService.getAutoComplete("Las Tunas");
@@ -29,6 +36,16 @@ public class BusApplicationTests {
 //        for (Result result : results) {
 //            System.out.println(result);
 //        }
+//        List<TraccarPosition> positions = LocalizationService.listPositions();
+//        Optional<TraccarPosition> optional = positions.parallelStream().filter(traccarPosition -> traccarPosition.getDeviceId() == 1).findFirst();
+//        optional.ifPresent(System.out::println);
+        List<Place> places = placeRepository.findAll();
+        places.forEach(place -> {
+            Geofence geoference = LocalizationService.createGeoferenceByPlace(place);
+            place.setGeoferenceId(geoference.getId());
+            place.setGeoference(geoference.getArea());
+            placeRepository.saveAndFlush(place);
+        });
         List<Geofence> geofences = LocalizationService.listGeofence();
         geofences.forEach(System.out::println);
     }

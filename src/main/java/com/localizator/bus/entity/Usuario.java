@@ -63,7 +63,7 @@ public class Usuario implements UserDetails, Serializable, ClonableEntity<Usuari
     @JoinColumn(name = "rol_id", foreignKey = @ForeignKey(name = "fk_usuario_rol"))
     private Rol rol;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "company_usuario", uniqueConstraints = {@UniqueConstraint(name = "usuario_company_unique", columnNames = {"usuario_id"})},
             foreignKey = @ForeignKey(name = "fk_company_usuario_usuario"), inverseForeignKey = @ForeignKey(name = "fk_company_usuario_company"),
             joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "company_id"))

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -56,7 +57,12 @@ public class UsuarioControl {
     }
 
     @GetMapping(value = "/usuario")
-    public ResponseEntity<AppResponse<Usuario>> listarUsuarios(Pageable pageable) {
+    public ResponseEntity<AppResponse<Usuario>> listarUsuarios(Pageable pageable, Specification<Usuario> specification) {
+        if (Optional.ofNullable(specification).isPresent()) {
+            System.out.println("Entro aqui");
+            List<Usuario> usuarios = usuarioRepository.findAll(specification);
+            return ok(success(usuarios).total(usuarios.size()).build());
+        }
         Page<Usuario> usuarios = usuarioRepository.findAll(pageable);
         return ok(success(usuarios.getContent()).total(usuarios.getTotalElements()).build());
     }
@@ -168,7 +174,10 @@ public class UsuarioControl {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<AppResponse> tratarExcepcion(Exception e, Locale locale) {
+        e.printStackTrace();
         GeneralException exception = new UsuarioException(e.getCause(), messageSource, locale);
         return ok(failure(exception.tratarExcepcion()).build());
     }
+
+
 }

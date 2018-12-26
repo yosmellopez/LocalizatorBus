@@ -28,7 +28,7 @@ export class TravelComponent implements OnInit {
     dataSource: MatTableDataSource<Travel> = new MatTableDataSource<Travel>();
     total: number = 0;
     pageSize: number = 10;
-    displayedColumns = ['seleccionado', 'expandido', 'active', 'travelDate', 'arriveDate', 'bus', 'route', 'acciones'];
+    displayedColumns = ['seleccionado', 'expandido', 'active', 'travelDate', 'arriveDate', 'bus', 'company', 'route', 'acciones'];
     childColumns = ['name', 'lastname', 'dni', 'place', 'acciones'];
     selection = new SelectionModel<Travel>(true, []);
     nombre: string = '';
