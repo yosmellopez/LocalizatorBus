@@ -1,0 +1,32 @@
+<form class="form" [formGroup]="form" (submit)="insertarDevice()">
+    <h1 mat-dialog-title style="margin: 0 0">{{insertar?'Nuevo Dispositivo':'Modificar Dispositivo'}}
+        <button type="button" mat-icon-button class="close-button" (click)="onNoClick()">
+            <mat-icon style="font-size: 25px">close</mat-icon>
+        </button>
+        <hr>
+    </h1>
+    <div mat-dialog-content style="min-height: 100%;overflow: hidden;">
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Nombre" formControlName="name">
+            <mat-error *ngIf="form.controls['name'].errors?.required">Debe insertar el nombre del dispositivo</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Identificador" formControlName="uniqueId" type="number">
+            <mat-error *ngIf="form.controls['uniqueId'].errors?.required">Debe insertar el núemero de identificación del dispositivo</mat-error>
+        </mat-form-field>
+        <div class="row full-width" style="margin-bottom: 10px;">
+            <mat-slide-toggle class="col-sm-6" formControlName="disabled">{{form.controls['disabled'].value?'Cancelado':'Activo'}}</mat-slide-toggle>
+        </div>
+    </div>
+    <div mat-dialog-actions class="boton-theme">
+        <span class="spacer"></span>
+        <button type="submit" mat-raised-button cdkFocusInitial color="primary">
+            <mat-icon>check_circle</mat-icon>
+            {{insertar?'Guardar':'Modificar'}}
+        </button>
+        <button type="button" mat-raised-button (click)="onNoClick()" color="warn">
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+    </div>
+</form>

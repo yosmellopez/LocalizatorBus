@@ -24,6 +24,12 @@
             </mat-select>
             <mat-error *ngIf="form.controls['company'].errors?.required">{{'bus.error.requiredCompany'|translate}}</mat-error>
         </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-select matInput placeholder="{{'bus.selectDevice'|translate}}" formControlName="device" [compareWith]="compararDevices">
+                <mat-option *ngFor="let device of devices" [value]="device">{{device.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.controls['device'].errors?.required">{{'bus.error.requiredCompany'|translate}}</mat-error>
+        </mat-form-field>
     </div>
     <div mat-dialog-actions class="boton-theme">
         <span class="spacer"></span>

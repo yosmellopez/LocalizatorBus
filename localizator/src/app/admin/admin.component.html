@@ -1,4 +1,11 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <app-header></app-header>
 <app-center></app-center>
-<!--<app-footer></app-footer>-->
+<!--<div style="position: fixed;bottom: 0px;background-color: #1b5e20;height: 150px;width: 100%"></div>-->
+<div class="jumbotron-1" [ngClass]="(expandido|async)?'page-expanded':'page-collapsed'">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid">
+        </div>
+    </div>
+</div>
+

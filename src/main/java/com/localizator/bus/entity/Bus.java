@@ -39,7 +39,7 @@ public class Bus implements Serializable, ClonableEntity<Bus> {
     private Company company;
 
     @ManyToOne
-//    @NotNull(message = "bus_device_not_null")
+    @NotNull(message = "bus_device_not_null")
     @JoinColumn(name = "device_id", foreignKey = @ForeignKey(name = "fk_bus_device"))
     private Device device;
 

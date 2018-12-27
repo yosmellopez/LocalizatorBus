@@ -19,13 +19,15 @@
         "siteCount": "Cantidad de Asientos",
         "company": "Nombre Empresa",
         "selectCompany": "Selecione la Empresa",
+        "selectDevice": "Selecione el Dispositivo",
         "list": "Lista de Buses",
         "listmsg": "Muestra el Listado de Buses del Sistema",
         "error": {
             "requiredCode": "Debe insertar el código del bus",
             "requiredNumber": "Debe insertar el número del bus",
             "requiredSiteCount": "Debe insertar la cantidad de asientos del bus",
-            "requiredCompany": "Debe seleccionar la empresa del bus"
+            "requiredCompany": "Debe seleccionar la empresa del bus",
+            "requiredDevice": "Debe seleccionar el dispositivo del bus"
         }
     },
     "place": {
@@ -73,6 +75,13 @@
         "canceled": "Cancelado",
         "list": "Lista de Empresas",
         "listmsg": "Muestra el Listado de Empresas del Sistema"
+    },
+    "device": {
+        "name": "Nombre",
+        "status": "Estado",
+        "canceled": "Cancelado",
+        "list": "Lista de Dispositivos",
+        "listmsg": "Muestra el Listado de Dispositivos del Sistema"
     },
     "actions": "Acciones",
     "notifications": "Notificaciones",

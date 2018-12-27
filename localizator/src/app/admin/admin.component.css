@@ -1,0 +1,16 @@
+.page-collapsed {
+    position: relative;
+    bottom: 0px;
+    height: 150px;
+    width: 100%;
+    z-index: 0;
+}
+
+.page-expanded {
+    position: fixed;
+    bottom: 0px;
+    height: 150px;
+    width: 100%;
+}
+
+/*page-expanded':'page-collapsed*/

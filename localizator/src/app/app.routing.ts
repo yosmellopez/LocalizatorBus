@@ -11,7 +11,7 @@ import {RouteInfo} from "./app.model";
 
 const routes: Route[] = [
     {path: '', redirectTo: '/login', pathMatch: 'full'},
-    {path: 'login', component: LoginComponent},
+    {path: 'login', component: LoginComponent, data: {title: "Iniciar Sesion"}},
     {
         path: '',
         component: AdminComponent,
@@ -73,6 +73,12 @@ export const RUTAS: RouteInfo[] = [
             title: 'company.list',
             pageTitle: 'company.list',
             icon: 'business',
+            class: 'waves-effect waves-cyan',
+        }, {
+            path: '/admin/device-list',
+            title: 'device.list',
+            pageTitle: 'device.list',
+            icon: 'phone_android',
             class: 'waves-effect waves-cyan',
         }]
     }, {

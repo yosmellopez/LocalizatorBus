@@ -66,7 +66,8 @@ public class LocalizationService {
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .defaultHeader(HttpHeaders.AUTHORIZATION, "Basic eW9zbWVsbG9wZXpAZ21haWwuY29tOnNlbWVvbHZpZG8=")
                 .build();
-        return webClient.get().exchange().block().toEntityList(Device.class).block().getBody();
+        return webClient.get().exchange().doOnError(throwable -> System.out.println(throwable.getLocalizedMessage()))
+                .block().toEntityList(Device.class).doOnError(throwable -> System.out.println(throwable.getLocalizedMessage())).block().getBody();
     }
 
     public static List<TraccarPosition> listPositions() {
@@ -90,7 +91,7 @@ public class LocalizationService {
                 .defaultHeader(HttpHeaders.AUTHORIZATION, "Basic eW9zbWVsbG9wZXpAZ21haWwuY29tOnNlbWVvbHZpZG8=")
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .build();
-        return webClient.get().exchange().block().toEntityList(TraccarPosition.class).block().getBody();
+        return webClient.get().exchange().doOnError(throwable -> System.out.println(throwable.getLocalizedMessage())).block().toEntityList(TraccarPosition.class).block().getBody();
     }
 
     public static Geofence createGeoferenceByPlace(Place place) {

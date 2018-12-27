@@ -35,6 +35,9 @@ public class Device implements Serializable, ClonableEntity<Device> {
     @Column(name = "hours")
     private Integer hours;
 
+    @NotNull(message = "device_name_not_null")
+    private String name;
+
     private String status;
 
     private Boolean disabled;
@@ -124,6 +127,14 @@ public class Device implements Serializable, ClonableEntity<Device> {
         this.disabled = disabled;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Integer getPositionId() {
         return positionId;
     }
@@ -192,6 +203,7 @@ public class Device implements Serializable, ClonableEntity<Device> {
         model = device.model;
         phone = device.phone;
         status = device.status;
+        name = device.name;
         uniqueId = device.uniqueId;
         groupId = device.groupId;
         positionId = device.positionId;

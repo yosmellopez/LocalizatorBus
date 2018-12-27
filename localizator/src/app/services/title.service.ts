@@ -1,17 +1,17 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {Title} from "../app.model";
+import {Titulo} from "../app.model";
 
 @Injectable({
     providedIn: 'root'
 })
 export class TitleService {
-    titleEmitter: EventEmitter<Title[]> = new EventEmitter<Title[]>();
+    titleEmitter: EventEmitter<Titulo[]> = new EventEmitter<Titulo[]>();
     pageTitleEmitter: EventEmitter<string> = new EventEmitter<string>();
 
     constructor() {
     }
 
-    emmit(titulos: Title[], pageTitle: string) {
+    emmit(titulos: Titulo[], pageTitle: string) {
         this.titleEmitter.emit(titulos);
         this.pageTitleEmitter.emit(pageTitle);
     }

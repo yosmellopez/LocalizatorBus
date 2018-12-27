@@ -18,14 +18,16 @@
         "number": "Number",
         "siteCount": "Number of Seats",
         "company": "Company Name",
-        "selectCompany": "Select  the Company",
+        "selectCompany": "Select the Company",
+        "selectDevice": "Select the Device",
         "list": "Bus List",
         "listmsg": "Show the system bus list",
         "error": {
             "requiredCode": "You must insert the bus code",
             "requiredNumber": "You must insert the bus number",
             "requiredSiteCount": "You must insert the bus bus list",
-            "requiredCompany": "You must select the bus company"
+            "requiredCompany": "You must select the bus company",
+            "requiredDevice": "You must select the bus device"
         }
     },
     "place": {
@@ -74,6 +76,13 @@
         "canceled": "Canceled",
         "list": "Company List",
         "listmsg": "Show system companies"
+    },
+    "device": {
+        "name": "Name",
+        "status": "Status",
+        "canceled": "Canceled",
+        "list": "Device List",
+        "listmsg": "Show system devices"
     },
     "actions": "Actions",
     "notifications": "Notifications",

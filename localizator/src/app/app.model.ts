@@ -40,6 +40,9 @@ export class Device {
     latitude: number;
     longitude: number;
     uniqueId: number;
+    name: string;
+    status: string;
+    disabled: boolean = false;
 }
 
 export class TraccarDevice {
@@ -245,7 +248,7 @@ export declare interface AppRoute {
     pageTitle: string;
 }
 
-export declare class Title {
+export declare class Titulo {
     title: string;
     active: boolean;
 }

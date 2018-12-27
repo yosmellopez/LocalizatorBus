@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {Observable, of} from "rxjs";
+import {AppService} from "../services/app.service";
 
 @Component({
     selector: 'app-admin',
@@ -6,11 +8,15 @@ import {Component, OnInit} from '@angular/core';
     styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
+    expandido: Observable<boolean> = new Observable();
 
-    constructor() {
+    constructor(private appService: AppService) {
     }
 
     ngOnInit() {
+        this.appService.pageEvent.subscribe(value => {
+            this.expandido = of(value);
+        })
     }
 
 }

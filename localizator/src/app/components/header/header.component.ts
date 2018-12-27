@@ -1,6 +1,6 @@
 import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {NotificacionService} from "../../services/notification.service";
-import {Notificacion, RouteInfo, Title, Usuario} from "../../app.model";
+import {Notificacion, RouteInfo, Titulo, Usuario} from "../../app.model";
 import {WebsocketService} from "../../services/websocket.service";
 import {Observable, of, Subscription} from "rxjs/index";
 import {Message} from '@stomp/stompjs';
@@ -10,6 +10,7 @@ import {TranslateService} from "../../services/translate.service";
 import {Principal} from "../../services/principal.service";
 import {TitleService} from "../../services/title.service";
 import {Howl, Howler} from 'howler';
+import {AppService} from "../../services/app.service";
 
 declare function my_init_plugins();
 
@@ -45,7 +46,7 @@ const LANGUAGES: RouteInfo[] = [{
 })
 export class HeaderComponent implements OnInit {
     languages = LANGUAGES;
-    titulos: Observable<Title[]> = new Observable<Title[]>();
+    titulos: Observable<Titulo[]> = new Observable<Titulo[]>();
     pageTitle: Observable<string> = new Observable<string>();
     usuarioTitle: Observable<string> = new Observable<string>();
     notificaciones: Notificacion[] = [];
@@ -59,7 +60,7 @@ export class HeaderComponent implements OnInit {
     private websocketStatus: Subscription;
 
     constructor(private notificationService: NotificacionService, private websocket: WebsocketService, public snackBar: MatSnackBar, private language: LanguageService,
-                private translate: TranslateService, private principal: Principal, private titleService: TitleService) {
+                private translate: TranslateService, private principal: Principal, private titleService: TitleService, private appService: AppService) {
         this.username = localStorage.getItem("username");
         this.isAdmin = JSON.parse(localStorage.getItem("isAdmin") == null ? "false" : localStorage.getItem("isAdmin"));
     }
@@ -128,6 +129,7 @@ export class HeaderComponent implements OnInit {
     cambiarBarra() {
         this.expandido = !this.expandido;
         document.body.setAttribute("data-layout", this.expandido ? "default-sidebar-1" : "default-sidebar-2");
+        this.appService.pageEvent.emit(this.expandido);
     }
 
     crearNotificacion() {

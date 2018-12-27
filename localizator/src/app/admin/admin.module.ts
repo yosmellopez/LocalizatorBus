@@ -12,6 +12,8 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {CommonModule} from "@angular/common";
 import {CompanyComponent} from './company/company.component';
 import {CompanyWindow} from './company/company-window/company-window.component';
+import {DeviceComponent} from './device/device.component';
+import {DeviceWindow} from './device/device-window/device-window.component';
 
 
 @NgModule({
@@ -24,8 +26,8 @@ import {CompanyWindow} from './company/company-window/company-window.component';
         ReactiveFormsModule,
         PasswordLenghtModule
     ],
-    declarations: [UsuarioComponent, UsuarioWindow, DashboardComponent, CompanyComponent, CompanyWindow],
-    entryComponents: [UsuarioWindow, CompanyWindow]
+    declarations: [UsuarioComponent, UsuarioWindow, DashboardComponent, CompanyComponent, CompanyWindow, DeviceComponent, DeviceWindow],
+    entryComponents: [UsuarioWindow, CompanyWindow, DeviceWindow]
 })
 export class AdminModule {
 }
