@@ -607,6 +607,8 @@ MIT
 
 @angular/material/progress-bar
 
+@angular/material/list
+
 @angular/forms
 MIT
 
@@ -639,6 +641,8 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+@angular/material/divider
 
 ng2-charts
 MIT
@@ -831,8 +835,6 @@ MIT
 @stomp/ng2-stompjs
 MIT
 
-@angular/material/divider
-
 perfect-scrollbar
 MIT
 The MIT License (MIT) Copyright (c) 2012-2017 Hyunje Jun and other contributors
@@ -905,8 +907,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-
-@angular/material/list
 
 zone.js
 MIT
