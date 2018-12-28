@@ -99,10 +99,10 @@
                     <mat-icon>add</mat-icon>
                 </button>
                 <mat-form-field style="float: right;margin-right: 10px;width: 40%">
-                    <mat-select matInput placeholder="Seleccione el lugar del viaje" formControlName="place" [compareWith]="compararLugares">
-                        <mat-option *ngFor="let place of places" [value]="place">{{place.name}}</mat-option>
+                    <mat-select matInput placeholder="Seleccione el lugar del viaje" formControlName="device" [compareWith]="compararLugares">
+                        <mat-option *ngFor="let device of places" [value]="device">{{device.name}}</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="formPasajero.controls['place'].errors?.required">Debe seleccionar lugar del viaje</mat-error>
+                    <mat-error *ngIf="formPasajero.controls['device'].errors?.required">Debe seleccionar lugar del viaje</mat-error>
                 </mat-form-field>
                 <div formGroupName="passenger">
                     <div class="middle-width">
@@ -185,9 +185,9 @@
                         </ng-container>
 
                         <!-- Symbol Column -->
-                        <ng-container matColumnDef="place">
+                        <ng-container matColumnDef="device">
                             <th mat-header-cell *matHeaderCellDef> Lugar</th>
-                            <td mat-cell *matCellDef="let element"> {{element.place|place}}</td>
+                            <td mat-cell *matCellDef="let element"> {{element.device|device}}</td>
                             <td mat-footer-cell *matFooterCellDef></td>
                         </ng-container>
                         <!-- Symbol Column -->

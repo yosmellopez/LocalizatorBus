@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {TravelService} from "../../services/travel.service";
 import {MyLocation, Travel} from "../../app.model";
 import {FormControl} from "@angular/forms";
@@ -6,9 +6,6 @@ import {MatPaginator, MatSort, MatTabChangeEvent, MatTable, MatTableDataSource} 
 import {SelectionModel} from "@angular/cdk/collections";
 import {merge} from "rxjs";
 import {catchError, map, startWith, switchMap} from "rxjs/operators";
-import {TabMapComponent} from "../tab-map/tab-map.component";
-
-declare var google;
 
 @Component({
     selector: 'app-follow-travel',

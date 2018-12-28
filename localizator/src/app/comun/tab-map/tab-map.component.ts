@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {DevicePosition, PassengerTravel, TraccarDevice, Travel} from "../../app.model";
+import {DevicePosition, PassengerTravel, Device, Travel} from "../../app.model";
 import {TRACCAR_WEBSOCKET_API_URL} from "../../app.constant";
 
 declare var google;
@@ -17,8 +17,8 @@ export class TabMapComponent implements OnInit, AfterViewInit {
     @ViewChild("mapa") public mapa: ElementRef;
     @Input("travel") travel: Travel;
     devicePositions: DevicePosition[] = [];
-    devices: TraccarDevice[] = [];
-    device: TraccarDevice;
+    devices: Device[] = [];
+    device: Device;
     passengersTravel: PassengerTravel[] = [];
 
     constructor() {
@@ -39,7 +39,7 @@ export class TabMapComponent implements OnInit, AfterViewInit {
         this.marker = new google.maps.Marker({
             map: this.map,
             position: location,
-            draggable: true,
+            draggable: false,
             title: "Mi Ubicación"
         });
         this.infoWindow.setOptions({content: '<p>Ubicacion del viaje: ' + this.getTitle() + '</p>'});
@@ -70,6 +70,14 @@ export class TabMapComponent implements OnInit, AfterViewInit {
                 this.device = traccarDevices[0];
             }
         }
+    }
+
+    showInMap(passenger: PassengerTravel) {
+        let location = new google.maps.LatLng(passenger.place.lat, passenger.place.lon);
+        this.map.setCenter(location);
+        this.marker.setPosition(location);
+        this.infoWindow.setOptions({content: `<p>Parada del pasajero ${passenger.passenger.name} ${passenger.passenger.lastname} en ${passenger.place.name}</p>`});
+        this.infoWindow.open(this.map, this.marker);
     }
 
     getTitle(): string {

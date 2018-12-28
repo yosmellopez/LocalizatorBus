@@ -5,6 +5,7 @@ export const TRACCAR_SERVER_API_URL = "http://localhost:8082";
 export const TRACCAR_WEBSOCKET_API_URL = "ws://localhost:8082/api/socket";
 export const uri: string = localStorage.getItem("socketDir") + 'configuracion/websocket';
 export const NOTIFICATION_TOPIC: string = '/buslocator/notificacion';
+export const DEVICE_TOPIC: string = '/buslocator/device';
 
 export const stompConfig: StompConfig = {
     url: uri,

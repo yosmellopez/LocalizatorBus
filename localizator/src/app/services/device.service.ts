@@ -27,7 +27,7 @@ export class DeviceService {
     }
 
     modificarDevice(id: number, device: Device): Observable<Respuesta<Device>> {
-        device.deviceId = id;
+        device.id = id;
         return this.http.put<AppResponse<Device>>(this.deviceUrl + "/" + id, device, {observe: "response"});
     }
 

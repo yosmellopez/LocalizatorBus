@@ -17,14 +17,15 @@ export class DeviceWindow implements OnInit {
     insertar = true;
     form: FormGroup;
 
-    constructor(public dialogRef: MatDialogRef<DeviceWindow>, @Inject(MAT_DIALOG_DATA) {deviceId, name, uniqueId, disabled}: Device,
+    constructor(public dialogRef: MatDialogRef<DeviceWindow>, @Inject(MAT_DIALOG_DATA) {id, name, uniqueId, phone, disabled}: Device,
                 private service: DeviceService, private dialog: MatDialog) {
-        if (deviceId)
+        if (id)
             this.insertar = false;
-        this.idDevice = deviceId;
+        this.idDevice = id;
         this.form = new FormGroup({
             name: new FormControl(name, [Validators.required]),
             uniqueId: new FormControl(uniqueId, [Validators.required]),
+            phone: new FormControl(phone, [Validators.required, Validators.minLength(8)]),
             disabled: new FormControl(disabled, [Validators.required]),
         });
     }

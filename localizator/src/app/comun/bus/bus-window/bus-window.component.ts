@@ -88,7 +88,7 @@ export class BusWindow implements OnInit {
     }
 
     compararDevices(inicio: Device, fin: Device) {
-        return inicio && fin && inicio.deviceId === fin.deviceId;
+        return inicio && fin && inicio.id === fin.id;
     }
 
     onNoClick(): void {

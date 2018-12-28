@@ -7,7 +7,7 @@
         <mat-card-subtitle>{{'bus.listmsg'|translate}}</mat-card-subtitle>
         <span class="spacer"></span>
         <div class="card-actions">
-            <button mat-fab color="primary" (click)="abrirVentana()">
+            <button mat-fab color="primary" (click)="abrirVentana()" matTooltip="Nuevo Bus">
                 <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
             </button>
             <button mat-fab color="warn" (click)="eliminarBuss($event)">

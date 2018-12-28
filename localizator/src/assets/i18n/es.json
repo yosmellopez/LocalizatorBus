@@ -79,6 +79,7 @@
     "device": {
         "name": "Nombre",
         "status": "Estado",
+        "phone": "Número de Teléfono",
         "canceled": "Cancelado",
         "list": "Lista de Dispositivos",
         "listmsg": "Muestra el Listado de Dispositivos del Sistema"
@@ -90,6 +91,9 @@
     "gpsTravel": "GPS y Viajes",
     "noCompanies": "Sin Empresa",
     "welcome": "Bienvenido: ",
+    "unknown": "Desconocido",
+    "offline": "Desconectado",
+    "online": "Coenctado",
     "userprofile": "Perfil de Usuario",
     "accountlock": "Bloquear Pantalla"
 }

@@ -11,10 +11,11 @@ import {CompanyPipe} from './company.pipe';
 import {CompaniesPipe} from './companies.pipe';
 import {PropertyPipe} from './property.pipe';
 import {PostalCodePipe} from './postal-code.pipe';
+import {DevicePipe} from "./device.pipe";
 
 @NgModule({
-    declarations: [RolPipe, BusPipe, PlacePipe, RoutePipe, PassengerPipe, UsuarioPipe, DniPipe, TranslatePipe, CompanyPipe, CompaniesPipe, PropertyPipe, PostalCodePipe],
-    exports: [RolPipe, BusPipe, PlacePipe, RoutePipe, PassengerPipe, UsuarioPipe, DniPipe, TranslatePipe, CompanyPipe, CompaniesPipe, PropertyPipe, PostalCodePipe]
+    declarations: [RolPipe, BusPipe, PlacePipe, RoutePipe, PassengerPipe, UsuarioPipe, DniPipe, TranslatePipe, CompanyPipe, CompaniesPipe, PropertyPipe, PostalCodePipe, DevicePipe],
+    exports: [RolPipe, BusPipe, PlacePipe, RoutePipe, PassengerPipe, UsuarioPipe, DniPipe, TranslatePipe, CompanyPipe, CompaniesPipe, PropertyPipe, PostalCodePipe, DevicePipe]
 })
 export class PipesModule {
 

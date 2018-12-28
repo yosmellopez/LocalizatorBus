@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AppResponse, Respuesta, Device, ResponseApp} from "../../app.model";
+import {AppResponse, Respuesta, Device, ResponseApp, Notificacion} from "../../app.model";
 import {SelectionModel} from "@angular/cdk/collections";
 import {catchError, map, startWith, switchMap} from "rxjs/internal/operators";
 import {DeviceService} from "../../services/device.service";
@@ -7,6 +7,9 @@ import {Confirm, Information, MensajeError} from "../../mensaje/window.mensaje";
 import {MatDialog, MatPaginator, MatSort, MatTable, MatTableDataSource} from "@angular/material";
 import {forkJoin, merge, Subject} from "rxjs/index";
 import {DeviceWindow} from "./device-window/device-window.component";
+import {WebsocketService} from "../../services/websocket.service";
+import {NotificacionMensajeComponent} from "../../components/header/header.component";
+import {Message} from "@stomp/stompjs";
 
 declare function my_init_plugins();
 
@@ -20,7 +23,7 @@ export class DeviceComponent implements OnInit {
     dataSource: MatTableDataSource<Device> = new MatTableDataSource<Device>();
     total: number = 0;
     pageSize: number = 10;
-    displayedColumns = ['seleccionado', 'index', 'name', 'status', 'canceled', 'acciones'];
+    displayedColumns = ['seleccionado', 'index', 'name', 'phone', 'status', 'canceled', 'acciones'];
     selection = new SelectionModel<Device>(true, []);
     nombre: string = '';
     resultsLength = 0;
@@ -29,7 +32,8 @@ export class DeviceComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatTable) table: MatTable<Device>;
 
-    constructor(private service: DeviceService, private dialog: MatDialog) {
+    constructor(private service: DeviceService, private deviceSocket: WebsocketService, private dialog: MatDialog) {
+        deviceSocket.connectDeviceSocket();
     }
 
     ngOnInit() {
@@ -63,11 +67,12 @@ export class DeviceComponent implements OnInit {
                 this.table.dataSource = this.dataSource;
                 this.table.renderRows();
             });
+        this.deviceSocket.getMessageDevice().subscribe(this.onReceiveDevice);
     }
 
     abrirVentana() {
         let dialogRef = this.dialog.open(DeviceWindow, {
-            width: '400px', disableClose: true, data: new Device(),
+            width: '450px', disableClose: true, data: new Device(),
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -81,7 +86,7 @@ export class DeviceComponent implements OnInit {
     editarDevice(event: Event, device: Device): void {
         event.stopPropagation();
         let editDialogRef = this.dialog.open(DeviceWindow, {
-            width: '400px', data: device, disableClose: true
+            width: '450px', data: device, disableClose: true
         });
 
         editDialogRef.afterClosed().subscribe(result => {
@@ -103,11 +108,13 @@ export class DeviceComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this.service.eliminarDevice(device.deviceId).subscribe(resp => {
+                this.isLoadingResults = true;
+                this.service.eliminarDevice(device.id).subscribe(resp => {
+                    this.isLoadingResults = true;
                     if (resp.body.success) {
                         this.dialog.open(Information, {
                             width: '350px',
-                            data: {mensaje: 'Se ha eliminado la dispositivo.'}
+                            data: {mensaje: 'Se ha eliminado el dispositivo.'}
                         });
                         this.selection.clear();
                         this.paginator.page.emit();
@@ -137,7 +144,7 @@ export class DeviceComponent implements OnInit {
                     let allProgressObservables = [];
                     const todos = new Subject<boolean>();
                     devicees.forEach(device => {
-                        allProgressObservables.push(this.service.eliminarDevice(device.deviceId));
+                        allProgressObservables.push(this.service.eliminarDevice(device.id));
                     });
                     forkJoin(allProgressObservables).subscribe(response => {
                         let completo = true;
@@ -158,6 +165,15 @@ export class DeviceComponent implements OnInit {
                     });
                 }
             });
+        }
+    }
+
+    private onReceiveDevice = (message: Message) => {
+        console.log("Me llego el mensaje")
+        const device: Device = JSON.parse(message.body);
+        let searchDevice = this.dataSource.data.find((value: Device) => value.id === device.id);
+        if (searchDevice) {
+            searchDevice.status = device.status;
         }
     }
 

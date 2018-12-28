@@ -49,12 +49,12 @@
 
             <ng-container matColumnDef="origin">
                 <th mat-header-cell *matHeaderCellDef> Origen</th>
-                <td mat-cell *matCellDef="let element">{{element.origin|place}}</td>
+                <td mat-cell *matCellDef="let element">{{element.origin|device}}</td>
             </ng-container>
 
             <ng-container matColumnDef="destiny">
                 <th mat-header-cell *matHeaderCellDef> Destino</th>
-                <td mat-cell *matCellDef="let element">{{element.destiny|place}}</td>
+                <td mat-cell *matCellDef="let element">{{element.destiny|device}}</td>
             </ng-container>
 
             <ng-container matColumnDef="acciones" stickyEnd>

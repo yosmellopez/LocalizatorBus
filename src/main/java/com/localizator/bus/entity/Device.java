@@ -1,10 +1,13 @@
 package com.localizator.bus.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.localizator.bus.dto.TraccarDevice;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -23,10 +26,15 @@ public class Device implements Serializable, ClonableEntity<Device> {
     @NotNull(message = "device_traccar_id_not_null")
     private Long uniqueId;
 
+    @Column(name = "traccar_device_id")
+    private Long traccarDeviceId;
+
     @Column(name = "latitude")
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private Double latitude;
 
     @Column(name = "longitude")
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private Double longitude;
 
     @Column(name = "total_distance")
@@ -50,6 +58,7 @@ public class Device implements Serializable, ClonableEntity<Device> {
     @Column(name = "group_id")
     private Integer groupId;
 
+    @Size(min = 8, message = "device_phone_min_length")
     private String phone;
 
     private String model;
@@ -58,6 +67,7 @@ public class Device implements Serializable, ClonableEntity<Device> {
 
     private String category;
 
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private ArrayList<Integer> geofenceIds = new ArrayList<>();
 
     public Device() {
@@ -196,6 +206,14 @@ public class Device implements Serializable, ClonableEntity<Device> {
         return "Device{" + "deviceId=" + deviceId + ", latitude=" + latitude + ", longitude=" + longitude + '}';
     }
 
+    public Long getTraccarDeviceId() {
+        return traccarDeviceId;
+    }
+
+    public void setTraccarDeviceId(Long traccarDeviceId) {
+        this.traccarDeviceId = traccarDeviceId;
+    }
+
     @Override
     public void clone(Device device) {
         category = device.category;
@@ -213,5 +231,20 @@ public class Device implements Serializable, ClonableEntity<Device> {
         geofenceIds = device.geofenceIds;
         latitude = device.latitude;
         longitude = device.longitude;
+    }
+
+    public void cloneTracar(TraccarDevice device) {
+        category = device.getCategory();
+        contact = device.getContact();
+        model = device.getModel();
+        phone = device.getPhone();
+        status = device.getStatus();
+        name = device.getName();
+        uniqueId = device.getUniqueId();
+        groupId = device.getGroupId();
+        positionId = device.getPositionId();
+        disabled = device.getDisabled();
+        geofenceIds = device.getGeofenceIds();
+        traccarDeviceId = device.getDeviceId();
     }
 }

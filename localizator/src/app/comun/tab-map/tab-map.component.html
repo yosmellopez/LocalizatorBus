@@ -7,7 +7,7 @@
     <mat-card-content>
         <div class="row">
             <div class="col-md-3">
-                <div class="card mat-elevation-z10" style="height: 100%">
+                <div class="card mat-elevation-z10">
                     <div class="card-block with-icon">
                         <i>
                             <mat-icon color="primary">directions_bus</mat-icon>
@@ -15,18 +15,22 @@
                         <h4 class="card-title">Pasajeros del viaje</h4>
                         <p class="card-subtitle text-muted">{{travel.route|route}}</p>
                     </div>
-                    <div class="card-block">
-                        <mat-list *ngFor="let passenger of passengersTravel">
-                            <mat-list-item class="row">
-                                <div class="col-md-11">
-                                    {{passenger.passenger|passenger}}
-                                </div>
-                                <div class="col-md-1">
-                                    <mat-checkbox [checked]="true"></mat-checkbox>
-                                </div>
-                            </mat-list-item>
-                            <mat-divider></mat-divider>
-                        </mat-list>
+                    <div class="card-block" style="padding-top: 0;">
+                        <perfect-scrollbar style="max-height: 490px;">
+                            <mat-list *ngFor="let passenger of passengersTravel">
+                                <mat-list-item class="row" style="border-bottom: 1px solid #bfb7b8">
+                                    <div class="col-md-10" style="position: relative;top: -3px;">
+                                        {{passenger.passenger|passenger}}
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button mat-mini-fab color="primary" (click)="showInMap(passenger)" style="position: relative;top: -5px;"
+                                                [matTooltip]="'Mostrar Pasajero '+(passenger.passenger|passenger)+' en el Mapa'">
+                                            <mat-icon>map</mat-icon>
+                                        </button>
+                                    </div>
+                                </mat-list-item>
+                            </mat-list>
+                        </perfect-scrollbar>
                     </div>
                 </div>
             </div>

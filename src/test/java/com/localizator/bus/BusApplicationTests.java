@@ -1,10 +1,9 @@
 package com.localizator.bus;
 
-import com.localizator.bus.dto.Geofence;
-import com.localizator.bus.dto.Gisgraphy;
-import com.localizator.bus.dto.Result;
-import com.localizator.bus.dto.TraccarPosition;
+import com.localizator.bus.dto.*;
+import com.localizator.bus.entity.Device;
 import com.localizator.bus.entity.Place;
+import com.localizator.bus.repository.DeviceRepository;
 import com.localizator.bus.repository.PassengerTravelRepository;
 import com.localizator.bus.repository.PlaceRepository;
 import com.localizator.bus.service.LocalizationService;
@@ -29,6 +28,9 @@ public class BusApplicationTests {
     @Autowired
     PlaceRepository placeRepository;
 
+    @Autowired
+    DeviceRepository deviceRepository;
+
     @Test
     public void contextLoads() {
 //        Gisgraphy gisgraphy = LocalizationService.getAutoComplete("Las Tunas");
@@ -50,4 +52,15 @@ public class BusApplicationTests {
         geofences.forEach(System.out::println);
     }
 
+    @Test
+    public void createDevice() {
+        List<Device> devices = deviceRepository.findAll();
+        devices.forEach(device -> {
+            List<Device> deviceList = LocalizationService.listDevicesByUniqueId(device);
+            if (deviceList.isEmpty()) {
+                TraccarDevice traccarDevice = LocalizationService.createDevice(device);
+            }
+        });
+
+    }
 }

@@ -52,7 +52,6 @@ export class CenterComponent implements OnInit {
         this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
                 this.getTitle();
-                this.titleService.setTitle("Prueba");
             }
         });
         this.service.languageEmitter.subscribe(value => {
@@ -85,6 +84,7 @@ export class CenterComponent implements OnInit {
                 }
             }
         }
+        this.titleService.setTitle(`${pageTitle} | Localizator Bus`);
         this.tituloService.emmit(titulos, pageTitle);
         this.principal.identity().then(valor => {
             if (valor) {

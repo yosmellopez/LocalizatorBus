@@ -130,7 +130,7 @@ Section 1 -- Definitions.
      as reproduction, public display, public performance, distribution,
      dissemination, communication, or importation, and to make material
      available to the public including in ways that members of the
-     public may access the material from a place and at a time
+     public may access the material from a device and at a time
      individually chosen by them.
 
   l. Sui Generis Database Rights means rights other than copyright

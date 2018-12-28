@@ -29,7 +29,7 @@
                     <span *ngIf="form.controls['places'].value?.length > 3" class="additional-selection">(+{{form.controls['places'].value.length - 3}}
                         {{form.controls['places'].value?.length === 4 ? 'otro más' : 'más'}})</span>
                 </mat-select-trigger>
-                <mat-option *ngFor="let lugar of lugares" [value]="lugar">{{lugar|place}}</mat-option>
+                <mat-option *ngFor="let lugar of lugares" [value]="lugar">{{lugar|device}}</mat-option>
             </mat-select>
         </mat-form-field>
     </div>

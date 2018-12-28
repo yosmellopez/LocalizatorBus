@@ -1,0 +1,24 @@
+.acciones button {
+    margin-right: 5px;
+}
+
+.mat-column-seleccionado {
+    width: 70px;
+}
+
+.mat-column-expandido {
+    width: 50px;
+}
+
+.mat-column-index {
+    width: 50px;
+}
+
+.mat-column-acciones {
+    width: 120px;
+}
+
+.mat-col-rol {
+    margin-right: 20px;
+    width: 150px;
+}

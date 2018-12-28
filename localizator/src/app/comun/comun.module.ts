@@ -26,9 +26,10 @@ import {WTimeDialogComponent} from "../components/time-control/w-time-dialog.com
 import {WClockComponent} from "../components/time-control/w-clock.component";
 import {PlaceSelectorComponent} from './route/place-selector/place-selector.component';
 import {ChartsModule} from "ng2-charts";
+import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {GooglePlaceModule} from "ngx-google-places-autocomplete";
-import { FollowTravelComponent } from './follow-travel/follow-travel.component';
-import { TabMapComponent } from './tab-map/tab-map.component';
+import {FollowTravelComponent} from './follow-travel/follow-travel.component';
+import {TabMapComponent} from './tab-map/tab-map.component';
 
 @NgModule({
     imports: [
@@ -40,7 +41,8 @@ import { TabMapComponent } from './tab-map/tab-map.component';
         RouterModule.forChild(routesComun),
         NgxMaterialTimepickerModule,
         ChartsModule,
-        GooglePlaceModule
+        GooglePlaceModule,
+        PerfectScrollbarModule,
     ],
     declarations: [BusComponent, PlaceComponent, UserProfileComponent, RouteComponent, TravelComponent, BusWindow, PlaceWindow, RouteWindow,
         TravelWindow, DashboardComponent, NotificationComponent, WMatTimePickerComponent, WTimeDialogComponent, WClockComponent, PlaceSelectorComponent, FollowTravelComponent, TabMapComponent],

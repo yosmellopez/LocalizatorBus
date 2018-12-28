@@ -70,6 +70,18 @@ public class LocalizationService {
                 .block().toEntityList(Device.class).doOnError(throwable -> System.out.println(throwable.getLocalizedMessage())).block().getBody();
     }
 
+    public static List<Device> listDevicesByUniqueId(Device device) {
+        String fooResourceUrl = "http://localhost:8082/api/devices";
+        UriComponents builder = UriComponentsBuilder.fromHttpUrl(fooResourceUrl).queryParam("uniqueId", device.getUniqueId()).build();
+        String uriString = builder.toUriString();
+        WebClient webClient = WebClient.builder().baseUrl(uriString)
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .defaultHeader(HttpHeaders.AUTHORIZATION, "Basic eW9zbWVsbG9wZXpAZ21haWwuY29tOnNlbWVvbHZpZG8=")
+                .build();
+        return webClient.get().exchange().doOnError(throwable -> System.out.println(throwable.getLocalizedMessage()))
+                .block().toEntityList(Device.class).doOnError(throwable -> System.out.println(throwable.getLocalizedMessage())).block().getBody();
+    }
+
     public static List<TraccarPosition> listPositions() {
         String fooResourceUrl = "http://localhost:8082/api/positions";
         UriComponents builder = UriComponentsBuilder.fromHttpUrl(fooResourceUrl).build();
@@ -105,5 +117,29 @@ public class LocalizationService {
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .exchange().block()
                 .bodyToMono(Geofence.class).block();
+    }
+
+    public static TraccarDevice createDevice(Device device) {
+        TraccarDevice traccarDevice = new TraccarDevice(device);
+        WebClient webClient = WebClient.create("http://localhost:8082");
+        return webClient.post()
+                .uri("/api/devices")
+                .body(BodyInserters.fromObject(traccarDevice))
+                .header(HttpHeaders.AUTHORIZATION, "Basic eW9zbWVsbG9wZXpAZ21haWwuY29tOnNlbWVvbHZpZG8=")
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .exchange().block()
+                .bodyToMono(TraccarDevice.class).block();
+    }
+
+    public static Device updateDevice(Device device) {
+        TraccarDevice traccarDevice = new TraccarDevice(device);
+        WebClient webClient = WebClient.create("http://localhost:8082");
+        return webClient.post()
+                .uri("/api/devices/{deviceId}", device.getDeviceId())
+                .body(BodyInserters.fromObject(traccarDevice))
+                .header(HttpHeaders.AUTHORIZATION, "Basic eW9zbWVsbG9wZXpAZ21haWwuY29tOnNlbWVvbHZpZG8=")
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .exchange().block()
+                .bodyToMono(Device.class).block();
     }
 }

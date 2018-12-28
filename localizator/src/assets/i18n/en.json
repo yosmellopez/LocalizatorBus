@@ -80,6 +80,7 @@
     "device": {
         "name": "Name",
         "status": "Status",
+        "phone": "Phone Number",
         "canceled": "Canceled",
         "list": "Device List",
         "listmsg": "Show system devices"
@@ -92,5 +93,8 @@
     "gpsTravel": "GPS and Travels",
     "noCompanies": "No Companies",
     "welcome": "Welcome: ",
+    "unknown": "Unknown",
+    "offline": "Offline",
+    "online": "Online",
     "accountlock": "Lock Screen"
 }

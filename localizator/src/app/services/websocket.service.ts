@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {Message} from '@stomp/stompjs';
 import {map} from 'rxjs/operators';
 import {StompService, StompState} from '@stomp/ng2-stompjs';
-import {NOTIFICATION_TOPIC} from "../app.constant";
+import {DEVICE_TOPIC, NOTIFICATION_TOPIC} from "../app.constant";
 
 @Injectable({
     providedIn: 'root',
@@ -11,6 +11,7 @@ import {NOTIFICATION_TOPIC} from "../app.constant";
 export class WebsocketService {
     private messageNotificacion: Observable<Message>;
     private messageAdminNotificacion: Observable<Message>;
+    private messageDevice: Observable<Message>;
     public wsstate: Observable<string>;
 
     constructor(private stompService: StompService) {
@@ -23,6 +24,10 @@ export class WebsocketService {
             this.messageAdminNotificacion = this.stompService.subscribe(`${NOTIFICATION_TOPIC}/admin`);
     }
 
+    public connectDeviceSocket() {
+        this.messageDevice = this.stompService.subscribe(`${DEVICE_TOPIC}`);
+    }
+
     public getSocketStateObservable(): Observable<string> {
         return this.wsstate;
     }
@@ -33,5 +38,9 @@ export class WebsocketService {
 
     public getMessageAdminNotificacion(): Observable<Message> {
         return this.messageAdminNotificacion;
+    }
+
+    public getMessageDevice(): Observable<Message> {
+        return this.messageDevice;
     }
 }

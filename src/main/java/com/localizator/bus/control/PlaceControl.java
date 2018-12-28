@@ -1,12 +1,11 @@
 package com.localizator.bus.control;
 
-import com.localizator.bus.dto.Geofence;
 import com.localizator.bus.dto.Localization;
 import com.localizator.bus.dto.Result;
 import com.localizator.bus.entity.Place;
 import com.localizator.bus.exception.GeneralException;
 import com.localizator.bus.exception.PlaceException;
-import com.localizator.bus.implement.ObservableGeofence;
+import com.localizator.bus.implement.GeofenceRunnable;
 import com.localizator.bus.repository.PlaceRepository;
 import com.localizator.bus.service.LocalizationService;
 import com.localizator.bus.service.Posicion;
@@ -15,7 +14,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -74,7 +72,7 @@ public class PlaceControl {
     @PostMapping(value = "/place")
     public ResponseEntity<AppResponse<Place>> insertarPlace(@Valid @RequestBody Place place) {
         placeRepository.saveAndFlush(place);
-        Thread hilo = new Thread(new ObservableGeofence(place, placeRepository));
+        Thread hilo = new Thread(new GeofenceRunnable(place, placeRepository));
         hilo.start();
         return ok(success(place).build());
     }

@@ -4,6 +4,7 @@ import com.localizator.bus.entity.Device;
 import com.localizator.bus.entity.Usuario;
 import com.localizator.bus.exception.DeviceException;
 import com.localizator.bus.exception.GeneralException;
+import com.localizator.bus.implement.DeviceRunnable;
 import com.localizator.bus.repository.DeviceRepository;
 import com.localizator.bus.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -39,10 +41,13 @@ public class DeviceControl {
 
     private final MessageSource messageSource;
 
+    private final SimpMessagingTemplate messagingTemplate;
+
     @Autowired
-    public DeviceControl(DeviceRepository deviceRepository, MessageSource messageSource) {
+    public DeviceControl(DeviceRepository deviceRepository, MessageSource messageSource, SimpMessagingTemplate messagingTemplate) {
         this.deviceRepository = deviceRepository;
         this.messageSource = messageSource;
+        this.messagingTemplate = messagingTemplate;
     }
 
     @GetMapping(value = "/device")
@@ -60,6 +65,8 @@ public class DeviceControl {
     @PostMapping(value = "/device")
     public ResponseEntity<AppResponse<Device>> insertarDevice(@Valid @RequestBody Device device) {
         deviceRepository.saveAndFlush(device);
+        Thread thread = new Thread(new DeviceRunnable(device, deviceRepository, messagingTemplate));
+        thread.start();
         return ok(success(device).build());
     }
 

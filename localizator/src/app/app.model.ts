@@ -36,24 +36,17 @@ export class Bus {
 
 
 export class Device {
-    deviceId: number;
+    id: number;
     latitude: number;
     longitude: number;
     uniqueId: number;
     name: string;
     status: string;
+    phone: number;
     disabled: boolean = false;
-}
-
-export class TraccarDevice {
-    uniqueId: number;
     groupId: number;
-    id: number;
     model: string;
-    name: string;
-    phone: string;
     positionId: number;
-    status: string;
 }
 
 export class Place {

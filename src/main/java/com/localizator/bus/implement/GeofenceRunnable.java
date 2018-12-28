@@ -5,13 +5,13 @@ import com.localizator.bus.entity.Place;
 import com.localizator.bus.repository.PlaceRepository;
 import com.localizator.bus.service.LocalizationService;
 
-public class ObservableGeofence implements Runnable {
+public class GeofenceRunnable implements Runnable {
 
     private Place place;
 
     private PlaceRepository placeRepository;
 
-    public ObservableGeofence(Place place, PlaceRepository placeRepository) {
+    public GeofenceRunnable(Place place, PlaceRepository placeRepository) {
         this.place = place;
         this.placeRepository = placeRepository;
     }
@@ -21,5 +21,6 @@ public class ObservableGeofence implements Runnable {
         Geofence geoference = LocalizationService.createGeoferenceByPlace(place);
         place.setGeoferenceId(geoference.getId());
         place.setGeoference(geoference.getArea());
+        placeRepository.saveAndFlush(place);
     }
 }

@@ -14,8 +14,15 @@
             <input matInput placeholder="Identificador" formControlName="uniqueId" type="number">
             <mat-error *ngIf="form.controls['uniqueId'].errors?.required">Debe insertar el núemero de identificación del dispositivo</mat-error>
         </mat-form-field>
-        <div class="row full-width" style="margin-bottom: 10px;">
-            <mat-slide-toggle class="col-sm-6" formControlName="disabled">{{form.controls['disabled'].value?'Cancelado':'Activo'}}</mat-slide-toggle>
+        <mat-form-field class="full-width" hintLabel="Mínimo 8 caracteres">
+            <input #phone matInput placeholder="Número de Teléfono" formControlName="phone">
+            <mat-icon matSuffix style="position: relative;top: 2px;">phone</mat-icon>
+            <mat-hint align="end">{{phone.value?.length || 0}}/8</mat-hint>
+            <mat-error *ngIf="form.controls['phone'].errors?.required">Debe insertar el núemero de teléfono</mat-error>
+            <mat-error *ngIf="form.controls['phone'].errors?.minlength">El mínimo de caracteres debe ser 8</mat-error>
+        </mat-form-field>
+        <div class="row full-width" style="margin-bottom: 10px;margin-top: 8px;">
+            <mat-slide-toggle class="col-sm-6" formControlName="disabled">{{form.controls['disabled'].value?'Activo':'Cancelado'}}</mat-slide-toggle>
         </div>
     </div>
     <div mat-dialog-actions class="boton-theme">
