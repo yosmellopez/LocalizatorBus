@@ -58,7 +58,7 @@ public class LocalizationService {
         return webClient.get().exchange().block().toEntityList(Geofence.class).block().getBody();
     }
 
-    public static List<Device> listDevices() {
+    public static List<TraccarDevice> listDevices() {
         String fooResourceUrl = "http://localhost:8082/api/devices";
         UriComponents builder = UriComponentsBuilder.fromHttpUrl(fooResourceUrl).build();
         String uriString = builder.toUriString();
@@ -67,7 +67,7 @@ public class LocalizationService {
                 .defaultHeader(HttpHeaders.AUTHORIZATION, "Basic eW9zbWVsbG9wZXpAZ21haWwuY29tOnNlbWVvbHZpZG8=")
                 .build();
         return webClient.get().exchange().doOnError(throwable -> System.out.println(throwable.getLocalizedMessage()))
-                .block().toEntityList(Device.class).doOnError(throwable -> System.out.println(throwable.getLocalizedMessage())).block().getBody();
+                .block().toEntityList(TraccarDevice.class).doOnError(throwable -> System.out.println(throwable.getLocalizedMessage())).block().getBody();
     }
 
     public static List<Device> listDevicesByUniqueId(Device device) {
@@ -131,15 +131,15 @@ public class LocalizationService {
                 .bodyToMono(TraccarDevice.class).block();
     }
 
-    public static Device updateDevice(Device device) {
+    public static TraccarDevice updateDevice(Device device) {
         TraccarDevice traccarDevice = new TraccarDevice(device);
         WebClient webClient = WebClient.create("http://localhost:8082");
-        return webClient.post()
-                .uri("/api/devices/{deviceId}", device.getDeviceId())
+        return webClient.put()
+                .uri("/api/devices/{deviceId}", device.getTraccarDeviceId())
                 .body(BodyInserters.fromObject(traccarDevice))
                 .header(HttpHeaders.AUTHORIZATION, "Basic eW9zbWVsbG9wZXpAZ21haWwuY29tOnNlbWVvbHZpZG8=")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .exchange().block()
-                .bodyToMono(Device.class).block();
+                .bodyToMono(TraccarDevice.class).block();
     }
 }

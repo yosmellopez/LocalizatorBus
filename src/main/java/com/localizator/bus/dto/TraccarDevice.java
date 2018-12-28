@@ -36,8 +36,11 @@ public class TraccarDevice {
     @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private ArrayList<Integer> geofenceIds = new ArrayList<>();
 
+    public TraccarDevice() {
+    }
+
     public TraccarDevice(Device device) {
-        deviceId = device.getDeviceId();
+        deviceId = device.getTraccarDeviceId();
         uniqueId = device.getUniqueId();
         name = device.getName();
         status = device.getStatus();

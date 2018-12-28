@@ -1,5 +1,6 @@
 package com.localizator.bus.sheduledtask;
 
+import com.localizator.bus.dto.TraccarDevice;
 import com.localizator.bus.dto.TraccarPosition;
 import com.localizator.bus.entity.Device;
 import com.localizator.bus.entity.Notification;
@@ -57,21 +58,28 @@ public class AppTasks {
 
     @Scheduled(fixedDelay = 600000)
     public void udateDevices() {
-        List<Device> devices = LocalizationService.listDevices();
-        for (Device device : devices) {
+        List<TraccarDevice> devices = LocalizationService.listDevices();
+        for (TraccarDevice traccarDevice : devices) {
             List<TraccarPosition> positions = LocalizationService.listPositions();
-            Optional<TraccarPosition> positionOptional = positions.parallelStream().filter(traccarPosition -> traccarPosition.getDeviceId() == device.getDeviceId()).findFirst();
-            Optional<Device> optional = deviceRepository.findByUniqueId(device.getUniqueId());
-            positionOptional.ifPresent(traccarPosition -> {
-                device.setLatitude(traccarPosition.getLatitude());
-                device.setLongitude(traccarPosition.getLongitude());
-            });
+            Optional<TraccarPosition> positionOptional = positions.parallelStream().filter(traccarPosition -> traccarPosition.getDeviceId() == traccarDevice.getDeviceId()).findFirst();
+            Optional<Device> optional = deviceRepository.findByUniqueId(traccarDevice.getUniqueId());
+            Device device = optional.get();
+            if (positionOptional.isPresent()) {
+                TraccarPosition traccarPosition = positionOptional.get();
+                if (optional.isPresent()) {
+                    device.setLatitude(traccarPosition.getLatitude());
+                    device.setLongitude(traccarPosition.getLongitude());
+                }
+            }
             if (optional.isPresent()) {
-                Device deviceBd = optional.get();
-                deviceBd.clone(device);
+                Device deviceBd = device;
+                deviceBd.cloneTracar(traccarDevice);
                 deviceRepository.saveAndFlush(deviceBd);
-            } else
+            } else {
+                device = new Device();
+                device.cloneTracar(traccarDevice);
                 deviceRepository.saveAndFlush(device);
+            }
         }
     }
 

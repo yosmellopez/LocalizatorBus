@@ -65,7 +65,7 @@ public class DeviceControl {
     @PostMapping(value = "/device")
     public ResponseEntity<AppResponse<Device>> insertarDevice(@Valid @RequestBody Device device) {
         deviceRepository.saveAndFlush(device);
-        Thread thread = new Thread(new DeviceRunnable(device, deviceRepository, messagingTemplate));
+        Thread thread = new Thread(new DeviceRunnable(device, deviceRepository, messagingTemplate, true));
         thread.start();
         return ok(success(device).build());
     }
@@ -75,6 +75,8 @@ public class DeviceControl {
         Device deviceBd = optional.orElseThrow(() -> new EntityNotFoundException("device_not_found"));
         deviceBd.clone(device);
         deviceRepository.saveAndFlush(deviceBd);
+        Thread thread = new Thread(new DeviceRunnable(deviceBd, deviceRepository, messagingTemplate, false));
+        thread.start();
         return ok(success(deviceBd).build());
     }
 
