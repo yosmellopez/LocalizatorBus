@@ -18,6 +18,7 @@
         "number": "Number",
         "siteCount": "Number of Seats",
         "company": "Company Name",
+        "device": "Device",
         "selectCompany": "Select the Company",
         "selectDevice": "Select the Device",
         "list": "Bus List",

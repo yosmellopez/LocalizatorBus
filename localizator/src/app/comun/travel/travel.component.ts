@@ -78,7 +78,7 @@ export class TravelComponent implements OnInit {
 
     abrirVentana() {
         let dialogRef = this.dialog.open(TravelWindow, {
-            width: '900px', disableClose: true, data: new Travel(),
+            width: '700px', disableClose: true, data: new Travel(),
         });
 
         dialogRef.afterClosed().subscribe(result => {

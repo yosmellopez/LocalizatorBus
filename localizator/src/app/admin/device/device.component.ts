@@ -51,10 +51,10 @@ export class DeviceComponent implements OnInit {
                     this.isLoadingResults = true;
                     return this.service.listarDevices(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
                 }),
-                map(data => {
-                    this.total = data.body.total;
+                map(resp => {
+                    this.total = resp.body.total;
                     this.isLoadingResults = false;
-                    return data.body.elementos;
+                    return resp.body.elementos;
                 }),
                 catchError(data => {
                     this.isLoadingResults = false;

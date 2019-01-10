@@ -2,7 +2,7 @@
     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
 </div>
 <mat-tab-group [selectedIndex]="indexTab" (selectedTabChange)="selectionChange($event)">
-    <mat-tab label="Viajes en Curso {{today|date:'shortDate'}}">
+    <mat-tab label="Viajes en Curso {{today|date:'fullDate'}}">
         <mat-card color="primary">
             <mat-card-header color="primary">
                 <mat-card-title>{{'travel.course'|translate}}</mat-card-title>

@@ -50,10 +50,10 @@ const STEPS_ALL: any[] = [
     query(
         ':enter .' + ROUTE_ANIMATIONS_ELEMENTS,
         stagger(75, [
-            style({transform: 'translateY(10%)', opacity: 0}),
+            style({transform: 'scale3d(1, 1, 1)', opacity: 0}),
             animate(
                 '0.5s ease-in-out',
-                style({transform: 'translateY(0%)', opacity: 1})
+                style({transform: 'scale3d(1, 1, 1)', opacity: 1}),
             )
         ]),
         {optional: true}

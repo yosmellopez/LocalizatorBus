@@ -20,7 +20,7 @@ export class BusComponent implements OnInit {
     dataSource: MatTableDataSource<Bus> = new MatTableDataSource<Bus>();
     total: number = 0;
     pageSize: number = 10;
-    displayedColumns = ['seleccionado', 'index', 'code', 'number', 'siteNumber', 'company', 'acciones'];
+    displayedColumns = ['seleccionado', 'index', 'code', 'number', 'siteNumber', 'device', 'company', 'acciones'];
     selection = new SelectionModel<Bus>(true, []);
     nombre: string = '';
     resultsLength = 0;

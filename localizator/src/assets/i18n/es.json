@@ -18,6 +18,7 @@
         "number": "Número",
         "siteCount": "Cantidad de Asientos",
         "company": "Nombre Empresa",
+        "device": "Dispositivo",
         "selectCompany": "Selecione la Empresa",
         "selectDevice": "Selecione el Dispositivo",
         "list": "Lista de Buses",
@@ -93,7 +94,7 @@
     "welcome": "Bienvenido: ",
     "unknown": "Desconocido",
     "offline": "Desconectado",
-    "online": "Coenctado",
+    "online": "Conectado",
     "userprofile": "Perfil de Usuario",
     "accountlock": "Bloquear Pantalla"
 }

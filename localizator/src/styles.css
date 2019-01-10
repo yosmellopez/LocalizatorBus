@@ -82,7 +82,7 @@ table {
 .close-button {
     float: right;
     clear: right;
-    position: relative;
+    position: absolute;
     right: -6px;
     top: -7px;
 }

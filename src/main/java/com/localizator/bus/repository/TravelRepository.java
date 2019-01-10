@@ -23,6 +23,5 @@ public interface TravelRepository extends JpaRepository<Travel, Long> {
 
     List<Travel> findByTravelDateBeforeAndArriveDateAfterAndActive(Date start, Date limit, boolean active);
 
-
     Page<Travel> findByBus_Company(Company company, Pageable pageable);
 }

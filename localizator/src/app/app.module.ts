@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {HeaderComponent, NotificacionMensajeComponent} from './components/header/header.component';
@@ -25,14 +25,19 @@ import {AuthService} from "./services/auth.service";
 import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {PERFECT_SCROLLBAR_CONFIG} from 'ngx-perfect-scrollbar';
 import {PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
-import {DatePipe} from "@angular/common";
+import {DatePipe, registerLocaleData} from "@angular/common";
 import {ChartsModule} from "ng2-charts";
 import {GooglePlaceModule} from "ngx-google-places-autocomplete";
 import {TraccarStompService, traccarStompServiceFactory} from "./services/traccar-stomp.service";
+import localeCu from '@angular/common/locales/es-CU';
+import localeSpain from '@angular/common/locales/es';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
+
+registerLocaleData(localeSpain, "es");
+registerLocaleData(localeCu, "es_CU");
 
 @NgModule({
     declarations: [
@@ -75,6 +80,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         }, {
             provide: TraccarStompService,
             useFactory: traccarStompServiceFactory
+        }, {
+            provide: LOCALE_ID,
+            useValue: "es_CU"
         }
     ],
     bootstrap: [AppComponent],
@@ -82,6 +90,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 })
 export class AppModule {
     constructor(private dateAdapter: DateAdapter<Date>) {
-        dateAdapter.setLocale('en-in'); // DD/MM/YYYY
+        dateAdapter.setLocale('es'); // DD/MM/YYYY
     }
 }

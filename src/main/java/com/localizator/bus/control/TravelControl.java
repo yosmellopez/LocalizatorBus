@@ -6,6 +6,7 @@ import com.localizator.bus.exception.GeneralException;
 import com.localizator.bus.repository.*;
 import com.localizator.bus.security.SecurityUtils;
 import com.localizator.bus.service.NotificationService;
+import com.localizator.bus.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -65,7 +67,9 @@ public class TravelControl {
     @GetMapping(value = "/travel/onCurrentDate")
     public ResponseEntity<AppResponse<Travel>> searchTravelsOnDate(@AuthenticationPrincipal Usuario usuario) {
         Date currentDate = new Date();
-        List<Travel> travels = travelRepository.findByTravelDateBeforeAndArriveDateAfterAndActive(currentDate, currentDate, true);
+        Date yerterday = DateUtil.plusMinusDays(currentDate, 1, false);
+        Date tomorrow = DateUtil.plusMinusDays(currentDate, 1, true);
+        List<Travel> travels = travelRepository.findByTravelDateBeforeAndArriveDateAfterAndActive(tomorrow, yerterday, true);
         return ok(success(travels).total(travels.size()).build());
     }
 

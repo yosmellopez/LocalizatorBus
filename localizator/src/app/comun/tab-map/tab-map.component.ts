@@ -20,6 +20,7 @@ export class TabMapComponent implements OnInit, AfterViewInit {
     devices: Device[] = [];
     device: Device;
     passengersTravel: PassengerTravel[] = [];
+    passengersLength = 0;
 
     constructor() {
     }

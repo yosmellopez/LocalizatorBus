@@ -99,6 +99,7 @@ public class Bus implements Serializable, ClonableEntity<Bus> {
         siteNumber = bus.siteNumber;
         code = bus.code;
         number = bus.number;
+        device = bus.device;
     }
 
     @Override
