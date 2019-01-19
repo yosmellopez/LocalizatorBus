@@ -2,7 +2,7 @@
     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
 </div>
 <form class="form" [formGroup]="form" (submit)="insertarPlace()">
-    <h1 mat-dialog-title style="margin: 0 0">{{insertar?'Nuevo Lugar':'Modificar Lugar'}}
+    <h1 mat-dialog-title style="margin: 0 0" draggable-dialog>{{insertar?'Nuevo Lugar':'Modificar Lugar'}}
         <button type="button" mat-icon-button class="close-button" (click)="onNoClick()">
             <mat-icon style="font-size: 25px">close</mat-icon>
         </button>

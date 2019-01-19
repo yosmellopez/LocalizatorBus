@@ -14,7 +14,7 @@ import {CompanyComponent} from './company/company.component';
 import {CompanyWindow} from './company/company-window/company-window.component';
 import {DeviceComponent} from './device/device.component';
 import {DeviceWindow} from './device/device-window/device-window.component';
-
+import {DirectiveModule} from '../directives/directive.module';
 
 @NgModule({
     imports: [
@@ -24,7 +24,8 @@ import {DeviceWindow} from './device/device-window/device-window.component';
         RouterModule.forChild(adminRoutes),
         MensajeModule,
         ReactiveFormsModule,
-        PasswordLenghtModule
+        PasswordLenghtModule,
+        DirectiveModule
     ],
     declarations: [UsuarioComponent, UsuarioWindow, DashboardComponent, CompanyComponent, CompanyWindow, DeviceComponent, DeviceWindow],
     entryComponents: [UsuarioWindow, CompanyWindow, DeviceWindow]

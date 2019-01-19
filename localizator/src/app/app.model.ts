@@ -1,4 +1,4 @@
-import {HttpHeaders, HttpResponseBase} from "@angular/common/http";
+import {HttpHeaders, HttpResponseBase} from '@angular/common/http';
 import {NativeDateAdapter} from '@angular/material';
 
 export class Usuario {
@@ -12,7 +12,7 @@ export class Usuario {
     email: string;
     companies: Company[] = [];
     rol: Rol;
-    language: string = "es";
+    language: string = 'es';
 }
 
 export class Rol {
@@ -190,6 +190,11 @@ export class DevicePosition {
     speed: number;
     type: {};
     valid: boolean;
+}
+
+export interface Posicion {
+    x: number;
+    y: number;
 }
 
 export class ObjectParam<T> {

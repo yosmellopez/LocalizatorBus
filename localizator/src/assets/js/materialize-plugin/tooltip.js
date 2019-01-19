@@ -104,7 +104,7 @@
             var targetTop, targetLeft, newCoordinates;
 
             if (tooltipPosition === "top") {
-              // Top Position
+              // Top Posicion
               targetTop = origin.offset().top - tooltipHeight - margin;
               targetLeft = origin.offset().left + originWidth/2 - tooltipWidth/2;
               newCoordinates = repositionWithinScreen(targetLeft, targetTop, tooltipWidth, tooltipHeight);
@@ -118,7 +118,7 @@
                 marginLeft: (tooltipWidth/2) - (backdropOffsetWidth/2)
               });
             }
-            // Left Position
+            // Left Posicion
             else if (tooltipPosition === "left") {
               targetTop = origin.offset().top + originHeight/2 - tooltipHeight/2;
               targetLeft =  origin.offset().left - tooltipWidth - margin;
@@ -136,7 +136,7 @@
                 marginLeft: tooltipWidth
               });
             }
-            // Right Position
+            // Right Posicion
             else if (tooltipPosition === "right") {
               targetTop = origin.offset().top + originHeight/2 - tooltipHeight/2;
               targetLeft = origin.offset().left + originWidth + margin;
@@ -155,7 +155,7 @@
               });
             }
             else {
-              // Bottom Position
+              // Bottom Posicion
               targetTop = origin.offset().top + origin.outerHeight() + margin;
               targetLeft = origin.offset().left + originWidth/2 - tooltipWidth/2;
               newCoordinates = repositionWithinScreen(targetLeft, targetTop, tooltipWidth, tooltipHeight);

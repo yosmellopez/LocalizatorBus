@@ -165,7 +165,7 @@
           leftPosition =  offsetRight + gutterSpacing;
         }
 
-        // Position dropdown
+        // Posicion dropdown
         activates.css({
           position: 'absolute',
           top: origin.position().top + verticalOffset + scrollYOffset,

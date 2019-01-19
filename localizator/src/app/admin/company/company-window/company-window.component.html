@@ -1,5 +1,5 @@
 <form class="form" [formGroup]="form" (submit)="insertarCompany()">
-    <h1 mat-dialog-title style="margin: 0 0">{{insertar?'Nueva Empresa':'Modificar Empresa'}}
+    <h1 mat-dialog-title style="margin: 0 0" draggable-dialog>{{insertar?'Nueva Empresa':'Modificar Empresa'}}
         <button type="button" mat-icon-button class="close-button" (click)="onNoClick()">
             <mat-icon style="font-size: 25px">close</mat-icon>
         </button>

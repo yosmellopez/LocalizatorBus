@@ -1,4 +1,4 @@
-<h1 mat-dialog-title style="margin: 0 0">{{insertar?'Nuevo Viaje':'Modificar Viaje'}}
+<h1 mat-dialog-title style="margin: 0 0" draggable-dialog>{{insertar?'Nuevo Viaje':'Modificar Viaje'}}
     <button type="button" mat-icon-button class="close-button" (click)="onNoClick()">
         <mat-icon style="font-size: 25px">close</mat-icon>
     </button>
@@ -163,7 +163,7 @@
                             </td>
                             <td mat-footer-cell *matFooterCellDef></td>
                         </ng-container>
-                        <!-- Position Column -->
+                        <!-- Posicion Column -->
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef> Nombre</th>
                             <td mat-cell *matCellDef="let element"> {{element.passenger.name}}</td>
