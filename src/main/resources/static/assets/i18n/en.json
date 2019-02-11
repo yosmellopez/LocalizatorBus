@@ -18,14 +18,17 @@
         "number": "Number",
         "siteCount": "Number of Seats",
         "company": "Company Name",
-        "selectCompany": "Select  the Company",
+        "device": "Device",
+        "selectCompany": "Select the Company",
+        "selectDevice": "Select the Device",
         "list": "Bus List",
         "listmsg": "Show the system bus list",
         "error": {
             "requiredCode": "You must insert the bus code",
             "requiredNumber": "You must insert the bus number",
             "requiredSiteCount": "You must insert the bus bus list",
-            "requiredCompany": "You must select the bus company"
+            "requiredCompany": "You must select the bus company",
+            "requiredDevice": "You must select the bus device"
         }
     },
     "place": {
@@ -75,6 +78,14 @@
         "list": "Company List",
         "listmsg": "Show system companies"
     },
+    "device": {
+        "name": "Name",
+        "status": "Status",
+        "phone": "Phone Number",
+        "canceled": "Canceled",
+        "list": "Device List",
+        "listmsg": "Show system devices"
+    },
     "actions": "Actions",
     "notifications": "Notifications",
     "dashboard": "Dashboard",
@@ -83,5 +94,8 @@
     "gpsTravel": "GPS and Travels",
     "noCompanies": "No Companies",
     "welcome": "Welcome: ",
+    "unknown": "Unknown",
+    "offline": "Offline",
+    "online": "Online",
     "accountlock": "Lock Screen"
 }

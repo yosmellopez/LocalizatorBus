@@ -18,14 +18,17 @@
         "number": "Número",
         "siteCount": "Cantidad de Asientos",
         "company": "Nombre Empresa",
+        "device": "Dispositivo",
         "selectCompany": "Selecione la Empresa",
+        "selectDevice": "Selecione el Dispositivo",
         "list": "Lista de Buses",
         "listmsg": "Muestra el Listado de Buses del Sistema",
         "error": {
             "requiredCode": "Debe insertar el código del bus",
             "requiredNumber": "Debe insertar el número del bus",
             "requiredSiteCount": "Debe insertar la cantidad de asientos del bus",
-            "requiredCompany": "Debe seleccionar la empresa del bus"
+            "requiredCompany": "Debe seleccionar la empresa del bus",
+            "requiredDevice": "Debe seleccionar el dispositivo del bus"
         }
     },
     "place": {
@@ -74,6 +77,14 @@
         "list": "Lista de Empresas",
         "listmsg": "Muestra el Listado de Empresas del Sistema"
     },
+    "device": {
+        "name": "Nombre",
+        "status": "Estado",
+        "phone": "Número de Teléfono",
+        "canceled": "Cancelado",
+        "list": "Lista de Dispositivos",
+        "listmsg": "Muestra el Listado de Dispositivos del Sistema"
+    },
     "actions": "Acciones",
     "notifications": "Notificaciones",
     "dashboard": "Dashboard",
@@ -81,6 +92,9 @@
     "gpsTravel": "GPS y Viajes",
     "noCompanies": "Sin Empresa",
     "welcome": "Bienvenido: ",
+    "unknown": "Desconocido",
+    "offline": "Desconectado",
+    "online": "Conectado",
     "userprofile": "Perfil de Usuario",
     "accountlock": "Bloquear Pantalla"
 }

@@ -6,6 +6,7 @@ import {FooterComponent} from './components/footer/footer.component';
 import {AngularMaterialModule} from './material.module';
 import {RouterModule} from '@angular/router';
 import {AppRoutingModule} from './app.routing';
+// @ts-ignore
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {PipesModule} from './pipes/pipes.module';
 import {ComunComponent} from './comun/comun.component';
@@ -18,6 +19,7 @@ import {DateAdapter} from '@angular/material';
 import {DateFormat} from './app.model';
 import {StompConfig, StompService} from '@stomp/ng2-stompjs';
 import {stompConfig} from './app.constant';
+// @ts-ignore
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UserMenuComponent} from './components/user-menu/user-menu.component';
 import {TokenInterceptor} from './services/token-interceptor';

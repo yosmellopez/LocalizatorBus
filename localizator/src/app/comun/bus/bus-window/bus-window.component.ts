@@ -1,12 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
-import {Bus, Company, Device} from "../../../app.model";
-import {MensajeError} from "../../../mensaje/window.mensaje";
-import {BusService} from "../../../services/bus.service";
-import {CompanyService} from "../../../services/company.service";
-import {Principal} from "../../../services/principal.service";
-import {DeviceService} from "../../../services/device.service";
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {Bus, Company, Device} from '../../../app.model';
+import {MensajeError} from '../../../mensaje/window.mensaje';
+import {BusService} from '../../../services/bus.service';
+import {CompanyService} from '../../../services/company.service';
+import {Principal} from '../../../services/principal.service';
+import {DeviceService} from '../../../services/device.service';
 
 @Component({
     selector: 'app-bus-window',
@@ -34,6 +34,17 @@ export class BusWindow implements OnInit {
             company: new FormControl(company, [Validators.required]),
             device: new FormControl(device, [Validators.required]),
         });
+        this.companyService.subscribe(resp => {
+            if (resp.body.success) {
+                this.companies = resp.body.elementos;
+                this.principal.hasAuthority('Usuario').then(isUser => {
+                    if (isUser) {
+                        let company = this.companies.find((value: Company, index: number) => index == 0);
+                        this.form.controls['company'].setValue(company);
+                    }
+                });
+            }
+        });
     }
 
     insertarBus(): void {
@@ -45,7 +56,7 @@ export class BusWindow implements OnInit {
                     if (appResp.success) {
                         this.dialogRef.close(resp.body);
                     } else {
-                        this.dialog.open(MensajeError, {width: "400px", data: {mensaje: appResp.msg}});
+                        this.dialog.open(MensajeError, {width: '400px', data: {mensaje: appResp.msg}});
                     }
                     this.isLoadingResults = false;
                 });
@@ -55,7 +66,7 @@ export class BusWindow implements OnInit {
                     if (appResp.success) {
                         this.dialogRef.close(resp.body);
                     } else {
-                        this.dialog.open(MensajeError, {width: "400px", data: {mensaje: appResp.msg}});
+                        this.dialog.open(MensajeError, {width: '400px', data: {mensaje: appResp.msg}});
                     }
                     this.isLoadingResults = false;
                 });
@@ -64,17 +75,7 @@ export class BusWindow implements OnInit {
     }
 
     ngOnInit() {
-        this.companyService.listarAllCompanys().subscribe(resp => {
-            if (resp.body.success) {
-                this.companies = resp.body.elementos;
-                this.principal.hasAuthority("Usuario").then(isUser => {
-                    if (isUser) {
-                        let company = this.companies.find((value: Company, index: number) => index == 0);
-                        this.form.controls['company'].setValue(company);
-                    }
-                });
-            }
-        });
+        this.companyService.listarAllCompanys();
         this.deviceService.listarAllDevices().subscribe(resp => {
             if (resp.body.success) {
                 this.devices = resp.body.elementos;

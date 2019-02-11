@@ -1,14 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {TravelWindow} from "../travel/travel-window/travel-window.component";
-import {PassengerTravel, Travel} from "../../app.model";
-import {SelectionModel} from "@angular/cdk/collections";
-import {catchError, map, startWith, switchMap} from "rxjs/internal/operators";
-import {Confirm, Information, MensajeError} from "../../mensaje/window.mensaje";
-import {MatDialog, MatPaginator, MatSort, MatTable, MatTableDataSource} from "@angular/material";
-import {TravelService} from "../../services/travel.service";
-import {forkJoin, merge, Subject} from "rxjs/index";
-import {animate, state, style, transition, trigger} from "@angular/animations";
-import {PassengerTravelService} from "../../services/passenger-travel.service";
+import {TravelWindow} from '../travel/travel-window/travel-window.component';
+import {PassengerTravel, Travel} from '../../app.model';
+import {SelectionModel} from '@angular/cdk/collections';
+import {catchError, map, startWith, switchMap} from 'rxjs/internal/operators';
+import {Confirm, Information, MensajeError} from '../../mensaje/window.mensaje';
+import {MatDialog, MatPaginator, MatSort, MatTable, MatTableDataSource} from '@angular/material';
+import {TravelService} from '../../services/travel.service';
+import {forkJoin, merge, Subject} from 'rxjs/index';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {PassengerTravelService} from '../../services/passenger-travel.service';
 
 declare function my_init_plugins();
 
@@ -78,7 +78,7 @@ export class TravelComponent implements OnInit {
 
     abrirVentana() {
         let dialogRef = this.dialog.open(TravelWindow, {
-            width: '700px', disableClose: true, data: new Travel(),
+            width: '700px', position: {top: '10%'}, disableClose: true, data: new Travel(),
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -92,7 +92,7 @@ export class TravelComponent implements OnInit {
     editarTravel(event: Event, travel: Travel): void {
         event.stopPropagation();
         let editDialogRef = this.dialog.open(TravelWindow, {
-            width: '700px', data: travel, disableClose: true
+            width: '700px', position: {top: '10%'}, data: travel, disableClose: true
         });
 
         editDialogRef.afterClosed().subscribe(result => {
@@ -139,11 +139,11 @@ export class TravelComponent implements OnInit {
         event.stopPropagation();
         let traveles = this.selection.selected;
         if (traveles.length === 0) {
-            this.dialog.open(Information, {width: '320px', data: {mensaje: "No se han seleccionado elementos"}});
+            this.dialog.open(Information, {width: '320px', data: {mensaje: 'No se han seleccionado elementos'}});
         } else {
             let dialogRef = this.dialog.open(Confirm, {
                 width: '400px',
-                data: {mensaje: 'Desea eliminar los viajes:<br>- ' + traveles.map(travel => travel.travelDate).join("<br> -")},
+                data: {mensaje: 'Desea eliminar los viajes:<br>- ' + traveles.map(travel => travel.travelDate).join('<br> -')},
             });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
@@ -211,11 +211,11 @@ export class TravelComponent implements OnInit {
     }
 
     private inicializarElementos(): void {
-        this.paginator._intl.itemsPerPageLabel = "Registros por página";
-        this.paginator._intl.firstPageLabel = "Primera página";
-        this.paginator._intl.lastPageLabel = "Última página";
-        this.paginator._intl.nextPageLabel = "Página siguiente";
-        this.paginator._intl.previousPageLabel = "Página anterior";
+        this.paginator._intl.itemsPerPageLabel = 'Registros por página';
+        this.paginator._intl.firstPageLabel = 'Primera página';
+        this.paginator._intl.lastPageLabel = 'Última página';
+        this.paginator._intl.nextPageLabel = 'Página siguiente';
+        this.paginator._intl.previousPageLabel = 'Página anterior';
         this.paginator._intl.getRangeLabel = (page: number, pageSize: number, length: number) => {
             if (length == 0 || pageSize == 0) {
                 return `0 de ${length}`;

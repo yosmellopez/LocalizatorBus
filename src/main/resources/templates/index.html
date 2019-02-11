@@ -5,22 +5,23 @@
         <title>Localizator</title>
         <base th:href="@{/}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" type="image/x-icon" href="favicon.ico">
-        <link rel="stylesheet" th:href="@{/recursos/static/styles.eaf4e624c5299acdf0bb.css}">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.20.1/ol.css" type="text/css">
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8l1rN0PWx-ABg5ryh35dTpJ-dHkOxVxc&libraries=places&language=es&region=ES"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.20.1/ol.js" type="text/javascript"></script>
+        <meta name="context-path" th:content="@{/}">
         <script th:inline="javascript">
-            var rootUrl = [[@{/}]];
-                localStorage.setItem("serverUrl", rootUrl);
-                localStorage.setItem("socketDir", "ws://" + window.location.host + rootUrl + "localizator/");
+            var rootUrl = document.querySelector('meta[name=context-path]').getAttribute("content");
+            localStorage.setItem("serverUrl", rootUrl);
+            localStorage.setItem("socketDir", "ws://" + window.location.host + rootUrl + "localizator/");
         </script>
+        <link rel="stylesheet" th:href="@{/recursos/static/assets/favicon.png}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.20.1/ol.css">
+        <link rel="stylesheet" th:href="@{/recursos/static/styles.479f7007244d82d21b63.css}">
     </head>
     <body class="animated fadeIn" id="dashboards-analytics" data-layout="default-sidebar-1" data-sidebar="primary" data-navbar="primary" data-controller="dashboards" data-view="analytics" #body>
         <app-root></app-root>
-        <script type="text/javascript" th:src="@{/recursos/static/runtime.1b035b95acc1c127324d.js}"></script>
-        <script type="text/javascript" th:src="@{/recursos/static/polyfills.c1da48c5c45ccdef1eb4.js}"></script>
-        <script type="text/javascript" th:src="@{/recursos/static/scripts.cb8c365d18dac55a86e1.js}"></script>
-        <script type="text/javascript" th:src="@{/recursos/static/main.150de51f9821cc93f614.js}"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8l1rN0PWx-ABg5ryh35dTpJ-dHkOxVxc&amp;libraries=places&amp;language=es&amp;region=ES"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.20.1/ol.js"></script>
+        <script type="text/javascript" th:src="@{/recursos/static/runtime.bbd0bc7b7fda901866f3.js}"></script>
+        <script type="text/javascript" th:src="@{/recursos/static/polyfills.4e4f5d9984e68bbc2d17.js}"></script>
+        <script type="text/javascript" th:src="@{/recursos/static/scripts.cee6f10cb6d1afd436fc.js}"></script>
+        <script type="text/javascript" th:src="@{/recursos/static/main.ee9e4df3890ab3ba7331.js}"></script>
     </body>
 </html>

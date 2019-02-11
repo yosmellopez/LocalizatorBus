@@ -1,11 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {MensajeError} from "../../../mensaje/window.mensaje";
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
-import {UsuarioService} from "../../../services/usuario.service";
-import {Company, Rol, Usuario} from "../../../app.model";
-import {RolService} from "../../../services/rol.service";
-import {CompanyService} from "../../../services/company.service";
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {MensajeError} from '../../../mensaje/window.mensaje';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {UsuarioService} from '../../../services/usuario.service';
+import {Company, Rol, Usuario} from '../../../app.model';
+import {RolService} from '../../../services/rol.service';
+import {CompanyService} from '../../../services/company.service';
 
 @Component({
     selector: 'app-usuario-window',
@@ -19,8 +19,8 @@ export class UsuarioWindow implements OnInit {
     insertar = true;
     activated: boolean;
     form: FormGroup;
-    roles: Rol[];
-    companies: Company[];
+    roles: Rol[] = [];
+    companies: Company[] = [];
     isAdmin: boolean = true;
     isEmpty: boolean = false;
 
@@ -59,17 +59,18 @@ export class UsuarioWindow implements OnInit {
             } else
                 this.form.controls['company'].disable();
         });
+        this.rolService.subscribe(resp => {
+            this.roles = resp.body.elementos;
+        });
+        this.companyService.subscribe(resp => {
+            if (resp.body.success)
+                this.companies = resp.body.elementos;
+        })
     }
 
     ngOnInit() {
-        this.rolService.listarRoles().subscribe(resp => {
-            if (resp.body.success)
-                this.roles = resp.body.elementos;
-        });
-        this.companyService.listarAllCompanys().subscribe(resp => {
-            if (resp.body.success)
-                this.companies = resp.body.elementos;
-        });
+        this.rolService.listarRoles();
+        this.companyService.listarAllCompanys();
     }
 
 
@@ -88,7 +89,7 @@ export class UsuarioWindow implements OnInit {
                     if (appResp.success) {
                         this.dialogRef.close(resp.body);
                     } else {
-                        this.dialog.open(MensajeError, {width: "400px", data: {mensaje: appResp.msg}});
+                        this.dialog.open(MensajeError, {width: '400px', data: {mensaje: appResp.msg}});
                     }
                     this.isLoadingResults = false;
                 });
@@ -98,7 +99,7 @@ export class UsuarioWindow implements OnInit {
                     if (appResp.success) {
                         this.dialogRef.close(resp.body);
                     } else {
-                        this.dialog.open(MensajeError, {width: "400px", data: {mensaje: appResp.msg}});
+                        this.dialog.open(MensajeError, {width: '400px', data: {mensaje: appResp.msg}});
                     }
                     this.isLoadingResults = false;
                 });

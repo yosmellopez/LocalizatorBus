@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.CacheControl;
@@ -19,13 +20,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.springframework.web.servlet.resource.PathResourceResolver;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
@@ -37,6 +37,8 @@ import java.util.concurrent.TimeUnit;
 @EnableSpringDataWebSupport
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    private String baseApiPath = "/api";
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
@@ -47,6 +49,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/recursos/static/**", "/assets/i18n/**", "*.js", "*.woff2", "/assets/**")
                 .addResourceLocations("classpath:/static/", "classpath:/static/assets/i18n/", "classpath:/static/", "classpath:/static/", "classpath:/static/assets/")
                 .setCacheControl(CacheControl.maxAge(30, TimeUnit.MICROSECONDS).cachePublic());
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("*").allowedOrigins("*").allowCredentials(true);
     }
 
     @Bean

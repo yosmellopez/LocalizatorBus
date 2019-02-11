@@ -3,10 +3,10 @@ import {MatDialogContainer, MatDialogRef} from '@angular/material';
 import {Subscription} from 'rxjs/Subscription';
 import {takeUntil} from 'rxjs/operators/takeUntil';
 import 'rxjs/add/observable/fromEvent';
-import {take} from 'rxjs/operators/take';
 import {Posicion} from '../app.model';
 import {ModalPositionCache} from '../services/modal-position.cache';
 import {fromEvent} from 'rxjs';
+import {take} from 'rxjs/operators';
 
 @Directive({
     selector: '[draggable-dialog]'
@@ -31,8 +31,7 @@ export class DraggableDirective implements OnInit {
         const dialogType = this.matDialogRef.componentInstance.constructor;
         const cachedValue = this.positionCache.get(dialogType);
         this.offset = cachedValue || this._getOffset();
-        // this._updatePosition(this.offset.y, this.offset.x);
-
+        this._updatePosition(this.offset.y, this.offset.x);
         // this.matDialogRef.afterClosed().pipe(take(1)).subscribe(() => this.positionCache.set(dialogType, this.offset));
     }
 
