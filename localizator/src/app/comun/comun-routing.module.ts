@@ -1,17 +1,18 @@
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes} from '@angular/router';
-import {UserProfileComponent} from "./user-profile/user-profile.component";
-import {BusComponent} from "./bus/bus.component";
-import {PlaceComponent} from "./place/place.component";
-import {RouteComponent} from "./route/route.component";
-import {TravelComponent} from "./travel/travel.component";
-import {DashboardComponent} from "./dashboard/dashboard.component";
-import {NotificationComponent} from "../components/notification/notification.component";
-import {Injectable} from "@angular/core";
-import {NotificacionService} from "../services/notification.service";
-import {Notificacion} from "../app.model";
-import {Observable} from "rxjs/index";
-import {map} from "rxjs/internal/operators";
-import {FollowTravelComponent} from "./follow-travel/follow-travel.component";
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes } from '@angular/router';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { BusComponent } from './bus/bus.component';
+import { PlaceComponent } from './place/place.component';
+import { RouteComponent } from './route/route.component';
+import { TravelComponent } from './travel/travel.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { NotificationComponent } from '../components/notification/notification.component';
+import { Injectable } from '@angular/core';
+import { NotificacionService } from '../services/notification.service';
+import { Notificacion } from '../app.model';
+import { Observable } from 'rxjs/index';
+import { map } from 'rxjs/internal/operators';
+import { FollowTravelComponent } from './follow-travel/follow-travel.component';
+import { ForgotPasswordComponent } from '../components/forgot-password/forgot-password.component';
 
 
 @Injectable({providedIn: 'root'})

@@ -10,7 +10,7 @@ public final class AppConstants {
 
     public static final String REGISTRO_URL = "/api/usuario/registro";
 
-    public static final String AUTHENTICATION_RESTORE_PASSWORD = "/apirest/auth/restore";
+    public static final String AUTHENTICATION_RESTORE_PASSWORD = "/api/auth/restore";
 
     public static final String REFRESH_TOKEN_URL = "/api/auth/token";
 

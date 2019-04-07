@@ -1,19 +1,20 @@
-import {Injectable} from '@angular/core';
-import {TranslateService} from "./translate.service";
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
+    private lang: string = '';
 
-    constructor(private translate: TranslateService) {
+    constructor() {
     }
 
     public getToken(): string {
-        return localStorage.getItem('user_token') || "";
+        return localStorage.getItem('user_token') || '';
     }
 
     getLang(): string {
-        return this.translate.getLang();
+        this.lang = localStorage.getItem('lang') || 'es';
+        return this.lang;
     }
 }

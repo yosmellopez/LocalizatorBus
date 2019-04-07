@@ -12,5 +12,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>, JpaSpec
 
     Optional<Usuario> findByUsername(String username);
 
+    Optional<Usuario> findByEmail(String email);
+
     List<Usuario> findByRol(Rol rol);
 }

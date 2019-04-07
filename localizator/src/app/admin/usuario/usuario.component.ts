@@ -55,6 +55,7 @@ export class UsuarioComponent implements OnInit {
                 return data.body.elementos;
             }),
             catchError(data => {
+                this.isLoadingResults = false;
                 return [];
             })
         ).subscribe(datos => {

@@ -42,14 +42,16 @@
                     <span>{{mensaje}}</span>
                 </div>
                 <div class="input-field col s12" style="padding: 0 30px">
-                    <button class="col s12 login-btn" mat-flat-button color="primary" style="width: 104%">Iniciar Sesión
+                    <button class="col s12 login-btn" mat-flat-button color="primary" style="width: 104%" [disabled]="!form.valid">Iniciar Sesión
                         <mat-icon>keyboard_arrow_right</mat-icon>
                     </button>
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s6 m6 l6">
-                    <p class="margin right-align medium-small"><a href="page-forgot-password.html">Forgot password ?</a></p>
+                <div class="input-field col s7 m7 l7">
+                    <p class="margin right-align medium-small">
+                        <a routerLink="/forgot-password">{{'login.forgot'|translate}}</a>
+                    </p>
                 </div>
             </div>
         </form>

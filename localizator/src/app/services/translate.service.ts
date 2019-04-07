@@ -42,6 +42,8 @@ export class TranslateService {
     }
 
     getLang(): string {
+        this.lang = localStorage.getItem("lang") || "es";
+        console.log(this.lang);
         return this.lang;
     }
 

@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs/index";
-import {SERVER_API_URL} from "../app.constant";
-import {AppResponse, Respuesta, Usuario} from "../app.model";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/index';
+import { SERVER_API_URL } from '../app.constant';
+import { AppResponse, Respuesta, Usuario } from '../app.model';
 
 @Injectable({providedIn: 'root'})
 export class AccountService {
@@ -20,5 +20,12 @@ export class AccountService {
 
     iniciarSesion(values: any): Observable<Respuesta<Usuario>> {
         return this.http.post<AppResponse<Usuario>>(SERVER_API_URL + 'api/auth/login', values, {observe: 'response'});
+    }
+
+    restorePassword(email: string): Observable<Respuesta<Usuario>> {
+        return this.http.post<AppResponse<Usuario>>(SERVER_API_URL + 'api/auth/restore', {}, {
+            params: {email: email},
+            observe: 'response'
+        });
     }
 }

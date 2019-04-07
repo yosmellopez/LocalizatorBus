@@ -124,6 +124,13 @@ public class UsuarioControl {
         return ok(success(usuario).build());
     }
 
+    @PostMapping(value = "/auth/restore")
+    public ResponseEntity<AppResponse<Usuario>> passwordRestore(@RequestParam String email) {
+        Optional<Usuario> optional = usuarioRepository.findByEmail(email);
+        Usuario usuario = optional.orElseThrow(() -> new EntityNotFoundException("user_not_found"));
+        return ok(AppResponse.success(usuario).build());
+    }
+
     @PostMapping(value = "/language/change")
     public ResponseEntity<AppResponse<Boolean>> changeLanguage(@RequestParam String language, @AuthenticationPrincipal Usuario usuario) {
         usuario.setLanguage(language);

@@ -86,6 +86,10 @@
         "list": "Device List",
         "listmsg": "Show system devices"
     },
+    "login": {
+        "forgot": "Forgot your password?",
+        "toLogin": "Login"
+    },
     "actions": "Actions",
     "notifications": "Notifications",
     "dashboard": "Dashboard",

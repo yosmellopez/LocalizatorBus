@@ -1,40 +1,40 @@
-import {LOCALE_ID, NgModule} from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 
-import {AppComponent} from './app.component';
-import {HeaderComponent, NotificacionMensajeComponent} from './components/header/header.component';
-import {FooterComponent} from './components/footer/footer.component';
-import {AngularMaterialModule} from './material.module';
-import {RouterModule} from '@angular/router';
-import {AppRoutingModule} from './app.routing';
+import { AppComponent } from './app.component';
+import { HeaderComponent, NotificacionMensajeComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { AngularMaterialModule } from './material.module';
+import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from './app.routing';
 // @ts-ignore
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {PipesModule} from './pipes/pipes.module';
-import {ComunComponent} from './comun/comun.component';
-import {MensajeModule} from './mensaje/mensaje.module';
-import {LoginComponent} from './components/login/login.component';
-import {AdminComponent} from './admin/admin.component';
-import {CenterComponent} from './components/center/center.component';
-import {ReactiveFormsModule} from '@angular/forms';
-import {DateAdapter} from '@angular/material';
-import {DateFormat} from './app.model';
-import {StompConfig, StompService} from '@stomp/ng2-stompjs';
-import {stompConfig} from './app.constant';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { PipesModule } from './pipes/pipes.module';
+import { ComunComponent } from './comun/comun.component';
+import { MensajeModule } from './mensaje/mensaje.module';
+import { LoginComponent } from './components/login/login.component';
+import { AdminComponent } from './admin/admin.component';
+import { CenterComponent } from './components/center/center.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DateAdapter } from '@angular/material';
+import { DateFormat } from './app.model';
+import { StompConfig, StompService } from '@stomp/ng2-stompjs';
+import { stompConfig } from './app.constant';
 // @ts-ignore
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {UserMenuComponent} from './components/user-menu/user-menu.component';
-import {TokenInterceptor} from './services/token-interceptor';
-import {AuthService} from './services/auth.service';
-import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
-import {PERFECT_SCROLLBAR_CONFIG} from 'ngx-perfect-scrollbar';
-import {PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
-import {DatePipe, registerLocaleData} from '@angular/common';
-import {ChartsModule} from 'ng2-charts';
-import {GooglePlaceModule} from 'ngx-google-places-autocomplete';
-import {TraccarStompService, traccarStompServiceFactory} from './services/traccar-stomp.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserMenuComponent } from './components/user-menu/user-menu.component';
+import { TokenInterceptor } from './services/token-interceptor';
+import { AuthService } from './services/auth.service';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { DatePipe, registerLocaleData } from '@angular/common';
+import { ChartsModule } from 'ng2-charts';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { TraccarStompService, traccarStompServiceFactory } from './services/traccar-stomp.service';
 import localeCu from '@angular/common/locales/es-CU';
 import localeSpain from '@angular/common/locales/es';
-import {DraggableDirective} from './directives/draggable.directive';
-import {DeviceWindow} from './admin/device/device-window/device-window.component';
+import { TranslateService } from './services/translate.service';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -50,6 +50,7 @@ registerLocaleData(localeCu, 'es_CU');
         FooterComponent,
         ComunComponent,
         LoginComponent,
+        ForgotPasswordComponent,
         AdminComponent,
         CenterComponent,
         NotificacionMensajeComponent,
@@ -77,7 +78,7 @@ registerLocaleData(localeCu, 'es_CU');
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,
             multi: true,
-            deps: [AuthService]
+            deps: [AuthService, TranslateService]
         }, {
             provide: PERFECT_SCROLLBAR_CONFIG,
             useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG

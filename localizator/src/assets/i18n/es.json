@@ -85,6 +85,10 @@
         "list": "Lista de Dispositivos",
         "listmsg": "Muestra el Listado de Dispositivos del Sistema"
     },
+    "login": {
+        "forgot": "¿Ha olvidado su contraseña?",
+        "toLogin": "Iniciar Sesión"
+    },
     "actions": "Acciones",
     "notifications": "Notificaciones",
     "dashboard": "Dashboard",

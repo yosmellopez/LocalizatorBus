@@ -8,13 +8,13 @@
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>bus</name>
+    <name>busgps</name>
     <description>Localizator Bus Proyect</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.2.RELEASE</version>
+        <version>2.1.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 

@@ -8,10 +8,12 @@ import {BrowserModule} from "@angular/platform-browser";
 import {AdminGuard} from "./guards/admin.guard";
 import {UsuarioGuard} from "./guards/usuario.guard";
 import {RouteInfo} from "./app.model";
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 const routes: Route[] = [
     {path: '', redirectTo: '/login', pathMatch: 'full'},
     {path: 'login', component: LoginComponent, data: {title: "Iniciar Sesion"}},
+    {path: 'forgot-password', component: ForgotPasswordComponent, data: {title: "Iniciar Sesion"}},
     {
         path: '',
         component: AdminComponent,
