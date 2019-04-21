@@ -274,30 +274,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>com.thymeleaf</groupId>
-                <artifactId>angular-resources</artifactId>
-                <version>1.0-SNAPSHOT</version>
-                <executions>
-                    <execution>
-                        <id>create-resource</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>update</goal>
-                        </goals>
-                        <configuration>
-                            <extensions>css,js</extensions>
-                            <inputFile>${project.basedir}/src/main/resources/static/index.html</inputFile>
-                            <outputFile>${project.basedir}/src/main/resources/templates/index.html</outputFile>
-                            <!--<resources>-->
-                            <!--<resource>-->
-                            <!--<directory>${project.basedir}/src/main/resources/static/</directory>-->
-                            <!--</resource>-->
-                            <!--</resources>-->
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
