@@ -15,7 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PlaceWindow } from './place/place-window/place-window.component';
 import { RouteWindow } from './route/route-window/route-window.component';
 import { TravelWindow } from './travel/travel-window/travel-window.component';
-import { DateAdapter } from '@angular/material';
+import { DateAdapter } from '@angular/material/core';
 import { DateFormat } from '../app.model';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotificationComponent } from '../components/notification/notification.component';

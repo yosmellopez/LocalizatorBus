@@ -15,7 +15,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { CenterComponent } from './components/center/center.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DateAdapter } from '@angular/material';
+import { DateAdapter } from '@angular/material/core';
 import { DateFormat } from './app.model';
 import { StompConfig, StompService } from '@stomp/ng2-stompjs';
 import { stompConfig } from './app.constant';

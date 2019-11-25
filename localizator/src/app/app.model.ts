@@ -1,5 +1,5 @@
 import {HttpHeaders, HttpResponseBase} from '@angular/common/http';
-import {NativeDateAdapter} from '@angular/material';
+import { NativeDateAdapter } from '@angular/material/core';
 
 export class Usuario {
     id: number;

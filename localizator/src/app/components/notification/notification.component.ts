@@ -2,7 +2,10 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Notificacion} from "../../app.model";
 import {catchError, map, startWith, switchMap} from "rxjs/internal/operators";
 import {Confirm, Information} from "../../mensaje/window.mensaje";
-import {MatDialog, MatPaginator, MatSort, MatTable, MatTableDataSource} from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTable, MatTableDataSource } from "@angular/material/table";
 import {merge} from "rxjs/index";
 import {NotificacionService} from "../../services/notification.service";
 

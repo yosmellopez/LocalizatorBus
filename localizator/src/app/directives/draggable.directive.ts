@@ -1,5 +1,5 @@
 import {Directive, HostListener, OnInit} from '@angular/core';
-import {MatDialogContainer, MatDialogRef} from '@angular/material';
+import { MatDialogContainer, MatDialogRef } from '@angular/material/dialog';
 import {Subscription} from 'rxjs/Subscription';
 import {takeUntil} from 'rxjs/operators/takeUntil';
 import 'rxjs/add/observable/fromEvent';

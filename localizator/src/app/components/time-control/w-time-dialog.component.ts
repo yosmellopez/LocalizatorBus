@@ -1,6 +1,6 @@
 import {Component, Inject, ChangeDetectorRef} from '@angular/core';
-import {MatDialogRef} from '@angular/material';
-import {MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import {CLOCK_TYPE} from './w-clock.component';
 

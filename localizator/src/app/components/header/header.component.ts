@@ -4,7 +4,7 @@ import {Notificacion, RouteInfo, Titulo, Usuario} from "../../app.model";
 import {WebsocketService} from "../../services/websocket.service";
 import {Observable, of, Subscription} from "rxjs/index";
 import {Message} from '@stomp/stompjs';
-import {MAT_SNACK_BAR_DATA, MatSnackBar, MatSnackBarRef} from "@angular/material";
+import { MAT_SNACK_BAR_DATA, MatSnackBar, MatSnackBarRef } from "@angular/material/snack-bar";
 import {LanguageService} from "../../services/language.service";
 import {TranslateService} from "../../services/translate.service";
 import {Principal} from "../../services/principal.service";

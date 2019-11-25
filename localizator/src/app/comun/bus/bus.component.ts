@@ -4,7 +4,10 @@ import {SelectionModel} from "@angular/cdk/collections";
 import {catchError, map, startWith, switchMap} from "rxjs/internal/operators";
 import {BusService} from "../../services/bus.service";
 import {Confirm, Information} from "../../mensaje/window.mensaje";
-import {MatDialog, MatPaginator, MatSort, MatTable, MatTableDataSource} from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTable, MatTableDataSource } from "@angular/material/table";
 import {forkJoin, merge, Subject} from "rxjs/index";
 import {BusWindow} from "./bus-window/bus-window.component";
 

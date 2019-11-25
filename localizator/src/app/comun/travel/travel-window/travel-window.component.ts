@@ -1,15 +1,11 @@
 import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, FormGroupDirective, NgForm, ValidationErrors, Validators} from "@angular/forms";
-import {
-    ErrorStateMatcher,
-    MAT_DATE_FORMATS,
-    MAT_DIALOG_DATA, MatAutocompleteSelectedEvent,
-    MatDialog,
-    MatDialogRef,
-    MatSnackBar,
-    MatStepper,
-    MatTableDataSource
-} from "@angular/material";
+import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
+import { ErrorStateMatcher, MAT_DATE_FORMATS } from "@angular/material/core";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatStepper } from "@angular/material/stepper";
+import { MatTableDataSource } from "@angular/material/table";
 import {Bus, Passenger, PassengerTravel, Place, Route, Travel} from "../../../app.model";
 import {Confirm, Information, MensajeError, MensajeToast} from "../../../mensaje/window.mensaje";
 import {TravelService} from "../../../services/travel.service";

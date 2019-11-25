@@ -1,5 +1,6 @@
 import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MAT_SNACK_BAR_DATA, MatDialogRef, MatSnackBarRef} from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
 import {Mensaje} from "../app.model";
 
 @Component({

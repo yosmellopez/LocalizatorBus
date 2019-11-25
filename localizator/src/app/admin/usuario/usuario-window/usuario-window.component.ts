@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MensajeError} from '../../../mensaje/window.mensaje';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import {UsuarioService} from '../../../services/usuario.service';
 import {Company, Rol, Usuario} from '../../../app.model';
 import {RolService} from '../../../services/rol.service';
