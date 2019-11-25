@@ -18,13 +18,13 @@ const routes: Route[] = [
         path: '',
         component: AdminComponent,
         canActivate: [AdminGuard],
-        children: [{path: 'admin', loadChildren: './admin/admin.module#AdminModule'}]
+        children: [{path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)}]
     },
     {
         path: '',
         canActivate: [UsuarioGuard],
         component: ComunComponent,
-        children: [{path: 'user', loadChildren: './comun/comun.module#ComunModule'}]
+        children: [{path: 'user', loadChildren: () => import('./comun/comun.module').then(m => m.ComunModule)}]
     }
 ];
 
