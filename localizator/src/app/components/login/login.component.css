@@ -33,7 +33,7 @@ body {
 .progreso {
     position: relative;
     width: 103%;
-    left: 0px;
+    left: 0;
     height: 5px;
     float: left;
     clear: right;
@@ -45,7 +45,7 @@ body {
 
 .frente {
     height: 581px;
-    width: 400px;
+    width: 380px;
     min-height: 300px;
     min-width: 300px;
     z-index: 1000000;

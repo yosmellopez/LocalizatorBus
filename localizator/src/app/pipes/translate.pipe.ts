@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {TranslateService} from "../services/translate.service";
+import {TranslateService} from '../services/translate.service';
 
 @Pipe({
     name: 'translate',
@@ -11,8 +11,9 @@ export class TranslatePipe implements PipeTransform {
     }
 
     transform(key: string): any {
-        if (key)
+        if (key) {
             return this.translate.translate(key);
-        return "";
+        }
+        return '';
     }
 }

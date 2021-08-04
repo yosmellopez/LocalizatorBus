@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {DevicePosition, PassengerTravel, Device, Travel} from "../../app.model";
-import {TRACCAR_WEBSOCKET_API_URL} from "../../app.constant";
+import {Device, DevicePosition, PassengerTravel, Travel} from '../../app.model';
+import {TRACCAR_WEBSOCKET_API_URL} from '../../app.constant';
 
 declare var google;
 declare var ol;
@@ -14,8 +14,8 @@ export class TabMapComponent implements OnInit, AfterViewInit {
     map = null;
     marker = null;
     infoWindow = null;
-    @ViewChild("mapa") public mapa: ElementRef;
-    @Input("travel") travel: Travel;
+    @ViewChild('mapa', {static: true}) public mapa: ElementRef;
+    @Input('travel') travel: Travel;
     devicePositions: DevicePosition[] = [];
     devices: Device[] = [];
     device: Device;
@@ -27,36 +27,36 @@ export class TabMapComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.passengersTravel = this.travel.passengerTravels;
-        let socket = new WebSocket(TRACCAR_WEBSOCKET_API_URL);
+        const socket = new WebSocket(TRACCAR_WEBSOCKET_API_URL);
         socket.onmessage = this.onReceiveNotification;
     }
 
     ngAfterViewInit(): void {
-        let bus = this.travel.bus;
-        let location = new google.maps.LatLng(bus.device.latitude, bus.device.longitude);
-        let mapProp = {center: location, zoom: 13, mapTypeId: google.maps.MapTypeId.ROADMAP};
+        const bus = this.travel.bus;
+        const location = new google.maps.LatLng(bus.device.latitude, bus.device.longitude);
+        const mapProp = {center: location, zoom: 13, mapTypeId: google.maps.MapTypeId.ROADMAP};
         this.map = new google.maps.Map(this.mapa.nativeElement, mapProp);
         this.infoWindow = new google.maps.InfoWindow();
         this.marker = new google.maps.Marker({
             map: this.map,
             position: location,
             draggable: false,
-            title: "Mi Ubicación"
+            title: 'Mi Ubicación'
         });
         this.infoWindow.setOptions({content: '<p>Ubicacion del viaje: ' + this.getTitle() + '</p>'});
         this.infoWindow.open(this.map, this.marker);
     }
 
     private onReceiveNotification = (event) => {
-        let datos = JSON.parse(event.data);
+        const datos = JSON.parse(event.data);
         if (datos.positions) {
             this.devicePositions = datos.positions;
             if (this.device) {
-                let filteredPositions = this.devicePositions.filter(value => value.deviceId == this.device.id);
+                const filteredPositions = this.devicePositions.filter(value => value.deviceId === this.device.id);
                 if (filteredPositions.length !== 0) {
-                    console.log("Llego la data positions en: " + this.travel.route.code)
-                    let devicePosition = filteredPositions[0];
-                    let location = new google.maps.LatLng(devicePosition.latitude, devicePosition.longitude);
+                    console.log('Llego la data positions en: ' + this.travel.route.code);
+                    const devicePosition = filteredPositions[0];
+                    const location = new google.maps.LatLng(devicePosition.latitude, devicePosition.longitude);
                     this.map.setCenter(location);
                     this.marker.setPosition(location);
                     this.infoWindow.setOptions({content: '<p>Ubicacion del viaje: ' + this.getTitle() + '</p>'});
@@ -66,7 +66,7 @@ export class TabMapComponent implements OnInit, AfterViewInit {
         }
         if (datos.devices) {
             this.devices = datos.devices;
-            let traccarDevices = this.devices.filter(value => value.uniqueId == this.travel.bus.device.uniqueId);
+            const traccarDevices = this.devices.filter(value => value.uniqueId === this.travel.bus.device.uniqueId);
             if (traccarDevices.length !== 0) {
                 this.device = traccarDevices[0];
             }
@@ -74,7 +74,7 @@ export class TabMapComponent implements OnInit, AfterViewInit {
     }
 
     showInMap(passenger: PassengerTravel) {
-        let location = new google.maps.LatLng(passenger.place.lat, passenger.place.lon);
+        const location = new google.maps.LatLng(passenger.place.lat, passenger.place.lon);
         this.map.setCenter(location);
         this.marker.setPosition(location);
         this.infoWindow.setOptions({content: `<p>Parada del pasajero ${passenger.passenger.name} ${passenger.passenger.lastname} en ${passenger.place.name}</p>`});
@@ -86,10 +86,10 @@ export class TabMapComponent implements OnInit, AfterViewInit {
     }
 
     inipTraccarMap() {
-        let me = this;
-        let url = "http://localhost:8082";
-        let token = (window.location.search.match(/token=([^&#]+)/) || [])[1];
-        let style = function (label) {
+        const me = this;
+        const url = 'http://localhost:8082';
+        const token = (window.location.search.match(/token=([^&#]+)/) || [])[1];
+        const style = function (label) {
             return new ol.style.Style({
                 image: new ol.style.Circle({
                     fill: new ol.style.Fill({
@@ -115,32 +115,32 @@ export class TabMapComponent implements OnInit, AfterViewInit {
                 })
             });
         };
-        let source = new ol.source.Vector();
-        let markers = {};
-        let map = new ol.Map({
+        const source = new ol.source.Vector();
+        const markers = {};
+        const map = new ol.Map({
             layers: [new ol.layer.Tile({source: new ol.source.OSM()}),
                 new ol.layer.Vector({source: source})
             ],
-            target: "map",
+            target: 'map',
             view: new ol.View({
                 center: ol.proj.fromLonLat([0, 0]),
                 zoom: 2
             })
         });
 
-        let ajax = function (method, url, callback) {
-            let xhr = new XMLHttpRequest();
+        const ajax = function (method, url, callback) {
+            const xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
             xhr.open(method, url, true);
             xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
+                if (xhr.readyState === 4) {
                     callback(JSON.parse(xhr.responseText));
                 }
             };
-            if (method == 'POST') {
+            if (method === 'POST') {
                 xhr.setRequestHeader('Content-type', 'application/json');
             }
-            xhr.send()
+            xhr.send();
         };
 
         ajax('GET', url + '/api/server', function (server) {

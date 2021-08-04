@@ -1,11 +1,11 @@
 import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, FormGroupDirective, NgForm, ValidationErrors, Validators} from "@angular/forms";
-import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
-import { ErrorStateMatcher, MAT_DATE_FORMATS } from "@angular/material/core";
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { MatStepper } from "@angular/material/stepper";
-import { MatTableDataSource } from "@angular/material/table";
+import {AbstractControl, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
+import {ErrorStateMatcher, MAT_DATE_FORMATS} from "@angular/material/core";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatStepper} from "@angular/material/stepper";
+import {MatTableDataSource} from "@angular/material/table";
 import {Bus, Passenger, PassengerTravel, Place, Route, Travel} from "../../../app.model";
 import {Confirm, Information, MensajeError, MensajeToast} from "../../../mensaje/window.mensaje";
 import {TravelService} from "../../../services/travel.service";
@@ -264,15 +264,15 @@ export class TravelWindow implements OnInit {
         });
     }
 
-    compararRoutes(inicio: Route, fin: Route) {
+    compararRoutes(inicio: Route, fin: Route): boolean {
         return inicio && fin && inicio.id === fin.id;
     };
 
-    compararBuses(inicio: Bus, fin: Bus) {
+    compararBuses(inicio: Bus, fin: Bus): boolean {
         return inicio && fin && inicio.id === fin.id;
     };
 
-    compararLugares(inicio: Place, fin: Place) {
+    compararLugares(inicio: Place, fin: Place): boolean {
         return inicio && fin && inicio.id === fin.id;
     };
 

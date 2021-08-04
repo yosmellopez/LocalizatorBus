@@ -1,14 +1,14 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({providedIn: 'root'})
 export class TranslateService {
     data: any = {};
-    private lang: string = "";
+    private lang = '';
     languageEmitter: EventEmitter<boolean> = new EventEmitter();
 
     constructor(private http: HttpClient) {
-        this.lang = localStorage.getItem("lang") || "es";
+        this.lang = localStorage.getItem('lang') || 'es';
         this.use();
     }
 
@@ -21,7 +21,7 @@ export class TranslateService {
                     resolve(this.data);
                 },
                 error => {
-                    console.log(error)
+                    console.log(error);
                     this.data = {};
                     resolve(this.data);
                 }
@@ -30,26 +30,28 @@ export class TranslateService {
     }
 
     translate(key: string) {
-        let split: any[] = key.split(".");
+        const split: any[] = key.split('.');
         let currentObject: any = null;
         split.forEach(string => {
-            if (!currentObject)
+            if (!currentObject) {
                 currentObject = this.data[string];
-            else
+            }
+            else {
                 currentObject = currentObject[string];
+            }
         });
         return currentObject || key;
     }
 
     getLang(): string {
-        this.lang = localStorage.getItem("lang") || "es";
+        this.lang = localStorage.getItem('lang') || 'es';
         console.log(this.lang);
         return this.lang;
     }
 
     setLang(lang: string) {
         this.lang = lang;
-        localStorage.setItem("lang", lang);
+        localStorage.setItem('lang', lang);
         this.use().then(datos => {
             this.languageEmitter.emit(true);
         });

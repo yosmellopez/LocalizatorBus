@@ -56,7 +56,7 @@ public class AppTasks {
         template.convertAndSend("/buslocator/notificacion/admin", notification);
     }
 
-    @Scheduled(fixedDelay = 600000)
+//    @Scheduled(fixedDelay = 600000)
     public void udateDevices() {
         List<TraccarDevice> devices = LocalizationService.listDevices();
         for (TraccarDevice traccarDevice : devices) {

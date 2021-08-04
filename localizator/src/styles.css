@@ -123,7 +123,7 @@ mat-paginator {
     color: black;
     position: relative;
     bottom: 30px;
-    left: 30px;
+    left: 0;
 }
 
 .success-snackbar {
@@ -131,7 +131,7 @@ mat-paginator {
     color: white;
     position: relative;
     top: 30px;
-    left: 30px;
+    left: 0;
 }
 
 .failure-snackbar {
@@ -139,7 +139,7 @@ mat-paginator {
     color: white;
     position: relative;
     top: 30px;
-    left: 30px;
+    left: 0;
 }
 
 .mat-snack-bar-container {

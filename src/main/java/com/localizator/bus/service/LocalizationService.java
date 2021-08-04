@@ -1,23 +1,17 @@
 package com.localizator.bus.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.localizator.bus.dto.*;
 import com.localizator.bus.entity.Device;
 import com.localizator.bus.entity.Place;
-import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
-import org.springframework.http.*;
-import org.springframework.web.reactive.function.BodyInserter;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-import reactor.core.publisher.Mono;
 
-import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class LocalizationService {
@@ -66,8 +60,8 @@ public class LocalizationService {
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .defaultHeader(HttpHeaders.AUTHORIZATION, "Basic eW9zbWVsbG9wZXpAZ21haWwuY29tOnNlbWVvbHZpZG8=")
                 .build();
-        return webClient.get().exchange().doOnError(throwable -> System.out.println(throwable.getLocalizedMessage()))
-                .block().toEntityList(TraccarDevice.class).doOnError(throwable -> System.out.println(throwable.getLocalizedMessage())).block().getBody();
+        return Objects.requireNonNull(webClient.get().exchange().doOnError(throwable -> System.out.println(throwable.getLocalizedMessage()))
+                .block()).toEntityList(TraccarDevice.class).doOnError(throwable -> System.out.println(throwable.getLocalizedMessage())).block().getBody();
     }
 
     public static List<Device> listDevicesByUniqueId(Device device) {
@@ -136,7 +130,7 @@ public class LocalizationService {
         WebClient webClient = WebClient.create("http://localhost:8082");
         return webClient.put()
                 .uri("/api/devices/{deviceId}", device.getTraccarDeviceId())
-                .body(BodyInserters.fromObject(traccarDevice))
+                .body(BodyInserters.fromValue(traccarDevice))
                 .header(HttpHeaders.AUTHORIZATION, "Basic eW9zbWVsbG9wZXpAZ21haWwuY29tOnNlbWVvbHZpZG8=")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .exchange().block()
